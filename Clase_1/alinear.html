@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Práctica de Estilos en HTML</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f8ff;
+      }
+      .container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+      h2 {
+        color: #2980b9;
+        margin-top: 30px;
+      }
+      .example {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-left: 4px solid #3498db;
+        margin: 20px 0;
+        border-radius: 5px;
+      }
+      .code-example {
+        background-color: #e8f4f8;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      .practice-box {
+        padding: 15px;
+        margin: 15px 0;
+        border: 1px dashed #3498db;
+        border-radius: 5px;
+      }
+      .note {
+        background-color: #e7f4ff;
+        padding: 15px;
+        border-left: 4px solid #3498db;
+        margin: 15px 0;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Práctica de Estilos Básicos en HTML</h1>
+
+      <div class="note">
+        <p>
+          Edita los valores en los ejemplos para practicar diferentes estilos.
+        </p>
+      </div>
+
+      <h2>Color de Fondo</h2>
+      <div class="code-example">
+        <pre><code>&lt;body style="background-color:blue"&gt;</code></pre>
+      </div>
+      <div class="practice-box" style="background-color: lightblue">
+        <h3>Ejemplo práctico:</h3>
+        <div style="background-color: blue; padding: 10px; color: white">
+          <h1>Mi Primer Título</h1>
+          <p>Mi primer párrafo.</p>
+        </div>
+      </div>
+
+      <h2>Color de Letras</h2>
+      <div class="code-example">
+        <pre><code>&lt;h1 style="color:red"&gt;Mi Primer Título&lt;/h1&gt;
+&lt;p style="color:red"&gt;Mi primer párrafo.&lt;/p&gt;</code></pre>
+      </div>
+      <div class="practice-box">
+        <h3>Ejemplo práctico:</h3>
+        <div style="background-color: blue; padding: 10px">
+          <h1 style="color: red">Mi Primer Título</h1>
+          <p style="color: white">Mi primer párrafo.</p>
+        </div>
+      </div>
+
+      <h2>Definir Fuentes</h2>
+      <div class="code-example">
+        <pre><code>&lt;h1 style="font-family:arial"&gt;Mi Primer Título&lt;/h1&gt;
+&lt;p style="color:red; font-family:arial"&gt;Mi primer párrafo.&lt;/p&gt;</code></pre>
+      </div>
+      <div class="practice-box">
+        <h3>Ejemplo práctico:</h3>
+        <div style="background-color: blue; padding: 10px">
+          <h1 style="font-family: Arial; color: white">Mi Primer Título</h1>
+          <p style="color: red; font-family: Arial">Mi primer párrafo.</p>
+        </div>
+        <p>
+          Prueba con otras fuentes: 'Times New Roman', 'Courier New', 'Verdana'
+        </p>
+      </div>
+
+      <h2>Alinear Texto</h2>
+      <div class="code-example">
+        <pre><code>&lt;h1 style="text-align:center"&gt;Hola Mundo&lt;/h1&gt;
+&lt;h2 style="text-align:left"&gt;Hola Mundo&lt;/h2&gt;
+&lt;h3 style="text-align:right"&gt;Hola Mundo&lt;/h3&gt;</code></pre>
+      </div>
+      <div class="practice-box">
+        <h3>Ejemplo práctico:</h3>
+        <div style="background-color: #f0f0f0; padding: 10px">
+          <h1 style="text-align: center">Hola Mundo (centrado)</h1>
+          <h2 style="text-align: left">Hola Mundo (izquierda)</h2>
+          <h3 style="text-align: right">Hola Mundo (derecha)</h3>
+        </div>
+      </div>
+
+      <div class="note">
+        <p>Puedes modificar el código y compartir con la clase!</p>
+      </div>
+    </div>
+  </body>
+</html>

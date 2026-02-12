@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Práctica de Listas y Texto Editado</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+      }
+      .container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+      h2 {
+        color: #2980b9;
+        margin-top: 30px;
+      }
+      .example {
+        background-color: #f0f8ff;
+        padding: 20px;
+        border-radius: 5px;
+        margin: 20px 0;
+        border-left: 4px solid #3498db;
+      }
+      .practice-box {
+        padding: 15px;
+        margin: 15px 0;
+        border: 1px dashed #3498db;
+        border-radius: 5px;
+        background-color: #fff;
+      }
+      ul,
+      ol {
+        padding-left: 25px;
+      }
+      ul {
+        list-style-type: square;
+      }
+      ol {
+        list-style-type: decimal;
+      }
+      li {
+        margin-bottom: 8px;
+      }
+      .note {
+        background-color: #e7f4ff;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+      }
+      del {
+        color: #e74c3c;
+        text-decoration: line-through;
+      }
+      ins {
+        color: #27ae60;
+        text-decoration: underline;
+      }
+      code {
+        background-color: #e8f4f8;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: "Courier New", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Práctica de Listas y Texto Editado</h1>
+
+      <div class="note">
+        <p>
+          Edita los ejemplos para practicar diferentes tipos de listas y
+          formatos de texto.
+        </p>
+      </div>
+
+      <h2>Listas sin numeración (<code>&lt;ul&gt;</code>)</h2>
+      <div class="example">
+        <h3>Código:</h3>
+        <pre><code>&lt;ul&gt;
+  &lt;li&gt;Pepsi&lt;/li&gt;
+  &lt;li&gt;CocaCola&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+
+        <h3>Resultado:</h3>
+        <ul>
+          <li>Pepsi</li>
+          <li>CocaCola</li>
+        </ul>
+      </div>
+
+      <h2>Listas con numeración (<code>&lt;ol&gt;</code>)</h2>
+      <div class="example">
+        <h3>Código:</h3>
+        <pre><code>&lt;ol&gt;
+  &lt;li&gt;Pepsi&lt;/li&gt;
+  &lt;li&gt;CocaCola&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+
+        <h3>Resultado:</h3>
+        <ol>
+          <li>Pepsi</li>
+          <li>CocaCola</li>
+          <li>Sprite</li>
+          <li>Getorade</li>
+        </ol>
+      </div>
+
+      <div class="practice-box">
+        <h3>¡Practica aquí!</h3>
+        <p>Agrega tus propias listas:</p>
+        <ul>
+          <li>Elemento 1</li>
+          <li>Elemento 2</li>
+          <!-- Agrega más elementos aquí -->
+        </ul>
+
+        <ol>
+          <li>Primer elemento</li>
+          <li>Segundo elemento</li>
+          <!-- Agrega más elementos aquí -->
+        </ol>
+      </div>
+
+      <h2>
+        Texto editado (<code>&lt;del&gt;</code> y <code>&lt;ins&gt;</code>)
+      </h2>
+      <div class="example">
+        <h3>Código:</h3>
+        <pre><code>&lt;p&gt;My favorite color is &lt;del&gt;blue&lt;/del&gt; &lt;ins&gt;red&lt;/ins&gt;!&lt;/p&gt;</code></pre>
+
+        <h3>Resultado:</h3>
+        <p>My favorite color is <del>blue</del> <ins>red</ins>!</p>
+      </div>
+
+      <div class="practice-box">
+        <h3>¡Practica aquí!</h3>
+        <p>Crea tus propios ejemplos:</p>
+        <p>Mi comida favorita es <del>pizza</del> <ins>sushi</ins>.</p>
+        <p>Prefiero usar <del>Windows</del> <ins>Linux</ins>.</p>
+        <!-- Agrega más ejemplos aquí -->
+      </div>
+
+      <div class="note">
+        <p>Modificar este código y compartir con la clase!</p>
+      </div>
+    </div>
+  </body>
+</html>
