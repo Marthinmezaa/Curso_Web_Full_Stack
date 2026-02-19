@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎮 Generador de Videojuegos con IA</title>
+    <style>
+      /* ===== ESTILO SIMPLE Y LIMPIO ===== */
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        padding: 30px;
+        margin: 0;
+      }
+
+      .formulario {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #444;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 1em;
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      .contador {
+        text-align: right;
+        font-size: 0.9em;
+        color: #666;
+        margin-top: 5px;
+      }
+
+      .botones {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      #btnGenerar {
+        background: #007bff;
+        color: white;
+      }
+
+      #btnGenerar:hover {
+        background: #0056b3;
+      }
+
+      #btnPublicar {
+        background: #28a745;
+        color: white;
+      }
+
+      #btnPublicar:hover {
+        background: #1e7e34;
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .mensaje {
+        margin-top: 20px;
+        padding: 10px;
+        background: #e9ecef;
+        border-left: 4px solid #007bff;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      .mensaje.error {
+        border-left-color: #dc3545;
+        background: #f8d7da;
+      }
+
+      .pie {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.8em;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="formulario">
+      <h2>🎮 Generador de Videojuegos con IA</h2>
+      <p style="text-align: center; color: #555">
+        Crea la descripción de tu próximo juego
+      </p>
+
+      <!-- Campo: nombre -->
+      <label for="nombre">🏷️ Nombre del videojuego</label>
+      <input
+        type="text"
+        id="nombre"
+        placeholder="Ej: The Witcher 3: wild hunt"
+        value="The Witcher 3: Wild Hunt"
+      />
+
+      <!-- Campo: descripción con contador -->
+      <label for="descripcion">📜 Descripción</label>
+      <textarea
+        id="descripcion"
+        maxlength="500"
+        placeholder="La IA generará aquí..."
+      ></textarea>
+      <div class="contador" id="contador">0/500</div>
+
+      <!-- Botones -->
+      <div class="botones">
+        <button type="button" id="btnGenerar">✨ Generar con IA</button>
+        <button type="button" id="btnPublicar">🚀 Publicar</button>
+      </div>
+
+      <!-- Mensajes de estado -->
+      <div class="mensaje" id="mensaje">
+        💡 Presiona "Generar" para que la IA cree una descripción.
+      </div>
+
+      <div class="pie">⚡ IA gratuita (OpenRouter) - Demo educativa</div>
+    </div>
+
+    <script>
+      // ============================================
+      // 1. CONFIGURACIÓN (¡cambia solo tu API Key!)
+      // ============================================
+      const API_KEY =
+        "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";
+      const MODELO = "openrouter/free";
+
+      // ============================================
+      // 2. ELEMENTOS DEL DOM
+      // ============================================
+      const nombreInput = document.getElementById("nombre");
+      const descTextarea = document.getElementById("descripcion");
+      const btnGenerar = document.getElementById("btnGenerar");
+      const btnPublicar = document.getElementById("btnPublicar");
+      const mensajeDiv = document.getElementById("mensaje");
+      const contadorSpan = document.getElementById("contador");
+
+      // ============================================
+      // 3. FUNCIONES AUXILIARES (cortas y claras)
+      // ============================================
+
+      // Actualiza el contador de caracteres
+      function actualizarContador() {
+        const longitud = descTextarea.value.length;
+        contadorSpan.textContent = `${longitud}/500`;
+      }
+
+      // Muestra un mensaje (opcionalmente como error)
+      function mostrarMensaje(texto, esError = false) {
+        mensajeDiv.textContent = texto;
+        mensajeDiv.classList.toggle("error", esError);
+      }
+
+      // Habilita/deshabilita ambos botones (para evitar dobles clics)
+      function deshabilitarBotones(estado) {
+        btnGenerar.disabled = estado;
+        btnPublicar.disabled = estado;
+      }
+
+      // ============================================
+      // 4. GENERAR DESCRIPCIÓN CON IA
+      // ============================================
+      async function generarDescripcion() {
+        // 4.1 Validar nombre
+        const nombre = nombreInput.value.trim();
+        if (nombre === "") {
+          mostrarMensaje("❌ Escribe el nombre del juego", true);
+          nombreInput.focus();
+          return;
+        }
+
+        // 4.2 Deshabilitar botones y mostrar estado
+        deshabilitarBotones(true);
+        const textoOriginalBoton = btnGenerar.textContent;
+        btnGenerar.textContent = "⏳ Generando...";
+        mostrarMensaje("⏳ Llamando a la IA...");
+
+        // 4.3 Preparar prompt
+        const prompt = `Crea una descripción corta (3-5 frases) para un videojuego llamado "${nombre}". Solo la descripción, sin comentarios.`;
+
+        try {
+          // 4.4 Llamada a la API
+          const respuesta = await fetch(
+            "https://openrouter.ai/api/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${API_KEY}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                model: MODELO,
+                messages: [{ role: "user", content: prompt }],
+                max_tokens: 200,
+              }),
+            },
+          );
+
+          // 4.5 Manejo de errores HTTP
+          if (!respuesta.ok) {
+            throw new Error("Error en la API. Revisa tu clave.");
+          }
+
+          const datos = await respuesta.json();
+          const textoGenerado = datos.choices[0]?.message?.content?.trim();
+
+          if (!textoGenerado) {
+            throw new Error("La IA no respondió texto válido.");
+          }
+
+          // 4.6 Éxito: mostrar la descripción
+          descTextarea.value = textoGenerado;
+          actualizarContador();
+          mostrarMensaje("✅ Descripción generada correctamente.");
+        } catch (error) {
+          console.error(error);
+          mostrarMensaje("❌ " + error.message, true);
+        } finally {
+          // 4.7 Restaurar botones
+          deshabilitarBotones(false);
+          btnGenerar.textContent = textoOriginalBoton;
+        }
+      }
+
+      // ============================================
+      // 5. PUBLICAR (simulación)
+      // ============================================
+      function publicarJuego() {
+        const nombre = nombreInput.value.trim();
+        if (nombre === "") {
+          mostrarMensaje("❌ El nombre es obligatorio", true);
+          nombreInput.focus();
+          return;
+        }
+        alert(`🎉 ¡Gracias por publicar "${nombre}"! (Demo)`);
+        mostrarMensaje(`🚀 Juego "${nombre}" listo para desarrollar.`);
+      }
+
+      // ============================================
+      // 6. EVENTOS INICIALES
+      // ============================================
+      descTextarea.addEventListener("input", actualizarContador);
+      btnGenerar.addEventListener("click", generarDescripcion);
+      btnPublicar.addEventListener("click", publicarJuego);
+
+      // Inicializar contador
+      actualizarContador();
+    </script>
+  </body>
+</html>

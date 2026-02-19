@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador de Certificados</title>
+
+    <style>
+      /* Estilos básicos */
+      body {
+        font-family: Arial;
+        padding: 20px;
+        background: #eef2f7;
+      }
+      .container {
+        max-width: 700px;
+        margin: auto;
+      }
+      .form,
+      .certificado {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .form input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+      }
+      .btn {
+        padding: 10px;
+        width: 100%;
+        margin-top: 10px;
+        background: #3498db;
+        color: white;
+        border: none;
+        border-radius: 6px;
+      }
+      .certificado {
+        display: none;
+        border: 8px solid #3498db;
+        text-align: center;
+      }
+      .nombre {
+        font-size: 28px;
+        margin: 20px 0;
+      }
+      .curso {
+        font-size: 22px;
+        color: #3498db;
+      }
+      .firma {
+        margin-top: 40px;
+      }
+      .linea {
+        width: 200px;
+        height: 1px;
+        background: black;
+        margin: auto;
+      }
+      @media print {
+        .no-print {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Generador de Certificados</h1>
+
+      <!-- Formulario -->
+      <div id="form" class="form">
+        <input id="nombre" type="text" placeholder="Nombre completo" />
+        <input id="curso" type="text" placeholder="Nombre del curso" />
+        <input id="fecha" type="date" />
+        <button class="btn" onclick="generar()">Generar Certificado</button>
+      </div>
+
+      <!-- Certificado -->
+      <div id="cert" class="certificado">
+        <h2>CERTIFICADO DE APROBACIÓN</h2>
+        <p>Este documento certifica que</p>
+
+        <div id="nombreCert" class="nombre"></div>
+
+        <p>ha completado exitosamente el curso</p>
+        <div id="cursoCert" class="curso"></div>
+
+        <p>Fecha: <span id="fechaCert"></span></p>
+
+        <div class="firma">
+          <div class="linea"></div>
+          Director Académico
+        </div>
+
+        <button class="btn no-print" onclick="volver()">Volver</button>
+        <button class="btn no-print" onclick="print()">Imprimir</button>
+      </div>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id); // Atajo para obtener elementos
+
+      function generar() {
+        // Copia los datos al certificado
+        $("nombreCert").textContent = $("nombre").value;
+        $("cursoCert").textContent = $("curso").value;
+        $("fechaCert").textContent = $("fecha").value;
+
+        // Muestra el certificado
+        $("form").style.display = "none";
+        $("cert").style.display = "block";
+      }
+
+      const volver = () => (
+        ($("form").style.display = "block"),
+        ($("cert").style.display = "none")
+      );
+
+      const print = () => window.print(); // Imprimir
+    </script>
+  </body>
+</html>

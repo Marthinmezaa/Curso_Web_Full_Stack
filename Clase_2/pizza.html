@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de Pizza</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #e74c3c;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      input[type="text"],
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      fieldset {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
+      legend {
+        font-weight: bold;
+        padding: 0 10px;
+      }
+
+      .checkbox-group {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .checkbox-group label {
+        font-weight: normal;
+        display: flex;
+        align-items: center;
+      }
+
+      .checkbox-group input {
+        margin-right: 8px;
+      }
+
+      button {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      button:hover {
+        background-color: #c0392b;
+      }
+
+      .pizza-preview {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+      }
+
+      .pizza-preview h2 {
+        color: #e74c3c;
+        margin-top: 0;
+      }
+
+      .pizza-info {
+        background-color: white;
+        padding: 15px;
+        border-radius: 5px;
+      }
+
+      @media (max-width: 600px) {
+        .checkbox-group {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🍕 Personaliza Tu Pizza</h1>
+
+      <form id="pizza-form">
+        <div class="form-group">
+          <label for="nombre">Nombre de la pizza:</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            placeholder="Ej: Pizza Suprema"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="tamaño">Tamaño:</label>
+          <select id="tamaño" name="tamaño">
+            <option value="pequeña">Pequeña (25cm)</option>
+            <option value="mediana" selected>Mediana (30cm)</option>
+            <option value="grande">Grande (35cm)</option>
+            <option value="familiar">Familiar (40cm)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="masa">Tipo de masa:</label>
+          <select id="masa" name="masa">
+            <option value="fina">Masa Fina</option>
+            <option value="normal" selected>Masa Normal</option>
+            <option value="gruesa">Masa Gruesa</option>
+            <option value="integral">Masa Integral</option>
+          </select>
+        </div>
+
+        <fieldset>
+          <legend>Ingredientes:</legend>
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" name="ingredientes" value="queso" /> Queso
+              Mozzarella
+            </label>
+            <label>
+              <input type="checkbox" name="ingredientes" value="pepperoni" />
+              Pepperoni
+            </label>
+            <label>
+              <input type="checkbox" name="ingredientes" value="jamon" /> Jamón
+            </label>
+            <label>
+              <input type="checkbox" name="ingredientes" value="champiñones" />
+              Champiñones
+            </label>
+            <label>
+              <input type="checkbox" name="ingredientes" value="aceitunas" />
+              Aceitunas
+            </label>
+            <label>
+              <input type="checkbox" name="ingredientes" value="pimientos" />
+              Pimientos
+            </label>
+            <label>
+              <input type="checkbox" name="ingredientes" value="cebolla" />
+              Cebolla
+            </label>
+            <label>
+              <input type="checkbox" name="ingredientes" value="tocino" />
+              Tocino
+            </label>
+            <label>
+              <input type="checkbox" name="ingredientes" value="piña" /> Piña
+            </label>
+            <label>
+              <input type="checkbox" name="ingredientes" value="jalapeños" />
+              Jalapeños
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="form-group">
+          <label for="salsa">Salsa base:</label>
+          <select id="salsa" name="salsa">
+            <option value="tomate" selected>Salsa de Tomate</option>
+            <option value="barbacoa">Salsa Barbacoa</option>
+            <option value="blanca">Salsa Blanca</option>
+            <option value="pesto">Salsa Pesto</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="extra-queso">Queso extra:</label>
+          <select id="extra-queso" name="extra-queso">
+            <option value="no" selected>No</option>
+            <option value="ligero">Ligero (+10.000gs)</option>
+            <option value="normal">Normal (+20.000gs)</option>
+            <option value="extra">Extra (+30.000gs)</option>
+          </select>
+        </div>
+
+        <button type="submit">Crear Mi Pizza</button>
+      </form>
+
+      <div class="pizza-preview">
+        <h2>Resumen de tu pedido:</h2>
+        <div class="pizza-info">
+          <p><strong>Nombre:</strong> <span id="resumen-nombre">-</span></p>
+          <p><strong>Tamaño:</strong> <span id="resumen-tamaño">-</span></p>
+          <p><strong>Masa:</strong> <span id="resumen-masa">-</span></p>
+          <p><strong>Salsa:</strong> <span id="resumen-salsa">-</span></p>
+          <p><strong>Queso extra:</strong> <span id="resumen-queso">-</span></p>
+          <p>
+            <strong>Ingredientes:</strong>
+            <span id="resumen-ingredientes">-</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("pizza-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Obtener valores del formulario
+          const nombre = document.getElementById("nombre").value;
+          const tamaño = document.getElementById("tamaño").value;
+          const masa = document.getElementById("masa").value;
+          const salsa = document.getElementById("salsa").value;
+          const quesoExtra = document.getElementById("extra-queso").value;
+
+          // Obtener ingredientes seleccionados
+          const ingredientesSeleccionados = [];
+          const checkboxes = document.querySelectorAll(
+            'input[name="ingredientes"]:checked',
+          );
+          checkboxes.forEach((checkbox) => {
+            ingredientesSeleccionados.push(checkbox.value);
+          });
+
+          // Actualizar resumen
+          document.getElementById("resumen-nombre").textContent = nombre || "-";
+          document.getElementById("resumen-tamaño").textContent = tamaño;
+          document.getElementById("resumen-masa").textContent = masa;
+          document.getElementById("resumen-salsa").textContent = salsa;
+          document.getElementById("resumen-queso").textContent = quesoExtra;
+          document.getElementById("resumen-ingredientes").textContent =
+            ingredientesSeleccionados.length > 0
+              ? ingredientesSeleccionados.join(", ")
+              : "Ninguno";
+        });
+    </script>
+  </body>
+</html>

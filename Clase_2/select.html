@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atributos Especiales de Formularios</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        border-bottom: 3px solid #3498db;
+        padding-bottom: 15px;
+        margin-bottom: 30px;
+      }
+
+      h2 {
+        color: #2980b9;
+        margin-top: 40px;
+        border-left: 5px solid #3498db;
+        padding-left: 15px;
+      }
+
+      .card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 25px;
+        margin: 25px 0;
+        transition: transform 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .example {
+        background: #eaf7ff;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+        border: 1px solid #d0e3ff;
+      }
+
+      code {
+        background: #f0f8ff;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: "Courier New", monospace;
+        color: #d35400;
+      }
+
+      form {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      fieldset {
+        border: 2px solid #3498db;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+
+      legend {
+        color: #3498db;
+        font-weight: bold;
+        padding: 0 10px;
+      }
+
+      label {
+        display: inline-block;
+        width: 100px;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      input,
+      select {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 15px;
+        width: 200px;
+      }
+
+      input[type="submit"] {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s;
+        margin-right: 10px;
+      }
+
+      input[type="submit"]:hover {
+        background: #2980b9;
+      }
+
+      .highlight {
+        background-color: #fffde7;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-weight: bold;
+      }
+
+      .info-box {
+        background: #e8f4fc;
+        border-left: 4px solid #3498db;
+        padding: 15px;
+        margin: 20px 0;
+      }
+
+      .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin: 30px 0;
+      }
+
+      .flex-item {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .info-link {
+        text-align: center;
+        margin: 40px 0 20px;
+        padding: 15px;
+        background: #e3f2fd;
+        border-radius: 8px;
+      }
+
+      a {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Atributos Especiales de Formularios HTML</h1>
+
+    <div class="card">
+      <h2>Saltar Validación con <code>formnovalidate</code></h2>
+      <p>
+        HTML permite omitir la validación de formularios usando el atributo
+        <code>formnovalidate</code>.
+      </p>
+
+      <div class="info-box">
+        <p>
+          <span class="highlight">Tip:</span> Esto es útil cuando quieres
+          permitir al usuario enviar un formulario aunque algunos campos no
+          cumplan con las validaciones estándar.
+        </p>
+      </div>
+
+      <div class="example">
+        <form>
+          <fieldset>
+            <legend>Información Personal</legend>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required /><br />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required /><br />
+          </fieldset>
+
+          <input type="submit" value="Enviar con validación" />
+          <input type="submit" formnovalidate value="Enviar sin validar" />
+        </form>
+      </div>
+
+      <pre><code>&lt;form&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Información Personal&lt;/legend&gt;
+    &lt;label for="nombre"&gt;Nombre:&lt;/label&gt;
+    &lt;input type="text" name="nombre" required&gt;&lt;br&gt;
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" name="email" required&gt;&lt;br&gt;
+  &lt;/fieldset&gt;
+  
+  &lt;input type="submit" value="Enviar con validación"&gt;
+  &lt;input type="submit" formnovalidate value="Enviar sin validar"&gt;
+&lt;/form&gt;</code></pre>
+    </div>
+
+    <div class="card">
+      <h2>
+        Atributos: <code>readonly</code>, <code>autofocus</code> y
+        <code>hidden</code>
+      </h2>
+
+      <div class="flex-container">
+        <div class="flex-item">
+          <h3>readonly</h3>
+          <p>
+            Especifica que un campo es de solo lectura (no se puede modificar).
+          </p>
+        </div>
+
+        <div class="flex-item">
+          <h3>autofocus</h3>
+          <p>
+            Coloca automáticamente el foco en el campo cuando se carga la
+            página.
+          </p>
+        </div>
+
+        <div class="flex-item">
+          <h3>hidden</h3>
+          <p>
+            Oculta el campo (útil para enviar datos que el usuario no necesita
+            ver).
+          </p>
+        </div>
+      </div>
+
+      <div class="example">
+        <form>
+          <fieldset>
+            <legend>Información Personal</legend>
+            <input type="hidden" id="id" name="id" value="1" />
+
+            <label for="nombre2">Nombre:</label>
+            <input type="text" id="nombre2" name="nombre2" autofocus /><br />
+
+            <label for="email2">Email:</label>
+            <input
+              type="email"
+              id="email2"
+              name="email2"
+              value="usuario@ejemplo.com"
+              readonly
+            /><br />
+          </fieldset>
+
+          <input type="submit" value="Enviar" />
+        </form>
+      </div>
+
+      <pre><code>&lt;form&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Información Personal&lt;/legend&gt;
+    &lt;input type="hidden" name="id" value="1"&gt;
+    
+    &lt;label for="nombre"&gt;Nombre:&lt;/label&gt;
+    &lt;input type="text" name="nombre" autofocus&gt;&lt;br&gt;
+    
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" name="email" value="usuario@ejemplo.com" readonly&gt;&lt;br&gt;
+  &lt;/fieldset&gt;
+  
+  &lt;input type="submit"&gt;
+&lt;/form&gt;</code></pre>
+    </div>
+
+    <div class="card">
+      <h2>Elemento <code>&lt;select&gt;</code> para listas desplegables</h2>
+      <p>Permite elegir un valor de una lista predefinida de opciones.</p>
+
+      <div class="example">
+        <form>
+          <label for="frutas">Selecciona tu fruta favorita:</label>
+          <select id="frutas" name="frutas">
+            <option value="manzana">Manzana</option>
+            <option value="naranja">Naranja</option>
+            <option value="uva">Uva</option>
+            <option value="plátano">Plátano</option>
+            <option value="fresa">Fresa</option>
+          </select>
+
+          <input type="submit" value="Enviar" />
+        </form>
+      </div>
+
+      <pre><code>&lt;select id="frutas" name="frutas"&gt;
+  &lt;option value="manzana"&gt;Manzana&lt;/option&gt;
+  &lt;option value="naranja"&gt;Naranja&lt;/option&gt;
+  &lt;option value="uva"&gt;Uva&lt;/option&gt;
+  &lt;option value="plátano"&gt;Plátano&lt;/option&gt;
+  &lt;option value="fresa"&gt;Fresa&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+      <div class="info-box">
+        <p>
+          <span class="highlight">Tip:</span> Puedes usar el atributo
+          <code>selected</code> en un <code>&lt;option&gt;</code> para
+          preseleccionar un valor.
+        </p>
+      </div>
+    </div>
+
+    <div class="info-link">
+      <p>Para más información y ejemplos interactivos, visita:</p>
+      <p>
+        <a
+          href="https://www.w3schools.com/html/html_form_attributes.asp"
+          target="_blank"
+          >W3Schools - Atributos de Formularios HTML</a
+        >
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario Bello</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .form-container {
+        background: white;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 100%;
+      }
+
+      .form-container h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+        font-weight: bold;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus,
+      .form-group textarea:focus {
+        border-color: #5cb3fd;
+        outline: none;
+        box-shadow: 0 0 5px rgba(92, 179, 253, 0.5);
+      }
+
+      .submit-btn {
+        background: #5cb3fd;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      .submit-btn:hover {
+        background: #5399d4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h1>Formulario</h1>
+      <form>
+        <!-- Campo de texto -->
+        <div class="form-group">
+          <label for="name">Nombre completo:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Ingresa tu nombre"
+            required
+          />
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Correo electrónico:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="ejemplo@correo.com"
+            required
+          />
+        </div>
+
+        <!-- Teléfono con pattern -->
+        <div class="form-group">
+          <label for="phone">Teléfono (Formato: 0981-567-897):</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            placeholder="0983-755-161"
+            pattern="\d{4}-\d{3}-\d{4}"
+            required
+          />
+        </div>
+
+        <!-- Contraseña -->
+        <div class="form-group">
+          <label for="password"
+            >Contraseña (mínimo 8 caracteres, una letra y un número):</label
+          >
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Crea una contraseña"
+            pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}"
+            required
+          />
+        </div>
+
+        <!-- Fecha -->
+        <div class="form-group">
+          <label for="dob">Fecha de nacimiento:</label>
+          <input type="date" id="dob" name="dob" required />
+        </div>
+
+        <!-- Área de texto -->
+        <div class="form-group">
+          <label for="message">Mensaje:</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            placeholder="Escribe tu mensaje aquí..."
+          ></textarea>
+        </div>
+
+        <!-- Botón de envío -->
+        <button type="submit" class="submit-btn">Enviar</button>
+      </form>
+    </div>
+  </body>
+</html>
