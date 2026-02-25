@@ -1,0 +1,65 @@
+[
+  {
+    "id": "q1",
+    "pregunta": "¿Qué etiqueta HTML se utiliza para definir el inicio y el final de un formulario?",
+    "opciones": [
+      { "texto": "<form>", "correcta": true },
+      { "texto": "<fieldset>", "correcta": false },
+      { "texto": "<label>", "correcta": false }
+    ]
+  },
+  {
+    "id": "q2",
+    "pregunta": "¿Qué etiqueta HTML se utiliza para agrupar elementos dentro de un formulario?",
+    "opciones": [
+      { "texto": "<legend>", "correcta": false },
+      { "texto": "<fieldset>", "correcta": true },
+      { "texto": "<label>", "correcta": false }
+    ]
+  },
+  {
+    "id": "q3",
+    "pregunta": "¿Qué atributo de la etiqueta <input> se utiliza para definir un campo de solo lectura?",
+    "opciones": [
+      { "texto": "autofocus", "correcta": false },
+      { "texto": "readonly", "correcta": true },
+      { "texto": "hidden", "correcta": false }
+    ]
+  },
+  {
+    "id": "q4",
+    "pregunta": "¿Qué tipo de campo de entrada se utiliza para seleccionar una fecha en un formulario?",
+    "opciones": [
+      { "texto": "date", "correcta": true },
+      { "texto": "text", "correcta": false },
+      { "texto": "number", "correcta": false }
+    ]
+  },
+  {
+    "id": "q5",
+    "pregunta": "¿Qué atributo de la etiqueta <input> se utiliza para definir un valor mínimo y máximo?",
+    "opciones": [
+      { "texto": "min y max", "correcta": true },
+      { "texto": "value", "correcta": false },
+      { "texto": "range", "correcta": false }
+    ]
+  },
+  {
+    "id": "q6",
+    "pregunta": "¿Qué etiqueta HTML se utiliza para crear una lista desplegable en un formulario?",
+    "opciones": [
+      { "texto": "<select>", "correcta": true },
+      { "texto": "<option>", "correcta": false },
+      { "texto": "<datalist>", "correcta": false }
+    ]
+  },
+  {
+    "id": "q7",
+    "pregunta": "¿Qué atributo de la etiqueta <form> se utiliza para enviar un formulario sin validación?",
+    "opciones": [
+      { "texto": "formnovalidate", "correcta": true },
+      { "texto": "novalidate", "correcta": false },
+      { "texto": "no-validate", "correcta": false }
+    ]
+  }
+]
