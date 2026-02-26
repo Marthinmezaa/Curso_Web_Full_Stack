@@ -1,0 +1,92 @@
+[
+  {
+    "id": "q1",
+    "pregunta": "¿Qué significa CSS?",
+    "opciones": [
+      { "texto": "Cascading Style Sheets", "correcta": true },
+      { "texto": "Creative Style Sheets", "correcta": false },
+      { "texto": "Computer Style Sheets", "correcta": false }
+    ]
+  },
+  {
+    "id": "q2",
+    "pregunta": "¿Cuál es la función principal de CSS?",
+    "opciones": [
+      { "texto": "Definir el contenido de una página web", "correcta": false },
+      {
+        "texto": "Controlar el estilo y formato de múltiples páginas web",
+        "correcta": true
+      },
+      { "texto": "Validar el código HTML", "correcta": false }
+    ]
+  },
+  {
+    "id": "q3",
+    "pregunta": "¿Qué propiedad de CSS se utiliza para cambiar el color del texto?",
+    "opciones": [
+      { "texto": "text-color", "correcta": false },
+      { "texto": "color", "correcta": true },
+      { "texto": "font-color", "correcta": false }
+    ]
+  },
+  {
+    "id": "q4",
+    "pregunta": "¿Cuál es la sintaxis correcta para un comentario en CSS?",
+    "opciones": [
+      { "texto": "// Esto es un comentario", "correcta": false },
+      { "texto": "# Esto es un comentario", "correcta": false },
+      { "texto": "/* Esto es un comentario */", "correcta": true }
+    ]
+  },
+  {
+    "id": "q5",
+    "pregunta": "¿Qué tipo de borde define la propiedad `border-style: dotted;`?",
+    "opciones": [
+      { "texto": "Borde sólido", "correcta": false },
+      { "texto": "Borde punteado", "correcta": true },
+      { "texto": "Borde discontinuo", "correcta": false }
+    ]
+  },
+  {
+    "id": "q6",
+    "pregunta": "¿Cómo se define un color de fondo en CSS?",
+    "opciones": [
+      { "texto": "background-color", "correcta": true },
+      { "texto": "color", "correcta": false },
+      { "texto": "bg-color", "correcta": false }
+    ]
+  },
+  {
+    "id": "q7",
+    "pregunta": "¿Cuál de las siguientes es una forma correcta de aplicar un estilo en la cabecera de una página HTML?",
+    "opciones": [
+      {
+        "texto": "<style type='text/css'> h1 {color: red;} </style>",
+        "correcta": true
+      },
+      { "texto": "<css> h1 {color: red;} </css>", "correcta": false },
+      {
+        "texto": "<style='text/css'> h1 {color: red;} </style>",
+        "correcta": false
+      }
+    ]
+  },
+  {
+    "id": "q8",
+    "pregunta": "¿Qué propiedad CSS se usa para especificar una imagen de fondo?",
+    "opciones": [
+      { "texto": "background-image", "correcta": true },
+      { "texto": "background-url", "correcta": false },
+      { "texto": "background-img", "correcta": false }
+    ]
+  },
+  {
+    "id": "q9",
+    "pregunta": "¿Cuál es la regla CSS para definir animaciones?",
+    "opciones": [
+      { "texto": "@animate", "correcta": false },
+      { "texto": "@keyframes", "correcta": true },
+      { "texto": "@motion", "correcta": false }
+    ]
+  }
+]
