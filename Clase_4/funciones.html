@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Espectacular</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #fff;
+      }
+
+      .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+      }
+
+      .button {
+        background-color: #ff6f61;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 25px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition:
+          background-color 0.3s ease,
+          transform 0.3s ease;
+        margin: 10px;
+      }
+
+      .button:hover {
+        background-color: #ff3b2f;
+        transform: scale(1.1);
+      }
+
+      .output {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1.1em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>JavaScript Espectacular</h1>
+
+      <!-- Funciones -->
+      <button class="button" onclick="showMessage()">Mostrar Mensaje</button>
+      <button class="button" onclick="calculateSquare()">
+        Calcular Cuadrado
+      </button>
+
+      <!-- Salida dinámica -->
+      <div class="output" id="output"></div>
+    </div>
+
+    <script>
+      // Funciones
+      function showMessage() {
+        document.getElementById("output").textContent =
+          "¡Hola! Este es un mensaje desde una función.";
+      }
+
+      function calculateSquare() {
+        let number = prompt("Ingresa un número para calcular su cuadrado:");
+        if (number !== null) {
+          let result = number ** 2;
+          document.getElementById("output").textContent =
+            `El cuadrado de ${number} es: ${result}`;
+        }
+      }
+    </script>
+  </body>
+</html>

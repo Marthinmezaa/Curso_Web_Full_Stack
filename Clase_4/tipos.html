@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tipos de Datos y Operadores en JS</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #11998e, #38ef7d);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #fff;
+      }
+
+      .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+      }
+
+      .button {
+        background-color: #ff9a3c;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 25px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition:
+          background-color 0.3s ease,
+          transform 0.3s ease;
+        margin: 10px;
+      }
+
+      .button:hover {
+        background-color: #ff6f3c;
+        transform: scale(1.1);
+      }
+
+      .output {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1.1em;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Tipos de Datos y Operadores</h1>
+
+      <!-- Botones de demostración -->
+      <button class="button" onclick="showConcatenation()">
+        Concatenación
+      </button>
+      <button class="button" onclick="showExponentiation()">
+        Exponenciación
+      </button>
+      <button class="button" onclick="showDynamicTypes()">
+        Tipos Dinámicos
+      </button>
+      <button class="button" onclick="showTypeof()">Operador typeof</button>
+
+      <!-- Salida dinámica -->
+      <div class="output" id="output"></div>
+    </div>
+
+    <script>
+      // Función para limpiar y preparar la salida
+      function prepareOutput() {
+        document.getElementById("output").innerHTML = "";
+      }
+
+      // 1. Demostración de concatenación
+      function showConcatenation() {
+        prepareOutput();
+        let output = document.getElementById("output");
+
+        let firstName = "Juan";
+        let lastName = "Pérez";
+        let fullName = firstName + " " + lastName;
+
+        output.innerHTML += `<p><strong>Concatenación de cadenas:</strong></p>`;
+        output.innerHTML += `<p>firstName = "${firstName}"</p>`;
+        output.innerHTML += `<p>lastName = "${lastName}"</p>`;
+        output.innerHTML += `<p>fullName = firstName + " " + lastName</p>`;
+        output.innerHTML += `<p>Resultado: <strong>"${fullName}"</strong></p>`;
+      }
+
+      // 2. Demostración de exponenciación
+      function showExponentiation() {
+        prepareOutput();
+        let output = document.getElementById("output");
+
+        let base = 5;
+        let exponent = 3;
+        let result = base ** exponent;
+
+        output.innerHTML += `<p><strong>Exponenciación:</strong></p>`;
+        output.innerHTML += `<p>base = ${base}</p>`;
+        output.innerHTML += `<p>exponent = ${exponent}</p>`;
+        output.innerHTML += `<p>result = base ** exponent</p>`;
+        output.innerHTML += `<p>Resultado: <strong>${result}</strong> (${base} elevado a la ${exponent} potencia)</p>`;
+      }
+
+      // 3. Demostración de tipos dinámicos
+      function showDynamicTypes() {
+        prepareOutput();
+        let output = document.getElementById("output");
+
+        let VariableDinamica;
+
+        output.innerHTML += `<p><strong>Tipos de datos dinámicos:</strong></p>`;
+
+        VariableDinamica = "Soy una cadena";
+        output.innerHTML += `<p>VariableDinamica = "${VariableDinamica}" (${typeof VariableDinamica})</p>`;
+
+        VariableDinamica = 42;
+        output.innerHTML += `<p>VariableDinamica = ${VariableDinamica} (${typeof VariableDinamica})</p>`;
+
+        VariableDinamica = true;
+        output.innerHTML += `<p>VariableDinamica = ${VariableDinamica} (${typeof VariableDinamica})</p>`;
+
+        VariableDinamica = { nombre: "Ana", edad: 30 };
+        output.innerHTML += `<p>VariableDinamica = ${JSON.stringify(VariableDinamica)} (${typeof VariableDinamica})</p>`;
+      }
+
+      // 4. Demostración del operador typeof
+      function showTypeof() {
+        prepareOutput();
+        let output = document.getElementById("output");
+
+        output.innerHTML += `<p><strong>Operador typeof:</strong></p>`;
+        output.innerHTML += `<p>typeof "Hola" → <strong>"${typeof "Hola"}"</strong></p>`;
+        output.innerHTML += `<p>typeof 123 → <strong>"${typeof 123}"</strong></p>`;
+        output.innerHTML += `<p>typeof true → <strong>"${typeof true}"</strong></p>`;
+        output.innerHTML += `<p>typeof {a: 1} → <strong>"${typeof { a: 1 }}"</strong></p>`;
+        output.innerHTML += `<p>typeof undefined → <strong>"${typeof undefined}"</strong></p>`;
+      }
+    </script>
+  </body>
+</html>

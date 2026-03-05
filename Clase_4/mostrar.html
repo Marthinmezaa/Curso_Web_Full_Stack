@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mostrar y Ocultar con Estilo</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #fff;
+      }
+
+      .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+      }
+
+      #toggleButton {
+        background-color: #ff6f61;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 25px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition:
+          background-color 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      #toggleButton:hover {
+        background-color: #ff3b2f;
+        transform: scale(1.1);
+      }
+
+      #content {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        color: #fff;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition:
+          max-height 0.5s ease,
+          opacity 0.5s ease,
+          padding 0.5s ease;
+      }
+
+      #content.visible {
+        max-height: 200px; /* Ajusta según el contenido */
+        opacity: 1;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button id="toggleButton">Mostrar Contenido</button>
+      <div id="content">
+        ¡Este es un contenido espectacular que aparece y desaparece con estilo!
+        🌟
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggleButton = document.getElementById("toggleButton");
+        const content = document.getElementById("content");
+
+        toggleButton.addEventListener("click", function () {
+          if (content.classList.contains("visible")) {
+            content.classList.remove("visible");
+            toggleButton.textContent = "Mostrar Contenido";
+          } else {
+            content.classList.add("visible");
+            toggleButton.textContent = "Ocultar Contenido";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

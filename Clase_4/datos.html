@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explorando JavaScript</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .card {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .card h2 {
+        color: #3498db;
+        margin-top: 0;
+        font-size: 1.2em;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      .code-block {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+        font-family: "Courier New", Courier, monospace;
+        overflow-x: auto;
+        margin: 15px 0;
+      }
+      .output {
+        background-color: #e8f4f8;
+        padding: 10px;
+        border-radius: 4px;
+        margin-top: 10px;
+        min-height: 20px;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        font-style: italic;
+        color: #7f8c8d;
+      }
+      .highlight {
+        animation: highlight 2s;
+      }
+      @keyframes highlight {
+        0% {
+          background-color: #fffde7;
+        }
+        100% {
+          background-color: white;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Explorando las Formas de Mostrar Datos en JavaScript</h1>
+
+    <div class="container">
+      <!-- innerHTML -->
+      <div class="card" id="innerHTML-card">
+        <h2>1. innerHTML</h2>
+        <p>Modifica el contenido de un elemento HTML</p>
+        <div class="code-block">
+          document.getElementById("demo").innerHTML = "Hola Mundo";
+        </div>
+        <button onclick="demoInnerHTML()">Probar</button>
+        <div class="output" id="demo"></div>
+      </div>
+
+      <!-- document.write() -->
+      <div class="card">
+        <h2>2. document.write()</h2>
+        <p>Escribe directamente en el documento HTML</p>
+        <div class="code-block">
+          document.write('&lt;p&gt;Texto añadido dinámicamente&lt;/p&gt;');
+        </div>
+        <button onclick="demoDocumentWrite()">Probar</button>
+        <p>
+          <small
+            >Nota: Sobreescribe el documento si se usa después de cargar la
+            página</small
+          >
+        </p>
+      </div>
+
+      <!-- window.alert() -->
+      <div class="card">
+        <h2>3. window.alert()</h2>
+        <p>Muestra un cuadro de diálogo modal</p>
+        <div class="code-block">alert("¡Esto es una alerta!");</div>
+        <button onclick="demoAlert()">Probar</button>
+      </div>
+
+      <!-- console.log() -->
+      <div class="card">
+        <h2>4. console.log()</h2>
+        <p>Escribe en la consola del navegador</p>
+        <div class="code-block">
+          console.log("Mira la consola del navegador");
+        </div>
+        <button onclick="demoConsoleLog()">Probar</button>
+      </div>
+
+      <!-- Variables -->
+      <div class="card">
+        <h2>Variables en JavaScript</h2>
+        <p>Declaración y uso de variables</p>
+        <div class="code-block">
+          let x = 5;<br />
+          let y = 6;<br />
+          let z = x + y;<br />
+          console.log(z); // 11
+        </div>
+        <button onclick="demoVariables()">Probar en consola</button>
+      </div>
+
+      <!-- Punto y coma -->
+      <div class="card">
+        <h2>Punto y coma opcional</h2>
+        <p>JavaScript tiene Inserción Automática de Punto y Coma (ASI)</p>
+        <div class="code-block">
+          let a = 1<br />
+          let b = 2<br />
+          [a, b] = [b, a] // Intercambio de valores<br />
+          console.log(a, b) // 2 1
+        </div>
+        <button onclick="demoSemicolon()">Probar en consola</button>
+      </div>
+    </div>
+
+    <!-- Impresión -->
+    <div style="text-align: center; margin-top: 30px">
+      <button onclick="window.print()">Imprimir esta página</button>
+    </div>
+
+    <script>
+      // Función para innerHTML
+      function demoInnerHTML() {
+        const card = document.getElementById("innerHTML-card");
+        card.classList.add("highlight");
+        setTimeout(() => card.classList.remove("highlight"), 2000);
+
+        document.getElementById("demo").innerHTML = `
+                <strong>¡Funciona!</strong> La suma de 5 + 6 es ${5 + 6}.
+                <br><small>${new Date().toLocaleTimeString()}</small>
+            `;
+      }
+
+      // Función para document.write()
+      function demoDocumentWrite() {
+        document.write(`
+                <div style="padding:20px;background:#e3f2fd;border-radius:8px;">
+                    <h2>Document.write() en acción</h2>
+                    <p>Este contenido se ha añadido dinámicamente.</p>
+                    <p>5 + 6 = ${5 + 6}</p>
+                    <button onclick="window.location.reload()">Volver</button>
+                </div>
+            `);
+      }
+
+      // Función para alert()
+      function demoAlert() {
+        alert(`¡Alerta! La suma de 7 + 8 es ${7 + 8}`);
+      }
+
+      // Función para console.log()
+      function demoConsoleLog() {
+        console.log(
+          "%c¡Hola desde la consola!",
+          "color: white; background: linear-gradient(90deg, #3498db, #2ecc71); padding: 5px 10px; border-radius: 3px;",
+        );
+        console.log(
+          "Puedes inspeccionar elementos, ver errores y mucho más aquí.",
+        );
+        console.table([
+          { Método: "innerHTML", Uso: "Modificar elementos HTML" },
+          { Método: "document.write()", Uso: "Escribir en el documento" },
+          { Método: "alert()", Uso: "Mostrar alertas" },
+          { Método: "console.log()", Uso: "Depuración" },
+        ]);
+      }
+
+      // Función para variables
+      function demoVariables() {
+        let x = 5;
+        let y = 6;
+        let z = x + y;
+
+        console.group("Demo de Variables");
+        console.log("x =", x);
+        console.log("y =", y);
+        console.log("z = x + y =", z);
+        console.groupEnd();
+      }
+
+      // Función para punto y coma
+      function demoSemicolon() {
+        let a = 1;
+        let b = 2;
+
+        console.group("Demo de Punto y Coma");
+        console.log("Antes del intercambio: a =", a, "b =", b)[
+          // Intercambio de valores sin punto y coma
+          (a, b)
+        ] = [b, a];
+
+        console.log("Después del intercambio: a =", a, "b =", b);
+        console.log(
+          "JavaScript interpretó correctamente el código sin punto y coma",
+        );
+        console.groupEnd();
+      }
+    </script>
+  </body>
+</html>
