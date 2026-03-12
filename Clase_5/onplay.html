@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventos de Video</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        max-width: 800px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+      }
+
+      video {
+        width: 100%;
+        max-width: 600px;
+        border-radius: 10px;
+        margin: 20px 0;
+      }
+
+      .output {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1.1em;
+      }
+
+      .highlight {
+        color: #ff6f61;
+        font-weight: bold;
+      }
+
+      a {
+        color: #ff6f61;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Eventos de Video</h1>
+
+      <!-- Ejemplo 1: Evento onplay -->
+      <h2>Evento <code>onplay</code></h2>
+      <p>Asigna un evento "onplay" a un elemento de video.</p>
+      <p>Presiona play para ver el mensaje.</p>
+      <video controls onplay="mostrarMensajePlay()">
+        <source
+          src="https://www.w3schools.com/jsref/mov_bbb.mp4"
+          type="video/mp4"
+        />
+        <source
+          src="https://www.w3schools.com/jsref/mov_bbb.ogg"
+          type="video/ogg"
+        />
+        Tu navegador no soporta videos HTML5.
+      </video>
+      <p id="mensajePlay" class="output"></p>
+
+      <!-- Ejemplo 2: Evento onpause -->
+      <h2>Evento <code>onpause</code></h2>
+      <p>Asigna un evento "onpause" a un elemento de video.</p>
+      <p>Reproduce y pausa el video para ver el mensaje.</p>
+      <video controls onpause="mostrarMensajePause()">
+        <source
+          src="https://www.w3schools.com/jsref/mov_bbb.mp4"
+          type="video/mp4"
+        />
+        <source
+          src="https://www.w3schools.com/jsref/mov_bbb.ogg"
+          type="video/ogg"
+        />
+        Tu navegador no soporta videos HTML5.
+      </video>
+      <p id="mensajePause" class="output"></p>
+
+      <p>
+        Video cortesía de
+        <a href="https://www.bigbuckbunny.org/" target="_blank"
+          >Big Buck Bunny</a
+        >.
+      </p>
+    </div>
+
+    <script>
+      // Ejemplo 1: Mostrar mensaje al reproducir el video
+      function mostrarMensajePlay() {
+        document.getElementById("mensajePlay").innerHTML =
+          "El video ha comenzado a reproducirse.";
+      }
+
+      // Ejemplo 2: Mostrar mensaje al pausar el video
+      function mostrarMensajePause() {
+        document.getElementById("mensajePause").innerHTML =
+          "El video ha sido pausado.";
+      }
+    </script>
+  </body>
+</html>

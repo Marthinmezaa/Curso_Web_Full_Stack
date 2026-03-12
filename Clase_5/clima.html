@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clima Actual en HTML5</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(
+          to right,
+          #f0f4f8,
+          #ffffff
+        ); /* Fondo claro elegante */
+        color: #333;
+      }
+
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .container:hover {
+        transform: translateY(-10px);
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        font-weight: 500;
+      }
+
+      input {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background: #f9f9f9;
+        transition:
+          background 0.3s,
+          border-color 0.3s,
+          box-shadow 0.3s;
+      }
+
+      input:focus {
+        background: #e0f7fa;
+        outline: none;
+        border-color: #00796b;
+        box-shadow: 0 0 5px rgba(0, 121, 107, 0.5);
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background-color: #00796b;
+        color: white;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #004d40;
+      }
+
+      .weather {
+        margin-top: 20px;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      .weather h3 {
+        margin: 0;
+        font-weight: 500;
+      }
+
+      .weather p {
+        margin: 5px 0;
+      }
+
+      .icon {
+        width: 50px;
+        height: 50px;
+      }
+
+      #loading {
+        display: none;
+        margin-top: 10px;
+        font-style: italic;
+      }
+
+      #error {
+        display: none;
+        color: red;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2 id="greeting"></h2>
+      <input type="text" id="location" placeholder="Ingresa un lugar" />
+      <!-- Evento onclick: Se activa al hacer clic en el botón -->
+      <button onclick="getWeather()">Obtener Clima</button>
+      <div id="loading">Cargando...</div>
+      <div id="error">No se pudo obtener la información del clima.</div>
+      <div id="weather" class="weather"></div>
+    </div>
+
+    <script>
+      // Evento DOMContentLoaded: Se activa cuando el contenido HTML ha sido cargado y procesado.
+      document.addEventListener("DOMContentLoaded", () => {
+        const greetingElement = document.getElementById("greeting");
+        const hour = new Date().getHours();
+
+        // Saludo según el horario
+        if (hour < 12) {
+          greetingElement.textContent = "Buenos días";
+        } else if (hour < 18) {
+          greetingElement.textContent = "Buenas tardes";
+        } else {
+          greetingElement.textContent = "Buenas noches";
+        }
+      });
+
+      // Función para obtener el clima actual
+      async function getWeather() {
+        const button = document.querySelector("button");
+        const location = document.getElementById("location").value.trim();
+        const loadingElement = document.getElementById("loading");
+        const errorElement = document.getElementById("error");
+
+        // Validación del campo de entrada: Comprobar si se ha ingresado un lugar
+        if (!location) {
+          alert("Por favor, ingresa un lugar.");
+          return;
+        }
+
+        // Cambios de estado visual al iniciar la búsqueda
+        button.disabled = true; // Desactivar botón mientras se carga
+        loadingElement.style.display = "block"; // Mostrar mensaje de carga
+        errorElement.style.display = "none"; // Ocultar mensajes de error previos
+
+        const apiKey = "9310bae179295f6eb70c57737b374771"; // Reemplaza con tu clave de API de OpenWeatherMap
+        const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${apiKey}`;
+
+        try {
+          // Solicitud para obtener las coordenadas del lugar ingresado
+          const geoResponse = await fetch(geoUrl);
+          const geoData = await geoResponse.json();
+
+          // Verificar si se obtuvieron datos de geolocalización
+          if (
+            !geoData ||
+            geoData.length === 0 ||
+            !geoData[0].lat ||
+            !geoData[0].lon
+          ) {
+            errorElement.textContent =
+              "Lugar no encontrado o problema con la API Key. Inténtalo de nuevo.";
+            errorElement.style.display = "block";
+            return;
+          }
+
+          // Extraer latitud y longitud de los datos de geolocalización
+          const { lat, lon } = geoData[0];
+          const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=es&appid=${apiKey}`;
+
+          // Solicitud para obtener el clima actual con las coordenadas obtenidas
+          const weatherResponse = await fetch(weatherUrl);
+          const weatherData = await weatherResponse.json();
+
+          // Verificar si se obtuvieron datos del clima
+          if (!weatherData || !weatherData.weather || !weatherData.main) {
+            errorElement.textContent = "No se pudo obtener el clima actual.";
+            errorElement.style.display = "block";
+            return;
+          }
+
+          // Mostrar los datos del clima obtenidos
+          displayWeather(weatherData);
+        } catch (error) {
+          // Manejo de errores en caso de fallo en la solicitud
+          errorElement.textContent =
+            "Hubo un error al obtener el clima. Verifica la clave de API.";
+          errorElement.style.display = "block";
+          console.error(error);
+        } finally {
+          // Restaurar el estado original después de la solicitud
+          loadingElement.style.display = "none";
+          button.disabled = false; // Activar botón
+        }
+      }
+
+      // Función para mostrar los datos del clima en la interfaz
+      function displayWeather(data) {
+        const weatherElement = document.getElementById("weather");
+        weatherElement.style.opacity = 0; // Ocultar inicialmente para efecto de transición
+        weatherElement.innerHTML = "";
+
+        // Extraer y mostrar datos clave del clima
+        const temp = data.main.temp.toFixed(1);
+        const feelsLike = data.main.feels_like.toFixed(1); // Sensación térmica
+        const tempMin = data.main.temp_min.toFixed(1); // Temperatura mínima
+        const tempMax = data.main.temp_max.toFixed(1); // Temperatura máxima
+        const pressure = data.main.pressure; // Presión atmosférica
+        const humidity = data.main.humidity; // Humedad
+        const visibility = (data.visibility / 1000).toFixed(1); // Visibilidad en kilómetros
+        const clouds = data.clouds.all; // Nubosidad en porcentaje
+        const windSpeed = data.wind.speed; // Velocidad del viento
+        const weatherDescription = data.weather[0].description;
+        const locationName = data.name;
+        const icon = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+
+        // Actualizar el contenido HTML del contenedor de clima
+        weatherElement.innerHTML = `
+        <h3>${locationName}</h3>
+        <img src="${icon}" alt="Weather icon" class="icon">
+        <p>${temp}°C - ${weatherDescription}</p>
+        <p>Sensación térmica: ${feelsLike}°C</p>
+        <p>Temperatura mínima: ${tempMin}°C</p>
+        <p>Temperatura máxima: ${tempMax}°C</p>
+        <p>Presión: ${pressure} hPa</p>
+        <p>Humedad: ${humidity}%</p>
+        <p>Visibilidad: ${visibility} km</p>
+        <p>Nubosidad: ${clouds}%</p>
+        <p>Viento: ${windSpeed} m/s</p>
+    `;
+
+        // Efecto de transición para mostrar los datos
+        setTimeout(() => {
+          weatherElement.style.opacity = 1;
+        }, 100);
+      }
+    </script>
+  </body>
+</html>

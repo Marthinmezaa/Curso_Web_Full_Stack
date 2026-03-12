@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eventos del DOM</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        color: #fff;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        max-width: 800px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+      }
+
+      p {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+        font-size: 1em;
+      }
+
+      .output {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1.1em;
+      }
+
+      .image-container {
+        margin-top: 20px;
+      }
+
+      .image-container img {
+        transition: transform 0.3s ease;
+      }
+
+      .highlight {
+        color: #ff6f61;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Eventos del DOM</h1>
+
+      <!-- Ejemplo 1: Evento oncopy -->
+      <h2>Evento <code>oncopy</code></h2>
+      <p>Intenta copiar el texto en el campo de entrada:</p>
+      <input
+        type="text"
+        oncopy="mostrarMensajeCopia()"
+        value="Intenta copiar este texto"
+      />
+      <p id="mensajeCopia" class="output"></p>
+
+      <!-- Ejemplo 2: Evento oncut -->
+      <h2>Evento <code>oncut</code></h2>
+      <p>Intenta cortar el texto en el campo de entrada:</p>
+      <input
+        type="text"
+        oncut="mostrarMensajeCorte()"
+        value="Intenta cortar este texto"
+      />
+      <p id="mensajeCorte" class="output"></p>
+
+      <!-- Ejemplo 3: Evento onmouseover y onmouseout -->
+      <h2>Eventos <code>onmouseover</code> y <code>onmouseout</code></h2>
+      <p>
+        Pasa el mouse sobre la imagen para agrandarla y retíralo para volver a
+        su tamaño normal:
+      </p>
+      <div class="image-container">
+        <img
+          onmouseover="agrandarImagen(this)"
+          onmouseout="reducirImagen(this)"
+          src="https://www.w3schools.com/jsref/smiley.gif"
+          alt="Smiley"
+          width="32"
+          height="32"
+        />
+      </div>
+    </div>
+
+    <script>
+      // Ejemplo 1: Mostrar mensaje al copiar texto
+      function mostrarMensajeCopia() {
+        document.getElementById("mensajeCopia").innerHTML =
+          "¡Copiaste el texto!";
+      }
+
+      // Ejemplo 2: Mostrar mensaje al cortar texto
+      function mostrarMensajeCorte() {
+        document.getElementById("mensajeCorte").innerHTML =
+          "¡Cortaste el texto!";
+      }
+
+      // Ejemplo 3: Agrandar y reducir la imagen
+      function agrandarImagen(x) {
+        x.style.transform = "scale(2)";
+      }
+
+      function reducirImagen(x) {
+        x.style.transform = "scale(1)";
+      }
+    </script>
+  </body>
+</html>

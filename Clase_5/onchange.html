@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejemplos onchange</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      .ejemplo {
+        margin: 20px 0;
+        padding: 15px;
+        background: #f5f5f5;
+        border-radius: 5px;
+      }
+      input,
+      select {
+        padding: 8px;
+        margin: 5px 0;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      #resultado {
+        margin-top: 20px;
+        padding: 10px;
+        background: #e0e0e0;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔄 Evento onchange</h1>
+
+    <div class="ejemplo">
+      <label>📝 Texto (onchange):</label>
+      <input
+        type="text"
+        id="texto"
+        onchange="mostrar('Texto: ' + this.value)"
+      />
+    </div>
+
+    <div class="ejemplo">
+      <label>🎨 Select (onchange):</label>
+      <select id="select" onchange="mostrar('Elegiste: ' + this.value)">
+        <option value="">Selecciona</option>
+        <option value="Rojo">Rojo</option>
+        <option value="Verde">Verde</option>
+        <option value="Azul">Azul</option>
+      </select>
+    </div>
+
+    <div class="ejemplo">
+      <label>✅ Checkbox (onchange):</label>
+      <input
+        type="checkbox"
+        id="check"
+        onchange="
+          mostrar('Check: ' + (this.checked ? 'marcado' : 'sin marcar'))
+        "
+      />
+    </div>
+
+    <div id="resultado">Aquí verás los cambios...</div>
+
+    <script>
+      function mostrar(mensaje) {
+        document.getElementById("resultado").innerHTML = mensaje;
+      }
+    </script>
+  </body>
+</html>

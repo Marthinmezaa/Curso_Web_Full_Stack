@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejemplo con addEventListener</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        text-align: center;
+        background-color: #f0f8ff;
+        transition: background-color 0.5s ease;
+        padding: 50px;
+      }
+      h1 {
+        color: #ff6b6b;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: transform 0.2s;
+      }
+      button:hover {
+        transform: scale(1.05);
+        background-color: #45a049;
+      }
+      #mensaje {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333;
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>¡Hola Mundo! 🌍</h1>
+    <p>Presiona el botón para cambiar el fondo y ver un mensaje especial.</p>
+
+    <button id="miBoton">Hazme clic ✨</button>
+    <div id="mensaje"></div>
+
+    <script>
+      // Obtenemos el botón y el div del mensaje
+      const boton = document.getElementById("miBoton");
+      const mensaje = document.getElementById("mensaje");
+
+      // Array de colores bonitos para el fondo
+      const colores = [
+        "#ffb3ba",
+        "#ffdfba",
+        "#ffffba",
+        "#baffc9",
+        "#bae1ff",
+        "#e2baff",
+      ];
+
+      // Añadimos un event listener para el clic
+      boton.addEventListener("click", function () {
+        // Cambiamos el color de fondo al azar
+        const colorAleatorio =
+          colores[Math.floor(Math.random() * colores.length)];
+        document.body.style.backgroundColor = colorAleatorio;
+
+        // Mostramos un mensaje
+        mensaje.textContent = "¡Eres amado por Jesus!";
+        mensaje.style.opacity = 1;
+
+        // Ocultamos el mensaje después de 2 segundos
+        setTimeout(() => {
+          mensaje.style.opacity = 0;
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>

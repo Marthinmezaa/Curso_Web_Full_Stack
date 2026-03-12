@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aprendiendo onclick</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+      }
+      button {
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      #mensaje {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎯 Aprendiendo onclick</h1>
+
+    <!-- Botón básico con onclick -->
+    <button onclick="alert('¡Hiciste clic en el botón!')">Haz clic aquí</button>
+
+    <!-- Botón que cambia el texto de un párrafo -->
+    <button
+      onclick="
+        document.getElementById('texto').innerHTML = '¡El texto ha cambiado!'
+      "
+    >
+      Cambiar texto
+    </button>
+
+    <!-- Botón que llama a una función -->
+    <button onclick="mostrarMensaje()">Llamar función</button>
+
+    <button onclick="document.getElementById('texto').innerHTML = Date()">
+      La fecha es?
+    </button>
+
+    <!-- Elemento que mostrará mensajes -->
+    <div id="mensaje">
+      <p id="texto">Texto original</p>
+    </div>
+
+    <script>
+      // Función que se ejecuta con el tercer botón
+      function mostrarMensaje() {
+        let nombre = prompt("¿Cómo te llamas?");
+        if (nombre) {
+          document.getElementById("texto").innerHTML =
+            "¡Hola " + nombre + "! Bienvenido/a";
+        }
+      }
+    </script>
+  </body>
+</html>
