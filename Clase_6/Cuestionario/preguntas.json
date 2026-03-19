@@ -1,0 +1,83 @@
+[
+  {
+    "id": "q1",
+    "pregunta": "¿Qué valor devuelve Math.E en JavaScript?",
+    "opciones": [
+      { "texto": "El número de Euler", "correcta": true },
+      { "texto": "El valor de PI", "correcta": false },
+      { "texto": "La raíz cuadrada de 2", "correcta": false }
+    ]
+  },
+  {
+    "id": "q2",
+    "pregunta": "¿Qué método de Math se utiliza para redondear un número hacia el entero más cercano hacia arriba?",
+    "opciones": [
+      { "texto": "Math.round()", "correcta": false },
+      { "texto": "Math.ceil()", "correcta": true },
+      { "texto": "Math.floor()", "correcta": false }
+    ]
+  },
+  {
+    "id": "q3",
+    "pregunta": "¿Cuál es el resultado de Math.PI en JavaScript?",
+    "opciones": [
+      { "texto": "3.14", "correcta": false },
+      { "texto": "2.718", "correcta": false },
+      { "texto": "3.14159", "correcta": true }
+    ]
+  },
+  {
+    "id": "q4",
+    "pregunta": "¿Qué método de Math devuelve la parte entera de un número?",
+    "opciones": [
+      { "texto": "Math.trunc()", "correcta": true },
+      { "texto": "Math.floor()", "correcta": false },
+      { "texto": "Math.ceil()", "correcta": false }
+    ]
+  },
+  {
+    "id": "q5",
+    "pregunta": "¿Qué valor devuelve Math.sign(-5)?",
+    "opciones": [
+      { "texto": "1", "correcta": false },
+      { "texto": "-1", "correcta": true },
+      { "texto": "0", "correcta": false }
+    ]
+  },
+  {
+    "id": "q6",
+    "pregunta": "¿Qué método de Math se utiliza para obtener un número aleatorio entre 0 y 1?",
+    "opciones": [
+      { "texto": "Math.random()", "correcta": true },
+      { "texto": "Math.floor()", "correcta": false },
+      { "texto": "Math.ceil()", "correcta": false }
+    ]
+  },
+  {
+    "id": "q7",
+    "pregunta": "¿Qué valor devuelve Math.SQRT2?",
+    "opciones": [
+      { "texto": "La raíz cuadrada de 1/2", "correcta": false },
+      { "texto": "La raíz cuadrada de 2", "correcta": true },
+      { "texto": "El logaritmo natural de 2", "correcta": false }
+    ]
+  },
+  {
+    "id": "q8",
+    "pregunta": "¿Qué método de Math se utiliza para redondear un número al entero más cercano?",
+    "opciones": [
+      { "texto": "Math.ceil()", "correcta": false },
+      { "texto": "Math.floor()", "correcta": false },
+      { "texto": "Math.round()", "correcta": true }
+    ]
+  },
+  {
+    "id": "q9",
+    "pregunta": "¿Qué valor devuelve Math.LN10?",
+    "opciones": [
+      { "texto": "El logaritmo natural de 2", "correcta": false },
+      { "texto": "El logaritmo natural de 10", "correcta": true },
+      { "texto": "La raíz cuadrada de 1/2", "correcta": false }
+    ]
+  }
+]

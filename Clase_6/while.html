@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bucle While</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 30px auto;
+        padding: 20px;
+      }
+      button {
+        padding: 8px 12px;
+        margin: 5px;
+        cursor: pointer;
+        background: #ff9800;
+        color: white;
+        border: none;
+        border-radius: 3px;
+      }
+      .resultado {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔄 Bucle WHILE en JavaScript</h1>
+
+    <!-- EJEMPLO 1: While simple -->
+    <h2>📌 Contar con while</h2>
+    <button onclick="contarWhile()">Contar del 1 al 5</button>
+
+    <!-- EJEMPLO 2: While con condición -->
+    <h2>📌 Sumar números</h2>
+    <button onclick="sumarHasta10()">Sumar hasta llegar a 10</button>
+
+    <!-- EJEMPLO 3: While con número variable -->
+    <h2>📌 While interactivo</h2>
+    <input type="number" id="limite" value="3" min="1" max="10" />
+    <button onclick="contarHasta()">Contar hasta el número elegido</button>
+
+    <div class="resultado" id="resultado">
+      <p>🔹 Haz clic en los botones para ver ejemplos de while</p>
+    </div>
+
+    <script>
+      // EJEMPLO 1: While básico
+      function contarWhile() {
+        let i = 1;
+        let mensaje = "Contando: ";
+
+        while (i <= 5) {
+          mensaje += i + " ";
+          i++;
+        }
+
+        document.getElementById("resultado").innerHTML = mensaje;
+      }
+
+      // EJEMPLO 2: While con suma
+      function sumarHasta10() {
+        let suma = 0;
+        let numero = 1;
+        let mensaje = "";
+
+        while (suma < 10) {
+          suma += numero;
+          mensaje += `Sumando ${numero} → suma parcial: ${suma}<br>`;
+          numero++;
+        }
+
+        document.getElementById("resultado").innerHTML = mensaje;
+      }
+
+      // EJEMPLO 3: While con número ingresado por usuario
+      function contarHasta() {
+        let limite = document.getElementById("limite").value;
+        let contador = 1;
+        let resultado = "Contando hasta " + limite + ": ";
+
+        while (contador <= limite) {
+          resultado += contador + " ";
+          contador++;
+        }
+
+        document.getElementById("resultado").innerHTML = resultado;
+      }
+    </script>
+  </body>
+</html>

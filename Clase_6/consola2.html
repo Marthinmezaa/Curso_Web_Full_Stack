@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejemplos de Consola JavaScript</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        background-color: white;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+
+      .section {
+        margin-bottom: 30px;
+        padding: 15px;
+        border-left: 4px solid #3498db;
+        background-color: #f8f9fa;
+        border-radius: 0 5px 5px 0;
+      }
+
+      h2 {
+        color: #2980b9;
+        margin-top: 0;
+      }
+
+      pre {
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+        font-family: "Courier New", Courier, monospace;
+        tab-size: 4;
+      }
+
+      .console-btn {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+      }
+
+      .console-btn:hover {
+        background-color: #2980b9;
+      }
+
+      .info {
+        background-color: #d1ecf1;
+        border-left-color: #17a2b8;
+      }
+
+      .warning {
+        background-color: #fff3cd;
+        border-left-color: #ffc107;
+      }
+
+      .error {
+        background-color: #f8d7da;
+        border-left-color: #dc3545;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 30px;
+        color: #7f8c8d;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Ejemplos de Consola JavaScript</h1>
+
+      <div class="section">
+        <h2>Depuración básica con console.log()</h2>
+        <p>
+          Uso básico de <code>console.log()</code> para mostrar valores en la
+          consola.
+        </p>
+        <pre><code>let a = 5;
+let b = 6;
+let c = a + b;
+console.log("El valor de c es:", c); // Salida: El valor de c es: 11</code></pre>
+        <button class="console-btn" onclick="ejemploConsoleLog()">
+          Ejecutar en consola
+        </button>
+      </div>
+
+      <div class="section">
+        <h2>Mostrar datos en formato de tabla con console.table()</h2>
+        <p>
+          <code>console.table()</code> es útil para visualizar arrays u objetos
+          en formato tabular.
+        </p>
+        <pre><code>let personas = [
+  { Nombre: "Juan", Apellido: "González" },
+  { Nombre: "María", Apellido: "López" },
+  { Nombre: "Pedro", Apellido: "Martínez" }
+];
+console.table(personas);</code></pre>
+        <button class="console-btn" onclick="ejemploConsoleTable()">
+          Ejecutar en consola
+        </button>
+      </div>
+
+      <div class="section">
+        <h2>Manejo de errores con try-catch</h2>
+        <p>Ejemplo de cómo capturar y manejar errores en JavaScript.</p>
+        <pre><code>try {
+  let numero = 0;
+  console.log("Intentando dividir por cero...");
+  let resultado = 55 / numero; // Esto genera una excepción
+  console.log("Resultado:", resultado);
+} catch (error) {
+  console.error("Ocurrió un error:", error.message);
+}</code></pre>
+        <button class="console-btn" onclick="ejemploTryCatch()">
+          Ejecutar en consola
+        </button>
+      </div>
+
+      <div class="section info">
+        <h2>Mensajes informativos con console.info()</h2>
+        <p><code>console.info()</code> se usa para mensajes informativos.</p>
+        <pre><code>console.info("Esto es un mensaje informativo.");</code></pre>
+        <button class="console-btn" onclick="ejemploConsoleInfo()">
+          Ejecutar en consola
+        </button>
+      </div>
+
+      <div class="section warning">
+        <h2>Advertencias con console.warn()</h2>
+        <p><code>console.warn()</code> muestra mensajes de advertencia.</p>
+        <pre><code>console.warn("¡Advertencia! Algo podría no estar bien.");</code></pre>
+        <button class="console-btn" onclick="ejemploConsoleWarn()">
+          Ejecutar en consola
+        </button>
+      </div>
+
+      <div class="section error">
+        <h2>Errores con console.error()</h2>
+        <p><code>console.error()</code> muestra mensajes de error.</p>
+        <pre><code>console.error("Esto es un mensaje de error.");</code></pre>
+        <button class="console-btn" onclick="ejemploConsoleError()">
+          Ejecutar en consola
+        </button>
+      </div>
+
+      <footer>
+        <p>
+          Abra la consola del navegador (F12) para ver los resultados de los
+          ejemplos.
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      function ejemploConsoleLog() {
+        let a = 5;
+        let b = 6;
+        let c = a + b;
+        console.log("El valor de c es:", c);
+      }
+
+      function ejemploConsoleTable() {
+        let personas = [
+          { Nombre: "Juan", Apellido: "González" },
+          { Nombre: "María", Apellido: "López" },
+          { Nombre: "Pedro", Apellido: "Martínez" },
+        ];
+        console.table(personas);
+      }
+
+      function ejemploTryCatch() {
+        try {
+          let numero = 0;
+          console.log("Intentando dividir por cero...");
+          let resultado = 55 / numero;
+          console.log("Resultado:", resultado);
+        } catch (error) {
+          console.error("Ocurrió un error:", error.message);
+        }
+      }
+
+      function ejemploConsoleInfo() {
+        console.info("Esto es un mensaje informativo.");
+      }
+
+      function ejemploConsoleWarn() {
+        console.warn("¡Advertencia! Algo podría no estar bien.");
+      }
+
+      function ejemploConsoleError() {
+        console.error("Esto es un mensaje de error.");
+      }
+
+      // Ejecutar todos los ejemplos al cargar la página (para facilitar la visualización)
+      window.onload = function () {
+        console.clear();
+        console.log(
+          "%c¡Bienvenido a los ejemplos de consola JavaScript!",
+          "color: #3498db; font-size: 16px; font-weight: bold;",
+        );
+      };
+    </script>
+  </body>
+</html>

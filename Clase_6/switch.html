@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>For y Switch</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 30px auto;
+        padding: 20px;
+      }
+      button {
+        padding: 8px 12px;
+        margin: 5px;
+        cursor: pointer;
+        background: #2196f3;
+        color: white;
+        border: none;
+        border-radius: 3px;
+      }
+      .resultado {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🔄 For y Switch en JavaScript</h1>
+
+    <!-- EJEMPLO DE FOR -->
+    <h2>📌 Bucle FOR</h2>
+    <button onclick="contarNumeros()">Contar del 1 al 5</button>
+    <button onclick="tablaMultiplicar()">Tabla del 3</button>
+
+    <!-- EJEMPLO DE SWITCH -->
+    <h2>📌 Estructura SWITCH</h2>
+    <button onclick="mostrarDia('lunes')">Lunes</button>
+    <button onclick="mostrarDia('miercoles')">Miércoles</button>
+    <button onclick="mostrarDia('sabado')">Sábado</button>
+    <button onclick="mostrarDia('otro')">Otro día</button>
+
+    <div class="resultado" id="resultado">
+      <p>🔹 Haz clic en los botones para ver los ejemplos</p>
+    </div>
+
+    <script>
+      // EJEMPLO 1: FOR para contar
+      function contarNumeros() {
+        let mensaje = "Contando del 1 al 5: ";
+        for (let i = 1; i <= 5; i++) {
+          mensaje += i + " ";
+        }
+        document.getElementById("resultado").innerHTML = mensaje;
+      }
+
+      // EJEMPLO 2: FOR para tabla de multiplicar
+      function tablaMultiplicar() {
+        let mensaje = "Tabla del 3:<br>";
+        for (let i = 1; i <= 10; i++) {
+          mensaje += `3 x ${i} = ${3 * i}<br>`;
+        }
+        document.getElementById("resultado").innerHTML = mensaje;
+      }
+
+      // EJEMPLO 3: SWITCH para días de la semana
+      function mostrarDia(dia) {
+        let mensaje = "Día seleccionado: " + dia + "<br><br>";
+
+        switch (dia) {
+          case "lunes":
+            mensaje += "📅 Es lunes, inicio de semana";
+            break;
+          case "miercoles":
+            mensaje += "📅 Es miércoles, mitad de semana";
+            break;
+          case "sabado":
+            mensaje += "📅 Es sábado, fin de semana 🎉";
+            break;
+          default:
+            mensaje += "📅 Es otro día cualquiera";
+        }
+
+        document.getElementById("resultado").innerHTML = mensaje;
+      }
+    </script>
+  </body>
+</html>

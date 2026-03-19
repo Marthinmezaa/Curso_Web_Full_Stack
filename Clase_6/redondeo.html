@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Math.round, ceil, floor, trunc</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 30px auto;
+        padding: 20px;
+      }
+      button {
+        padding: 8px 12px;
+        margin: 5px;
+        cursor: pointer;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 3px;
+      }
+      .numero {
+        font-size: 22px;
+        color: #2196f3;
+        margin: 15px 0;
+      }
+      .resultado {
+        background: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🎯 Métodos de redondeo</h1>
+
+    <div class="numero">Número: <strong id="numeroDisplay">4.7</strong></div>
+
+    <button onclick="probarCon(4.1)">4.1</button>
+    <button onclick="probarCon(4.7)">4.7</button>
+    <button onclick="probarCon(-4.3)">-4.3</button>
+    <button onclick="probarCon(-4.7)">-4.7</button>
+
+    <div class="resultado" id="resultado">
+      <p>
+        <strong>🔹 Math.round(4.7)</strong> = 5 (redondea al entero + cercano)
+      </p>
+      <p><strong>🔹 Math.ceil(4.7)</strong> = 5 (redondea hacia arriba)</p>
+      <p><strong>🔹 Math.floor(4.7)</strong> = 4 (redondea hacia abajo)</p>
+      <p><strong>🔹 Math.trunc(4.7)</strong> = 4 (elimina decimales)</p>
+    </div>
+
+    <script>
+      function probarCon(num) {
+        document.getElementById("numeroDisplay").textContent = num;
+        document.getElementById("resultado").innerHTML = `
+                <p><strong>🔹 Math.round(${num})</strong> = ${Math.round(num)} (redondea al entero + cercano)</p>
+                <p><strong>🔹 Math.ceil(${num})</strong> = ${Math.ceil(num)} (redondea hacia arriba)</p>
+                <p><strong>🔹 Math.floor(${num})</strong> = ${Math.floor(num)} (redondea hacia abajo)</p>
+                <p><strong>🔹 Math.trunc(${num})</strong> = ${Math.trunc(num)} (elimina decimales)</p>
+            `;
+      }
+    </script>
+  </body>
+</html>
