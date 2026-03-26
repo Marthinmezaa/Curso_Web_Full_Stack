@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buscador de Texto</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        width: 90%;
+        max-width: 600px;
+        backdrop-filter: blur(10px);
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      textarea {
+        width: 100%;
+        height: 150px;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        resize: none;
+      }
+
+      textarea::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      input {
+        width: calc(100% - 22px);
+        padding: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+
+      input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        background-color: #ff6f61;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition:
+          background-color 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #ff3b2f;
+        transform: scale(1.05);
+      }
+
+      .results {
+        margin-top: 20px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .results p {
+        font-size: 16px;
+        margin: 10px 0;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+      }
+
+      .highlight {
+        color: #ff6f61;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Buscador de Texto</h1>
+      <textarea
+        id="inputText"
+        placeholder="Escribe o pega tu texto aquí..."
+      ></textarea>
+      <input type="text" id="searchText" placeholder="Texto a buscar" />
+      <button onclick="searchText()">Buscar</button>
+
+      <div class="results">
+        <p id="indexOfResult"></p>
+        <p id="includesResult"></p>
+        <p id="startsWithResult"></p>
+        <p id="endsWithResult"></p>
+      </div>
+    </div>
+
+    <script>
+      function searchText() {
+        const inputText = document.getElementById("inputText").value;
+        const searchText = document.getElementById("searchText").value;
+        const indexOfResult = document.getElementById("indexOfResult");
+        const includesResult = document.getElementById("includesResult");
+        const startsWithResult = document.getElementById("startsWithResult");
+        const endsWithResult = document.getElementById("endsWithResult");
+
+        if (searchText === "") {
+          indexOfResult.textContent = "Por favor, ingresa el texto a buscar.";
+          includesResult.textContent = "";
+          startsWithResult.textContent = "";
+          endsWithResult.textContent = "";
+          return;
+        }
+
+        const indexOf = inputText.indexOf(searchText);
+        const includes = inputText.includes(searchText);
+        const startsWith = inputText.startsWith(searchText);
+        const endsWith = inputText.endsWith(searchText);
+
+        indexOfResult.textContent =
+          indexOf >= 0 ? `indexOf: ${indexOf}` : "indexOf: No encontrado";
+        includesResult.textContent = `includes: ${includes}`;
+        startsWithResult.textContent = `startsWith: ${startsWith}`;
+        endsWithResult.textContent = `endsWith: ${endsWith}`;
+      }
+    </script>
+  </body>
+</html>

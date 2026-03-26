@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ejemplo getElementById y replace</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+      }
+      button {
+        padding: 10px 20px;
+        margin: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      #texto {
+        padding: 20px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        margin: 20px 0;
+        font-size: 18px;
+      }
+      input {
+        padding: 10px;
+        width: 80%;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📝 Ejemplo getElementById y replace</h1>
+
+    <div id="texto">Me gusta el color azul</div>
+
+    <button onclick="cambiarTexto()">Cambiar "azul" por "rojo"</button>
+
+    <br />
+
+    <input
+      type="text"
+      id="buscar"
+      placeholder="Palabra a buscar"
+      value="azul"
+    />
+    <input
+      type="text"
+      id="reemplazar"
+      placeholder="Palabra nueva"
+      value="rojo"
+    />
+    <button onclick="reemplazarPalabra()">Reemplazar palabra</button>
+
+    <script>
+      // Ejemplo 1: Reemplazo fijo
+      function cambiarTexto() {
+        let elemento = document.getElementById("texto");
+        let textoActual = elemento.innerHTML;
+        let textoNuevo = textoActual.replace("azul", "rojo");
+        elemento.innerHTML = textoNuevo;
+      }
+
+      // Ejemplo 2: Reemplazo dinámico usando los inputs
+      function reemplazarPalabra() {
+        let elemento = document.getElementById("texto");
+        let textoActual = elemento.innerHTML;
+        let buscar = document.getElementById("buscar").value;
+        let reemplazar = document.getElementById("reemplazar").value;
+
+        // Reemplazar la palabra (solo la primera ocurrencia)
+        let textoNuevo = textoActual.replace(buscar, reemplazar);
+        elemento.innerHTML = textoNuevo;
+      }
+    </script>
+  </body>
+</html>

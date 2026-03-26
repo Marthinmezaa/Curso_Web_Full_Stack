@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Formulario Simple</title>
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background: #eaf6f6;
+        padding: 40px;
+      }
+
+      form {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        max-width: 420px;
+        margin: auto;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        text-align: center;
+        color: #007b8a;
+      }
+
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+        color: #333;
+      }
+
+      input,
+      button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+
+      input:focus {
+        border-color: #007b8a;
+        outline: none;
+      }
+
+      button {
+        background-color: #007b8a;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #005f6b;
+      }
+
+      .error {
+        color: #d9534f;
+        font-size: 14px;
+        margin-top: -10px;
+        margin-bottom: 10px;
+      }
+
+      .success {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        text-align: center;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="contactForm">
+      <h2>📬 Contactanos</h2>
+
+      <div class="success" id="successMessage">
+        ¡Formulario enviado con éxito! 🎉
+      </div>
+
+      <label>Nombre:</label>
+      <input type="text" id="name" placeholder="Tu nombre" />
+      <div class="error" id="nameError"></div>
+
+      <label>Email:</label>
+      <input type="email" id="email" placeholder="ejemplo@correo.com" />
+      <div class="error" id="emailError"></div>
+
+      <label>Mensaje:</label>
+      <input type="text" id="message" placeholder="Tu mensaje" />
+      <div class="error" id="messageError"></div>
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Limpiar errores y mensaje
+          document.getElementById("nameError").textContent = "";
+          document.getElementById("emailError").textContent = "";
+          document.getElementById("messageError").textContent = "";
+          document.getElementById("successMessage").style.display = "none";
+
+          // Obtener valores
+          let name = document.getElementById("name").value.trim();
+          let email = document.getElementById("email").value.trim();
+          let message = document.getElementById("message").value.trim();
+
+          let valid = true;
+
+          // Validaciones
+          if (name.length < 3) {
+            document.getElementById("nameError").textContent =
+              "El nombre debe tener al menos 3 caracteres.";
+            valid = false;
+          }
+
+          if (!email.includes("@") || !email.includes(".")) {
+            document.getElementById("emailError").textContent =
+              "Email inválido.";
+            valid = false;
+          }
+
+          if (message.length < 5) {
+            document.getElementById("messageError").textContent =
+              "El mensaje debe tener al menos 5 caracteres.";
+            valid = false;
+          }
+
+          // Mostrar mensaje si todo está bien
+          if (valid) {
+            document.getElementById("successMessage").style.display = "block";
+            // Opcional: resetear el formulario
+            // document.getElementById("contactForm").reset();
+          }
+        });
+    </script>
+  </body>
+</html>

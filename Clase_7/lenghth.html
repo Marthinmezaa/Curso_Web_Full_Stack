@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aprendiendo Métodos de Texto en JavaScript</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+      }
+
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+
+      .concepto {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .concepto:hover {
+        transform: translateY(-5px);
+      }
+
+      h2 {
+        color: #3498db;
+        margin-top: 0;
+      }
+
+      .ejemplo {
+        background-color: #f0f8ff;
+        padding: 15px;
+        border-left: 4px solid #3498db;
+        margin: 15px 0;
+        font-family: "Courier New", Courier, monospace;
+      }
+
+      .resultado {
+        background-color: #e8f4f8;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+
+      .interactivo {
+        background-color: #eaf7ea;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+      }
+
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 200px;
+      }
+
+      .nota {
+        font-style: italic;
+        color: #7f8c8d;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Métodos de Texto en JavaScript</h1>
+
+    <div class="concepto">
+      <h2>Propiedad Length</h2>
+      <p>Permite encontrar la longitud (número de caracteres) de un texto.</p>
+
+      <div class="ejemplo">
+        <code
+          >let texto = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";<br />
+          let longitud = texto.length;</code
+        >
+        <div class="resultado" id="lengthResult"></div>
+      </div>
+
+      <div class="interactivo">
+        <p>Prueba tú mismo:</p>
+        <input type="text" id="lengthInput" placeholder="Escribe algo..." />
+        <button onclick="calcularLongitud()">Calcular Longitud</button>
+        <div class="resultado" id="lengthInteractiveResult"></div>
+      </div>
+    </div>
+
+    <div class="concepto">
+      <h2>Método Slice</h2>
+      <p>
+        Extrae una parte de un texto. Toma 2 parámetros: posición inicial y
+        posición final (no incluida).
+      </p>
+
+      <div class="ejemplo">
+        <code
+          >let frutas = "Manzana, Banana, Kiwi";<br />
+          let parte = frutas.slice(9, 15);</code
+        >
+        <div class="resultado" id="sliceResult"></div>
+      </div>
+
+      <div class="interactivo">
+        <p>Prueba tú mismo:</p>
+        <input
+          type="text"
+          id="sliceInput"
+          value="JavaScript es genial"
+        /><br /><br />
+        <label
+          >Inicio:
+          <input
+            type="number"
+            id="sliceStart"
+            value="0"
+            min="0"
+            style="width: 60px"
+        /></label>
+        <label
+          >Fin:
+          <input
+            type="number"
+            id="sliceEnd"
+            value="10"
+            min="0"
+            style="width: 60px"
+        /></label>
+        <button onclick="extraerTexto()">Extraer Texto</button>
+        <div class="resultado" id="sliceInteractiveResult"></div>
+      </div>
+
+      <p class="nota">
+        * substring() y substr() son métodos similares con pequeñas diferencias.
+      </p>
+    </div>
+
+    <div class="concepto">
+      <h2>toUpperCase() y toLowerCase()</h2>
+      <p>Convierten un texto a mayúsculas o minúsculas respectivamente.</p>
+
+      <div class="ejemplo">
+        <code
+          >let saludo = "Hola Mundo!";<br />
+          let mayusculas = saludo.toUpperCase();<br />
+          let minusculas = saludo.toLowerCase();</code
+        >
+        <div class="resultado" id="caseResult"></div>
+      </div>
+
+      <div class="interactivo">
+        <p>Prueba tú mismo:</p>
+        <input
+          type="text"
+          id="caseInput"
+          value="Transforma este texto"
+        /><br /><br />
+        <button onclick="aMayusculas()">A MAYÚSCULAS</button>
+        <button onclick="aMinusculas()">a minúsculas</button>
+        <div class="resultado" id="caseInteractiveResult"></div>
+      </div>
+    </div>
+
+    <script>
+      // Ejemplos estáticos
+      document.getElementById("lengthResult").textContent =
+        "Resultado: " + "ABCDEFGHIJKLMNOPQRSTUVWXYZ".length;
+
+      let frutas = "Manzana, Banana, Kiwi";
+      let parte = frutas.slice(9, 15);
+      document.getElementById("sliceResult").textContent =
+        "Resultado: " + parte;
+
+      let saludo = "Hola Mundo!";
+      document.getElementById("caseResult").innerHTML =
+        "Mayúsculas: " +
+        saludo.toUpperCase() +
+        "<br>" +
+        "Minúsculas: " +
+        saludo.toLowerCase();
+
+      // Funciones interactivas
+      function calcularLongitud() {
+        let texto = document.getElementById("lengthInput").value;
+        document.getElementById("lengthInteractiveResult").textContent =
+          "Longitud: " + texto.length;
+      }
+
+      function extraerTexto() {
+        let texto = document.getElementById("sliceInput").value;
+        let inicio = parseInt(document.getElementById("sliceStart").value);
+        let fin = parseInt(document.getElementById("sliceEnd").value);
+
+        if (fin > texto.length) fin = texto.length;
+        if (inicio > fin) inicio = fin;
+
+        let resultado = texto.slice(inicio, fin);
+        document.getElementById("sliceInteractiveResult").textContent =
+          "Texto extraído: " + resultado;
+      }
+
+      function aMayusculas() {
+        let texto = document.getElementById("caseInput").value;
+        document.getElementById("caseInteractiveResult").textContent =
+          "Resultado: " + texto.toUpperCase();
+      }
+
+      function aMinusculas() {
+        let texto = document.getElementById("caseInput").value;
+        document.getElementById("caseInteractiveResult").textContent =
+          "Resultado: " + texto.toLowerCase();
+      }
+
+      // Inicializar resultados interactivos
+      calcularLongitud();
+      extraerTexto();
+      aMayusculas();
+    </script>
+  </body>
+</html>

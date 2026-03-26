@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manipulación de Cadenas en JavaScript</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        padding: 30px;
+        width: 90%;
+        max-width: 600px;
+        backdrop-filter: blur(10px);
+      }
+
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .example {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .example h2 {
+        font-size: 1.8em;
+        margin-bottom: 10px;
+      }
+
+      .example p {
+        font-size: 16px;
+        margin: 10px 0;
+      }
+
+      .code {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        border-radius: 5px;
+        font-family: "Courier New", Courier, monospace;
+        margin: 10px 0;
+      }
+
+      .highlight {
+        color: #ff6f61;
+        font-weight: bold;
+      }
+
+      .button {
+        width: 100%;
+        padding: 12px;
+        background-color: #ff6f61;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition:
+          background-color 0.3s ease,
+          transform 0.3s ease;
+      }
+
+      .button:hover {
+        background-color: #ff3b2f;
+        transform: scale(1.05);
+      }
+
+      .output {
+        margin-top: 20px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+      }
+
+      .output p {
+        font-size: 16px;
+        margin: 10px 0;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Manipulación de Cadenas en JavaScript</h1>
+
+      <!-- Ejemplo 1: trim() -->
+      <div class="example">
+        <h2>trim()</h2>
+        <p>Elimina los espacios en blanco al inicio y al final de un string.</p>
+        <div class="code">
+          let text = " Hello World! ";<br />
+          let trimmedText = text.trim();<br />
+          console.log(trimmedText); // "Hello World!"
+        </div>
+        <button class="button" onclick="mostrarTrim()">
+          Mostrar Resultado
+        </button>
+        <div class="output" id="trimOutput"></div>
+      </div>
+
+      <!-- Ejemplo 2: concat() -->
+      <div class="example">
+        <h2>concat()</h2>
+        <p>Concatena dos o más strings.</p>
+        <div class="code">
+          let text1 = "Hello";<br />
+          let text2 = "World";<br />
+          let result = text1.concat(" ", text2);<br />
+          console.log(result); // "Hello World"
+        </div>
+        <button class="button" onclick="mostrarConcat()">
+          Mostrar Resultado
+        </button>
+        <div class="output" id="concatOutput"></div>
+      </div>
+
+      <!-- Ejemplo 3: charAt() -->
+      <div class="example">
+        <h2>charAt()</h2>
+        <p>Retorna el carácter en una posición específica.</p>
+        <div class="code">
+          let text = "Hello";<br />
+          let char = text.charAt(1);<br />
+          console.log(char); // "e"
+        </div>
+        <button class="button" onclick="mostrarCharAt()">
+          Mostrar Resultado
+        </button>
+        <div class="output" id="charAtOutput"></div>
+      </div>
+
+      <!-- Ejemplo 4: repeat() -->
+      <div class="example">
+        <h2>repeat()</h2>
+        <p>Repite un string un número específico de veces.</p>
+        <div class="code">
+          let text = "Hello";<br />
+          let repeatedText = text.repeat(3);<br />
+          console.log(repeatedText); // "HelloHelloHello"
+        </div>
+        <button class="button" onclick="mostrarRepeat()">
+          Mostrar Resultado
+        </button>
+        <div class="output" id="repeatOutput"></div>
+      </div>
+    </div>
+
+    <script>
+      // Función para mostrar el resultado de trim()
+      function mostrarTrim() {
+        let text = "   Hello World!   ";
+        let trimmedText = text.trim();
+        document.getElementById("trimOutput").innerHTML = `
+                <p><b>Resultado:</b> "${trimmedText}"</p>
+            `;
+      }
+
+      // Función para mostrar el resultado de concat()
+      function mostrarConcat() {
+        let text1 = "Hello";
+        let text2 = "World";
+        let result = text1.concat(" ", text2);
+        document.getElementById("concatOutput").innerHTML = `
+                <p><b>Resultado:</b> "${result}"</p>
+            `;
+      }
+
+      // Función para mostrar el resultado de charAt()
+      function mostrarCharAt() {
+        let text = "Hello";
+        let char = text.charAt(1);
+        document.getElementById("charAtOutput").innerHTML = `
+                <p><b>Resultado:</b> "${char}"</p>
+            `;
+      }
+
+      // Función para mostrar el resultado de repeat()
+      function mostrarRepeat() {
+        let text = "Hello";
+        let repeatedText = text.repeat(3);
+        document.getElementById("repeatOutput").innerHTML = `
+                <p><b>Resultado:</b> "${repeatedText}"</p>
+            `;
+      }
+    </script>
+  </body>
+</html>

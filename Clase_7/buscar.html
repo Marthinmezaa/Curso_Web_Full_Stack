@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Métodos de Búsqueda en Cadenas</title>
+    <style>
+      :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3f37c9;
+        --accent-color: #4895ef;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --success-color: #4cc9f0;
+        --warning-color: #f72585;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--dark-color);
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--light-color);
+      }
+
+      h1 {
+        color: var(--secondary-color);
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid var(--accent-color);
+        font-size: 2.2rem;
+      }
+
+      .concept-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        border-left: 5px solid var(--primary-color);
+      }
+
+      .concept-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      h2 {
+        color: var(--primary-color);
+        margin-top: 0;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+      }
+
+      h2::before {
+        content: "➤";
+        margin-right: 10px;
+        color: var(--accent-color);
+      }
+
+      .code-example {
+        background-color: #f5f7ff;
+        padding: 18px;
+        border-radius: 6px;
+        margin: 18px 0;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.95rem;
+        border: 1px solid #e0e3ff;
+        overflow-x: auto;
+      }
+
+      .result {
+        background-color: #e8f4fc;
+        padding: 12px;
+        margin-top: 12px;
+        border-radius: 6px;
+        font-weight: bold;
+        color: var(--secondary-color);
+        border-left: 4px solid var(--accent-color);
+      }
+
+      .interactive-area {
+        background-color: #f0f8ff;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
+      .interactive-area h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 1.2rem;
+      }
+
+      button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-right: 12px;
+        transition: all 0.3s;
+        font-weight: 500;
+      }
+
+      button:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-2px);
+      }
+
+      input,
+      textarea {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        width: 100%;
+        max-width: 500px;
+        margin-bottom: 12px;
+        font-family: inherit;
+        transition: border 0.3s;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+      }
+
+      .note {
+        font-style: italic;
+        color: #6c757d;
+        font-size: 0.9em;
+        margin-top: 10px;
+        padding-left: 15px;
+        border-left: 3px solid #adb5bd;
+      }
+
+      .method-info {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 6px;
+        margin: 15px 0;
+        border-left: 4px solid var(--accent-color);
+      }
+
+      .flex-container {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .flex-container input {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .highlight {
+        background-color: #fff3cd;
+        padding: 2px 4px;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Métodos de Búsqueda en Cadenas JavaScript</h1>
+
+    <div class="concept-card">
+      <h2>Método indexOf()</h2>
+      <p>
+        Retorna la posición de la primera aparición de un texto especificado.
+      </p>
+
+      <div class="method-info">
+        <p>
+          <strong>Sintaxis:</strong>
+          <code class="highlight"
+            >cadena.indexOf(textoABuscar, posicionInicio?)</code
+          >
+        </p>
+      </div>
+
+      <div class="code-example">
+        <code
+          >let str = "Por favor, encuentra donde 'encuentra' aparece!";<br />
+          let posicion = str.indexOf("encuentra");</code
+        >
+        <div class="result" id="indexOfResult"></div>
+      </div>
+
+      <div class="interactive-area">
+        <h3>Prueba tú mismo:</h3>
+        <textarea id="indexOfInput" rows="3">
+JavaScript es divertido. ¿No crees que JavaScript es genial?</textarea
+        >
+        <div class="flex-container">
+          <input
+            type="text"
+            id="indexOfSearch"
+            placeholder="Texto a buscar"
+            value="JavaScript"
+          />
+          <button onclick="buscarPrimeraOcurrencia()">
+            Buscar Primera Ocurrencia
+          </button>
+        </div>
+        <div class="result" id="indexOfInteractiveResult"></div>
+      </div>
+
+      <p class="note">
+        * El método <code>search()</code> es similar pero soporta expresiones
+        regulares.
+      </p>
+    </div>
+
+    <div class="concept-card">
+      <h2>Método lastIndexOf()</h2>
+      <p>
+        Retorna la posición de la última aparición de un texto especificado.
+      </p>
+
+      <div class="method-info">
+        <p>
+          <strong>Sintaxis:</strong>
+          <code class="highlight"
+            >cadena.lastIndexOf(textoABuscar, posicionInicio?)</code
+          >
+        </p>
+      </div>
+
+      <div class="code-example">
+        <code
+          >let str = "Por favor, encuentra donde 'encuentra' aparece!";<br />
+          let posicion = str.lastIndexOf("encuentra");</code
+        >
+        <div class="result" id="lastIndexOfResult"></div>
+      </div>
+
+      <div class="interactive-area">
+        <h3>Prueba tú mismo:</h3>
+        <textarea id="lastIndexOfInput" rows="3">
+Repetir es importante. ¿Por qué repetir? Porque repetir ayuda a aprender.</textarea
+        >
+        <div class="flex-container">
+          <input
+            type="text"
+            id="lastIndexOfSearch"
+            placeholder="Texto a buscar"
+            value="repetir"
+          />
+          <button onclick="buscarUltimaOcurrencia()">
+            Buscar Última Ocurrencia
+          </button>
+        </div>
+        <div class="result" id="lastIndexOfInteractiveResult"></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <h2>Método includes()</h2>
+      <p>
+        Retorna <code>true</code> si encuentra el texto especificado,
+        <code>false</code> si no.
+      </p>
+
+      <div class="method-info">
+        <p>
+          <strong>Sintaxis:</strong>
+          <code class="highlight"
+            >cadena.includes(textoABuscar, posicionInicio?)</code
+          >
+        </p>
+      </div>
+
+      <div class="code-example">
+        <code
+          >let texto = "Hola mundo, bienvenido al universo.";<br />
+          let resultado = texto.includes("mundo");</code
+        >
+        <div class="result" id="includesResult"></div>
+      </div>
+
+      <div class="interactive-area">
+        <h3>Prueba tú mismo:</h3>
+        <textarea id="includesInput" rows="3">
+Los métodos de cadena son muy útiles en programación.</textarea
+        >
+        <div class="flex-container">
+          <input
+            type="text"
+            id="includesSearch"
+            placeholder="Texto a buscar"
+            value="útiles"
+          />
+          <button onclick="verificarInclusion()">Verificar si Incluye</button>
+        </div>
+        <div class="result" id="includesInteractiveResult"></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <h2>Método startsWith()</h2>
+      <p>
+        Retorna <code>true</code> si la cadena comienza con el texto
+        especificado, <code>false</code> si no.
+      </p>
+
+      <div class="method-info">
+        <p>
+          <strong>Sintaxis:</strong>
+          <code class="highlight"
+            >cadena.startsWith(textoABuscar, posicionInicio?)</code
+          >
+        </p>
+      </div>
+
+      <div class="code-example">
+        <code
+          >let texto = "Hola mundo, bienvenido al universo.";<br />
+          let resultado = texto.startsWith("Hola");</code
+        >
+        <div class="result" id="startsWithResult"></div>
+      </div>
+
+      <div class="interactive-area">
+        <h3>Prueba tú mismo:</h3>
+        <textarea id="startsWithInput" rows="3">
+Bienvenidos al tutorial de JavaScript</textarea
+        >
+        <div class="flex-container">
+          <input
+            type="text"
+            id="startsWithSearch"
+            placeholder="Texto inicial"
+            value="Bienvenidos"
+          />
+          <button onclick="verificarInicio()">Verificar Inicio</button>
+        </div>
+        <div class="result" id="startsWithInteractiveResult"></div>
+      </div>
+    </div>
+
+    <div class="concept-card">
+      <h2>Método endsWith()</h2>
+      <p>
+        Retorna <code>true</code> si la cadena termina con el texto
+        especificado, <code>false</code> si no.
+      </p>
+
+      <div class="method-info">
+        <p>
+          <strong>Sintaxis:</strong>
+          <code class="highlight"
+            >cadena.endsWith(textoABuscar, longitud?)</code
+          >
+        </p>
+      </div>
+
+      <div class="code-example">
+        <code
+          >let texto = "Hola mundo, bienvenido al universo.";<br />
+          let resultado = texto.endsWith("universo.");</code
+        >
+        <div class="result" id="endsWithResult"></div>
+      </div>
+
+      <div class="interactive-area">
+        <h3>Prueba tú mismo:</h3>
+        <textarea id="endsWithInput" rows="3">
+Este es el final de nuestro ejemplo.</textarea
+        >
+        <div class="flex-container">
+          <input
+            type="text"
+            id="endsWithSearch"
+            placeholder="Texto final"
+            value="ejemplo."
+          />
+          <button onclick="verificarFinal()">Verificar Final</button>
+        </div>
+        <div class="result" id="endsWithInteractiveResult"></div>
+      </div>
+    </div>
+
+    <script>
+      // Ejemplos estáticos
+      let str1 = "Por favor, encuentra donde 'encuentra' aparece!";
+      document.getElementById("indexOfResult").textContent =
+        "Resultado: " + str1.indexOf("encuentra");
+
+      document.getElementById("lastIndexOfResult").textContent =
+        "Resultado: " + str1.lastIndexOf("encuentra");
+
+      let textoEjemplo = "Hola mundo, bienvenido al universo.";
+      document.getElementById("includesResult").textContent =
+        "Resultado: " + textoEjemplo.includes("mundo");
+
+      document.getElementById("startsWithResult").textContent =
+        "Resultado: " + textoEjemplo.startsWith("Hola");
+
+      document.getElementById("endsWithResult").textContent =
+        "Resultado: " + textoEjemplo.endsWith("universo.");
+
+      // Funciones interactivas
+      function buscarPrimeraOcurrencia() {
+        let texto = document.getElementById("indexOfInput").value;
+        let busqueda = document.getElementById("indexOfSearch").value;
+        let posicion = texto.indexOf(busqueda);
+
+        let resultado =
+          posicion === -1
+            ? `"${busqueda}" no encontrado`
+            : `Primera ocurrencia en posición: ${posicion}`;
+
+        document.getElementById("indexOfInteractiveResult").textContent =
+          resultado;
+      }
+
+      function buscarUltimaOcurrencia() {
+        let texto = document.getElementById("lastIndexOfInput").value;
+        let busqueda = document.getElementById("lastIndexOfSearch").value;
+        let posicion = texto.lastIndexOf(busqueda);
+
+        let resultado =
+          posicion === -1
+            ? `"${busqueda}" no encontrado`
+            : `Última ocurrencia en posición: ${posicion}`;
+
+        document.getElementById("lastIndexOfInteractiveResult").textContent =
+          resultado;
+      }
+
+      function verificarInclusion() {
+        let texto = document.getElementById("includesInput").value;
+        let busqueda = document.getElementById("includesSearch").value;
+        let resultado = texto.includes(busqueda);
+
+        document.getElementById("includesInteractiveResult").textContent =
+          `"${busqueda}" ${resultado ? "SÍ" : "NO"} está incluido`;
+      }
+
+      function verificarInicio() {
+        let texto = document.getElementById("startsWithInput").value;
+        let busqueda = document.getElementById("startsWithSearch").value;
+        let resultado = texto.startsWith(busqueda);
+
+        document.getElementById("startsWithInteractiveResult").textContent =
+          `La cadena ${resultado ? "SÍ" : "NO"} comienza con "${busqueda}"`;
+      }
+
+      function verificarFinal() {
+        let texto = document.getElementById("endsWithInput").value;
+        let busqueda = document.getElementById("endsWithSearch").value;
+        let resultado = texto.endsWith(busqueda);
+
+        document.getElementById("endsWithInteractiveResult").textContent =
+          `La cadena ${resultado ? "SÍ" : "NO"} termina con "${busqueda}"`;
+      }
+
+      // Inicializar resultados interactivos
+      buscarPrimeraOcurrencia();
+      buscarUltimaOcurrencia();
+      verificarInclusion();
+      verificarInicio();
+      verificarFinal();
+    </script>
+  </body>
+</html>
