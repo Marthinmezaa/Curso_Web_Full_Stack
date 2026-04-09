@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recorrido y Métodos de Arreglos</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f7f7;
+        color: #3f3f3f;
+        line-height: 1.6;
+      }
+      h1 {
+        color: #112d4e;
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #3f72af;
+      }
+      h2 {
+        color: #3f72af;
+        margin-top: 25px;
+      }
+      .card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .code-block {
+        background-color: #f0f4f8;
+        border-left: 4px solid #3f72af;
+        padding: 15px;
+        margin: 15px 0;
+        font-family: "Courier New", monospace;
+        overflow-x: auto;
+        border-radius: 0 5px 5px 0;
+      }
+      .interactive-section {
+        background-color: #dbe2ef;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 15px;
+      }
+      button {
+        background-color: #3f72af;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        transition: all 0.3s;
+        font-weight: bold;
+      }
+      button:hover {
+        background-color: #112d4e;
+        transform: scale(1.05);
+      }
+      .output-area {
+        background-color: white;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 15px;
+        min-height: 50px;
+        border: 1px solid #dbe2ef;
+      }
+      ul {
+        padding-left: 20px;
+      }
+      li {
+        margin-bottom: 5px;
+      }
+      .note {
+        background-color: #fff8e1;
+        padding: 10px;
+        border-left: 4px solid #ffc107;
+        margin: 10px 0;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Recorrido y Métodos de Arreglos en JavaScript</h1>
+
+    <div class="card">
+      <h2>Recorrer arreglos con bucle for</h2>
+      <p>
+        Podemos usar un bucle <code>for</code> tradicional para recorrer todos
+        los elementos de un arreglo:
+      </p>
+
+      <div class="code-block">
+        const fruits = ["Banana", "Orange", "Apple", "Mango"];<br />
+        let fLen = fruits.length; // Obtenemos la cantidad de elementos<br />
+        let text = "&lt;ul&gt;";<br />
+        for (let i = 0; i &lt; fLen; i++) {<br />
+        &nbsp;&nbsp;text += "&lt;li&gt;" + fruits[i] + "&lt;/li&gt;";<br />
+        }<br />
+        text += "&lt;/ul&gt;";
+      </div>
+
+      <div class="interactive-section">
+        <button onclick="showForLoop()">Mostrar con for</button>
+        <button onclick="generateListWithFor()">Generar lista HTML</button>
+        <div class="output-area" id="for-loop-output"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Recorrer arreglos con forEach</h2>
+      <p>
+        El método <code>forEach</code> ejecuta una función por cada elemento del
+        arreglo:
+      </p>
+
+      <div class="code-block">
+        const fruits = ["Banana", "Orange", "Apple", "Mango"];<br /><br />
+        let text = "&lt;ul&gt;";<br />
+        fruits.forEach(myFunction);<br />
+        text += "&lt;/ul&gt;";<br /><br />
+        function myFunction(value) {<br />
+        &nbsp;&nbsp;text += "&lt;li&gt;" + value + "&lt;/li&gt;";<br />
+        }
+      </div>
+
+      <div class="interactive-section">
+        <button onclick="showForEach()">Mostrar con forEach</button>
+        <button onclick="generateListWithForEach()">Generar lista HTML</button>
+        <div class="output-area" id="foreach-output"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Agregar elementos con push()</h2>
+      <p>
+        El método <code>push()</code> añade uno o más elementos al final del
+        arreglo:
+      </p>
+
+      <div class="code-block">
+        const fruits = ["Banana", "Orange", "Apple"];<br />
+        fruits.push("Lemon"); // Agrega un nuevo elemento<br />
+        fruits.push("Grapes", "Peach"); // Puedes agregar múltiples elementos
+      </div>
+
+      <div class="note">
+        <strong>Nota:</strong> push() modifica el arreglo original y devuelve la
+        nueva longitud.
+      </div>
+
+      <div class="interactive-section">
+        <button onclick="showOriginalArray()">Mostrar arreglo original</button>
+        <button onclick="addWithPush()">Agregar con push()</button>
+        <button onclick="showModifiedArray()">
+          Mostrar arreglo modificado
+        </button>
+        <div class="output-area" id="push-output"></div>
+      </div>
+    </div>
+
+    <script>
+      // Arreglo para los ejemplos
+      const fruits = ["Banana", "Orange", "Apple", "Mango"];
+      let modifiedFruits = ["Banana", "Orange", "Apple"];
+
+      // Función para mostrar el arreglo formateado
+      function displayArray(arr, elementId) {
+        document.getElementById(elementId).innerHTML =
+          `<strong>Arreglo:</strong> [${arr.join(", ")}]<br>
+                 <strong>Longitud:</strong> ${arr.length} elementos`;
+      }
+
+      // Funciones para el bucle for
+      function showForLoop() {
+        let output = "<strong>Recorrido con for:</strong><br>";
+        for (let i = 0; i < fruits.length; i++) {
+          output += `Elemento ${i}: ${fruits[i]}<br>`;
+        }
+        document.getElementById("for-loop-output").innerHTML = output;
+      }
+
+      function generateListWithFor() {
+        let text = "<ul>";
+        for (let i = 0; i < fruits.length; i++) {
+          text += `<li>${fruits[i]}</li>`;
+        }
+        text += "</ul>";
+        document.getElementById("for-loop-output").innerHTML = text;
+      }
+
+      // Funciones para forEach
+      function showForEach() {
+        let output = "<strong>Recorrido con forEach:</strong><br>";
+        fruits.forEach((fruit, index) => {
+          output += `Elemento ${index}: ${fruit}<br>`;
+        });
+        document.getElementById("foreach-output").innerHTML = output;
+      }
+
+      function generateListWithForEach() {
+        let text = "<ul>";
+        fruits.forEach((fruit) => {
+          text += `<li>${fruit}</li>`;
+        });
+        text += "</ul>";
+        document.getElementById("foreach-output").innerHTML = text;
+      }
+
+      // Funciones para push()
+      function showOriginalArray() {
+        displayArray(modifiedFruits, "push-output");
+      }
+
+      function addWithPush() {
+        modifiedFruits.push("Lemon");
+        modifiedFruits.push("Grapes", "Peach");
+        document.getElementById("push-output").innerHTML =
+          "Se agregaron elementos con push()";
+      }
+
+      function showModifiedArray() {
+        displayArray(modifiedFruits, "push-output");
+      }
+    </script>
+  </body>
+</html>

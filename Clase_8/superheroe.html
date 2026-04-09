@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador de Nombres de Superhéroe</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,700;14..32,800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: linear-gradient(135deg, #0b0c1a, #1a1e2f);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Inter", sans-serif;
+        padding: 1.5rem;
+      }
+      .tarjeta {
+        background: rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(8px);
+        border-radius: 2.5rem;
+        box-shadow:
+          0 25px 45px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(255, 255, 255, 0.1);
+        padding: 2rem 1.8rem 2.5rem;
+        max-width: 680px;
+        width: 100%;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        background: linear-gradient(120deg, #ffd166, #ff8c42, #ff5e7e);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        margin-bottom: 0.5rem;
+      }
+      .subtitulo {
+        color: #b9c3e6;
+        font-weight: 500;
+        border-bottom: 1px dashed rgba(255, 215, 100, 0.5);
+        display: inline-block;
+        padding-bottom: 0.3rem;
+        margin-bottom: 1.8rem;
+      }
+      .caja-nombre {
+        background: #0f111e;
+        border-radius: 2rem;
+        padding: 1.8rem 1rem;
+        margin: 1.2rem 0 1.8rem;
+        border: 1px solid rgba(255, 200, 100, 0.4);
+      }
+      .etiqueta {
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: #ffc857;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 0.8rem;
+      }
+      .nombre-heroe {
+        font-size: 2.4rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #f9f3e2, #ffe5b4);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        word-break: break-word;
+        animation: aparecer 0.3s ease-out;
+      }
+      @media (min-width: 520px) {
+        .nombre-heroe {
+          font-size: 3rem;
+        }
+        h1 {
+          font-size: 2.6rem;
+        }
+      }
+      button {
+        background: linear-gradient(95deg, #ff6a3d, #ff3b6f);
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+        font-family: inherit;
+        color: white;
+        border-radius: 3rem;
+        cursor: pointer;
+        width: 100%;
+        max-width: 280px;
+        transition: 0.2s;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+      }
+      button:hover {
+        transform: translateY(-3px);
+        filter: brightness(1.05);
+      }
+      button:active {
+        transform: translateY(2px);
+      }
+      @keyframes aparecer {
+        0% {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tarjeta">
+      <h1>⚡ GENERADOR DE SUPERHÉROE ⚡</h1>
+      <div class="subtitulo">🦸‍♀️ Crea tu identidad épica 🦸‍♂️</div>
+
+      <div class="caja-nombre">
+        <span class="etiqueta">🏆 TU NOMBRE DE SUPERHÉROE 🏆</span>
+        <div class="nombre-heroe" id="nombreHeroe">Súper Fuerza Relámpago</div>
+      </div>
+
+      <button id="botonGenerar">✨ GENERAR NUEVO NOMBRE ✨</button>
+    </div>
+
+    <script>
+      // Listas de partes del nombre (igual que el código Python original)
+      const primeras = [
+        "Súper",
+        "Mega",
+        "Hiper",
+        "Ultra",
+        "Increíble",
+        "Fantástico",
+      ];
+      const segundas = [
+        "Fuerza",
+        "Velocidad",
+        "Luz",
+        "Oscuridad",
+        "Rayos",
+        "Poder",
+      ];
+      const terceras = [
+        "Relámpago",
+        "Trueno",
+        "Estrella",
+        "Galaxia",
+        "Dragón",
+        "Fénix",
+      ];
+
+      function generarNombre() {
+        const p1 = primeras[Math.floor(Math.random() * primeras.length)];
+        const p2 = segundas[Math.floor(Math.random() * segundas.length)];
+        const p3 = terceras[Math.floor(Math.random() * terceras.length)];
+        return `${p1} ${p2} ${p3}`;
+      }
+
+      const nombreElem = document.getElementById("nombreHeroe");
+      const boton = document.getElementById("botonGenerar");
+
+      function actualizar() {
+        nombreElem.textContent = generarNombre();
+        // Reinicia animación
+        nombreElem.style.animation = "none";
+        void nombreElem.offsetHeight;
+        nombreElem.style.animation = "aparecer 0.3s ease-out";
+      }
+
+      boton.addEventListener("click", actualizar);
+      actualizar(); // Muestra un nombre aleatorio al cargar
+    </script>
+  </body>
+</html>

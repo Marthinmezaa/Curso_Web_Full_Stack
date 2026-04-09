@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Práctica de Canvas HTML5</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 30px;
+        background-color: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+      }
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 3px solid #3498db;
+        padding-bottom: 10px;
+      }
+      .card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+      }
+      .code-block {
+        background-color: #f8f9fa;
+        border-left: 4px solid #3498db;
+        padding: 15px;
+        margin: 15px 0;
+        font-family: "Courier New", monospace;
+        overflow-x: auto;
+        border-radius: 0 5px 5px 0;
+      }
+      .canvas-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+      canvas {
+        background-color: white;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 10px auto;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        font-size: 14px;
+        transition: all 0.3s;
+      }
+      button:hover {
+        background-color: #2980b9;
+        transform: scale(1.05);
+      }
+      .button-group {
+        margin: 15px 0;
+        text-align: center;
+      }
+      .explanation {
+        background-color: #e8f4fc;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+      }
+      .note {
+        background-color: #fff8e1;
+        padding: 10px;
+        border-left: 4px solid #f39c12;
+        margin: 10px 0;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Práctica con Elemento Canvas</h1>
+
+    <div class="card">
+      <h2>¿Qué es &lt;canvas&gt;?</h2>
+      <p>
+        Es un contenedor que permite dibujar gráficos mediante JavaScript.
+        Permite crear animaciones, juegos, visualizaciones de datos y más.
+      </p>
+
+      <div class="code-block">
+        &lt;canvas id="myCanvas" width="200" height="100"&gt;&lt;/canvas&gt;
+      </div>
+
+      <div class="note">
+        <strong>Nota:</strong> Los atributos width y height definen el tamaño
+        del área de dibujo.
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="introCanvas" width="200" height="100"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Dibujar una Línea</h2>
+
+      <div class="explanation">
+        <p>
+          Este código dibuja una línea desde la posición (0,0) hasta (200,100):
+        </p>
+      </div>
+
+      <div class="code-block">
+        var c = document.getElementById("myCanvas");<br />
+        var ctx = c.getContext("2d"); // Contexto de dibujo 2D<br />
+        ctx.moveTo(0, 0); // Posición inicial<br />
+        ctx.lineTo(200, 100); // Posición final<br />
+        ctx.stroke(); // Dibujar la línea
+      </div>
+
+      <div class="button-group">
+        <button onclick="drawLine()">Dibujar Línea</button>
+        <button onclick="clearCanvas('lineCanvas')">Limpiar</button>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="lineCanvas" width="200" height="100"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Dibujar un Rectángulo</h2>
+
+      <div class="explanation">
+        <p>Este código dibuja un rectángulo rojo de 150x75 píxeles:</p>
+      </div>
+
+      <div class="code-block">
+        const canvas = document.getElementById("myCanvas");<br />
+        const ctx = canvas.getContext("2d");<br />
+        ctx.fillStyle = "red"; // Color de relleno<br />
+        ctx.fillRect(0, 0, 150, 75); // Dibujar rectángulo
+      </div>
+
+      <div class="button-group">
+        <button onclick="drawRectangle()">Dibujar Rectángulo</button>
+        <button onclick="clearCanvas('rectCanvas')">Limpiar</button>
+        <button onclick="changeRectColor()">Cambiar Color</button>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="rectCanvas" width="200" height="100"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Dibujar un Círculo</h2>
+
+      <div class="explanation">
+        <p>Este código dibuja un círculo usando el método arc():</p>
+      </div>
+
+      <div class="code-block">
+        var c = document.getElementById("myCanvas");<br />
+        var ctx = c.getContext("2d");<br />
+        ctx.beginPath();<br />
+        ctx.arc(95, 50, 40, 0, 2 * Math.PI); // Parámetros del círculo<br />
+        ctx.stroke();
+      </div>
+
+      <div class="note">
+        <strong>Parámetros de arc():</strong> (x, y, radio, ánguloInicial,
+        ánguloFinal)
+      </div>
+
+      <div class="button-group">
+        <button onclick="drawCircle()">Dibujar Círculo</button>
+        <button onclick="clearCanvas('circleCanvas')">Limpiar</button>
+        <button onclick="fillCircle()">Rellenar Círculo</button>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="circleCanvas" width="200" height="100"></canvas>
+      </div>
+    </div>
+
+    <script>
+      // Dibujar línea
+      function drawLine() {
+        const canvas = document.getElementById("lineCanvas");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(200, 100);
+        ctx.strokeStyle = "#3498db";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+
+      // Dibujar rectángulo
+      function drawRectangle() {
+        const canvas = document.getElementById("rectCanvas");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "red";
+        ctx.fillRect(25, 12.5, 150, 75);
+      }
+
+      // Cambiar color del rectángulo
+      function changeRectColor() {
+        const colors = ["red", "blue", "green", "purple", "orange"];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+        const canvas = document.getElementById("rectCanvas");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = randomColor;
+        ctx.fillRect(25, 12.5, 150, 75);
+      }
+
+      // Dibujar círculo
+      function drawCircle() {
+        const canvas = document.getElementById("circleCanvas");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.arc(100, 50, 40, 0, 2 * Math.PI);
+        ctx.strokeStyle = "#e74c3c";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      // Rellenar círculo
+      function fillCircle() {
+        const canvas = document.getElementById("circleCanvas");
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.arc(100, 50, 40, 0, 2 * Math.PI);
+        ctx.fillStyle = "#2ecc71";
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      // Limpiar canvas
+      function clearCanvas(canvasId) {
+        const canvas = document.getElementById(canvasId);
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    </script>
+  </body>
+</html>

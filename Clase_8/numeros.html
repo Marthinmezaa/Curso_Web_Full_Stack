@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aprendiendo Números en JavaScript</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #333;
+        background-color: #f9f9f9;
+      }
+      h1,
+      h2 {
+        color: #2c3e50;
+      }
+      .container {
+        background-color: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .example {
+        background-color: #f0f8ff;
+        padding: 15px;
+        border-left: 4px solid #3498db;
+        margin: 15px 0;
+        border-radius: 0 4px 4px 0;
+      }
+      code {
+        background-color: #f0f0f0;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-family: "Courier New", Courier, monospace;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 5px 0;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      .result {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #e8f4f8;
+        border-radius: 4px;
+        display: none;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      .interactive {
+        margin: 20px 0;
+      }
+      input {
+        padding: 8px;
+        margin: 5px 0;
+        width: 200px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Números en JavaScript</h1>
+      <p>
+        JavaScript tiene un solo tipo de número. Los números se pueden escribir
+        con o sin decimales.
+      </p>
+
+      <div class="example">
+        <h3>Ejemplos básicos</h3>
+        <code>let x = 3.14; // Un número con decimales</code><br />
+        <code>let y = 3; // Un número sin decimales</code>
+
+        <div class="interactive">
+          <button onclick="showBasicExamples()">Mostrar ejemplos</button>
+          <div id="basicResult" class="result"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Método toFixed()</h2>
+      <p>Retorna un número con un número específico de decimales.</p>
+
+      <div class="example">
+        <code>let x = 9.656;</code><br />
+        <code>x.toFixed(0); // "10"</code><br />
+        <code>x.toFixed(2); // "9.66"</code><br />
+        <code>x.toFixed(4); // "9.6560"</code><br />
+        <code>x.toFixed(6); // "9.656000"</code>
+
+        <div class="interactive">
+          <p>Prueba el método toFixed() con diferentes valores:</p>
+          <input
+            type="number"
+            id="toFixedNumber"
+            value="9.656"
+            step="any"
+          /><br />
+          <input type="number" id="toFixedDecimals" value="2" min="0" /><br />
+          <button onclick="testToFixed()">Probar toFixed()</button>
+          <div id="toFixedResult" class="result"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Método Number()</h2>
+      <p>Convierte variables de JavaScript en números.</p>
+
+      <table>
+        <tr>
+          <th>Expresión</th>
+          <th>Resultado</th>
+        </tr>
+        <tr>
+          <td><code>Number(true)</code></td>
+          <td><code>1</code></td>
+        </tr>
+        <tr>
+          <td><code>Number(false)</code></td>
+          <td><code>0</code></td>
+        </tr>
+        <tr>
+          <td><code>Number("10")</code></td>
+          <td><code>10</code></td>
+        </tr>
+        <tr>
+          <td><code>Number(" 10")</code></td>
+          <td><code>10</code></td>
+        </tr>
+        <tr>
+          <td><code>Number("10 ")</code></td>
+          <td><code>10</code></td>
+        </tr>
+        <tr>
+          <td><code>Number("10 años")</code></td>
+          <td><code>NaN</code></td>
+        </tr>
+      </table>
+
+      <div class="interactive">
+        <p>Prueba el método Number() con tu propio valor:</p>
+        <input type="text" id="numberInput" value="123" /><br />
+        <button onclick="testNumber()">Probar Number()</button>
+        <div id="numberResult" class="result"></div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Método parseInt()</h2>
+      <p>Analiza un texto y devuelve el primer número encontrado.</p>
+
+      <div class="example">
+        <code>parseInt("10"); // 10</code><br />
+        <code>parseInt("10.33"); // 10</code><br />
+        <code>parseInt("10 20 30"); // 10</code><br />
+        <code>parseInt("10 años"); // 10</code>
+
+        <div class="interactive">
+          <p>Prueba el método parseInt() con tu propio texto:</p>
+          <input type="text" id="parseIntInput" value="10 años" /><br />
+          <button onclick="testParseInt()">Probar parseInt()</button>
+          <div id="parseIntResult" class="result"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Resumen de Métodos</h2>
+      <p>JavaScript ofrece varios métodos para trabajar con números:</p>
+      <ul>
+        <li><code>toFixed()</code> - Formatea un número con decimales fijos</li>
+        <li><code>Number()</code> - Convierte un valor a número</li>
+        <li>
+          <code>parseInt()</code> - Analiza un string y devuelve un entero
+        </li>
+        <li>
+          <code>parseFloat()</code> - Analiza un string y devuelve un número con
+          decimales
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      function showBasicExamples() {
+        let x = 3.14;
+        let y = 3;
+        let result = `x = ${x} (tipo: ${typeof x})<br>y = ${y} (tipo: ${typeof y})`;
+        document.getElementById("basicResult").innerHTML = result;
+        document.getElementById("basicResult").style.display = "block";
+      }
+
+      function testToFixed() {
+        let num = parseFloat(document.getElementById("toFixedNumber").value);
+        let decimals = parseInt(
+          document.getElementById("toFixedDecimals").value,
+        );
+        let result = `${num}.toFixed(${decimals}) = "${num.toFixed(decimals)}"`;
+        document.getElementById("toFixedResult").innerHTML = result;
+        document.getElementById("toFixedResult").style.display = "block";
+      }
+
+      function testNumber() {
+        let input = document.getElementById("numberInput").value;
+        let result = `Number("${input}") = ${Number(input)} (tipo: ${typeof Number(input)})`;
+        document.getElementById("numberResult").innerHTML = result;
+        document.getElementById("numberResult").style.display = "block";
+      }
+
+      function testParseInt() {
+        let input = document.getElementById("parseIntInput").value;
+        let result = `parseInt("${input}") = ${parseInt(input)} (tipo: ${typeof parseInt(input)})`;
+        document.getElementById("parseIntResult").innerHTML = result;
+        document.getElementById("parseIntResult").style.display = "block";
+      }
+    </script>
+  </body>
+</html>

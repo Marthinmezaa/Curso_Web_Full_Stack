@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Práctica de Arreglos en JavaScript</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+        color: #333;
+      }
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 10px;
+      }
+      .concept-box {
+        background-color: white;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .code-box {
+        background-color: #f8f9fa;
+        border-left: 4px solid #3498db;
+        padding: 10px;
+        margin: 10px 0;
+        font-family: "Courier New", Courier, monospace;
+        overflow-x: auto;
+      }
+      .interactive-area {
+        background-color: #e8f4fc;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 15px;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      #output {
+        margin-top: 15px;
+        padding: 10px;
+        background-color: white;
+        border-radius: 4px;
+        min-height: 50px;
+      }
+      .note {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Práctica de Arreglos en JavaScript</h1>
+
+    <div class="concept-box">
+      <h2>¿Qué son los arreglos?</h2>
+      <p>
+        Los arreglos (también llamados Array, Vector, Matriz o Listas) se
+        utilizan para almacenar múltiples valores en una sola variable.
+      </p>
+
+      <div class="code-box">const cars = ["Ford", "Volvo", "BMW"];</div>
+
+      <div class="note">
+        <strong>Nota:</strong> Al declarar con <code>const</code> no se puede
+        reasignar el arreglo completo, pero sí se pueden modificar sus
+        elementos.
+      </div>
+    </div>
+
+    <div class="concept-box">
+      <h2>Creación de arreglos</h2>
+      <p>Se puede crear un arreglo vacío y luego proporcionar los elementos:</p>
+
+      <div class="code-box">
+        const cars = [];<br />
+        cars[0] = "Saab";<br />
+        cars[1] = "Volvo";<br />
+        cars[2] = "BMW";
+      </div>
+
+      <div class="interactive-area">
+        <button onclick="createArray()">Crear arreglo</button>
+        <button onclick="showCreatedArray()">Mostrar arreglo</button>
+        <div id="create-output"></div>
+      </div>
+    </div>
+
+    <div class="concept-box">
+      <h2>Acceso a elementos</h2>
+      <p>
+        Se puede acceder a los elementos por su índice (comenzando desde 0):
+      </p>
+
+      <div class="code-box">
+        let cars = ["Ford", "Volvo", "BMW"];<br />
+        let name = cars[0]; // "Ford"
+      </div>
+
+      <div class="interactive-area">
+        <button onclick="accessFirstElement()">
+          Acceder al primer elemento
+        </button>
+        <button onclick="accessSecondElement()">
+          Acceder al segundo elemento
+        </button>
+        <div id="access-output"></div>
+      </div>
+    </div>
+
+    <div class="concept-box">
+      <h2>Modificación de elementos</h2>
+      <p>Se puede cambiar el valor de un elemento accediendo a su índice:</p>
+
+      <div class="code-box">
+        let cars = ["Ford", "Volvo", "BMW"];<br />
+        cars[0] = "Toyota"; // Cambia el primer elemento
+      </div>
+
+      <div class="interactive-area">
+        <button onclick="modifyFirstElement()">
+          Cambiar primer elemento a "Toyota"
+        </button>
+        <button onclick="showModifiedArray()">
+          Mostrar arreglo modificado
+        </button>
+        <div id="modify-output"></div>
+      </div>
+    </div>
+
+    <div class="concept-box">
+      <h2>Mostrar el arreglo completo</h2>
+      <p>Se puede acceder al arreglo completo mediante su nombre:</p>
+
+      <div class="code-box">
+        const cars = ["Saab", "Volvo", "BMW"];<br />
+        document.getElementById("demo").innerHTML = cars;
+      </div>
+
+      <div class="interactive-area">
+        <button onclick="showFullArray()">Mostrar arreglo completo</button>
+        <div id="full-array-output"></div>
+      </div>
+    </div>
+
+    <script>
+      // Arreglo para practicar
+      let cars = ["Ford", "Volvo", "BMW"];
+      let createdArray = [];
+
+      function createArray() {
+        createdArray = [];
+        createdArray[0] = "Saab";
+        createdArray[1] = "Volvo";
+        createdArray[2] = "BMW";
+        document.getElementById("create-output").innerHTML =
+          "Arreglo creado: [" + createdArray.join(", ") + "]";
+      }
+
+      function showCreatedArray() {
+        document.getElementById("create-output").innerHTML =
+          "Arreglo completo: [" + createdArray.join(", ") + "]";
+      }
+
+      function accessFirstElement() {
+        document.getElementById("access-output").innerHTML =
+          "Primer elemento: " + cars[0];
+      }
+
+      function accessSecondElement() {
+        document.getElementById("access-output").innerHTML =
+          "Segundo elemento: " + cars[1];
+      }
+
+      function modifyFirstElement() {
+        cars[0] = "Toyota";
+        document.getElementById("modify-output").innerHTML =
+          "Primer elemento cambiado a Toyota";
+      }
+
+      function showModifiedArray() {
+        document.getElementById("modify-output").innerHTML =
+          "Arreglo modificado: [" + cars.join(", ") + "]";
+      }
+
+      function showFullArray() {
+        document.getElementById("full-array-output").innerHTML =
+          "Arreglo completo: [" + cars.join(", ") + "]";
+      }
+    </script>
+  </body>
+</html>
