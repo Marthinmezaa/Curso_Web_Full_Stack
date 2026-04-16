@@ -1,0 +1,91 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.card {
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+  border-bottom: 1px solid #ddd;
+}
+
+.card-header img {
+  width: 100%;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-header img {
+  transform: scale(1.1);
+}
+
+.card-body {
+  padding: 16px;
+  text-align: center;
+}
+
+.card-body h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.card-body p {
+  margin: 8px 0;
+  color: #777;
+}
+
+.social-icons {
+  margin-top: 16px;
+}
+
+.social-icons a {
+  margin: 0 8px;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+}
+
+.social-icons img {
+  width: 30px;
+  height: 30px;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.card:hover .social-icons img {
+  animation: rotate 1s linear infinite;
+}
