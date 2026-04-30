@@ -1,0 +1,107 @@
+[
+  {
+    "id": "q1",
+    "pregunta": "¿Qué significa SQL?",
+    "opciones": [
+      { "texto": "Simple Query Language", "correcta": false },
+      { "texto": "Structured Query Language", "correcta": true },
+      { "texto": "System Query Logic", "correcta": false }
+    ]
+  },
+  {
+    "id": "q2",
+    "pregunta": "¿Cuál de los siguientes comandos crea una base de datos llamada 'FullStack'?",
+    "opciones": [
+      { "texto": "CREATE DB FullStack;", "correcta": false },
+      { "texto": "CREATE DATABASE FullStack;", "correcta": true },
+      { "texto": "NEW DATABASE FullStack;", "correcta": false }
+    ]
+  },
+  {
+    "id": "q3",
+    "pregunta": "¿Qué comando SQL se usa para crear una nueva tabla?",
+    "opciones": [
+      { "texto": "CREATE NEW TABLE", "correcta": false },
+      { "texto": "CREATE TABLE", "correcta": true },
+      { "texto": "ADD TABLE", "correcta": false }
+    ]
+  },
+  {
+    "id": "q4",
+    "pregunta": "¿Cuál es la sintaxis correcta para seleccionar todos los registros de una tabla llamada 'Productos'?",
+    "opciones": [
+      { "texto": "SELECT ALL FROM Productos;", "correcta": false },
+      { "texto": "SELECT * FROM Productos;", "correcta": true },
+      { "texto": "GET * FROM Productos;", "correcta": false }
+    ]
+  },
+  {
+    "id": "q5",
+    "pregunta": "¿Qué operador SQL se usa para filtrar registros que cumplen varias condiciones, como 'España' y 'Madrid'?",
+    "opciones": [
+      { "texto": "WHERE ... OR ...", "correcta": false },
+      { "texto": "WHERE ... AND ...", "correcta": true },
+      { "texto": "WHERE ... BETWEEN ...", "correcta": false }
+    ]
+  },
+  {
+    "id": "q6",
+    "pregunta": "¿Qué comando se utiliza para insertar datos en una tabla 'Clientes'?",
+    "opciones": [
+      { "texto": "INSERT INTO Clientes VALUES (...);", "correcta": true },
+      { "texto": "ADD TO Clientes (...);", "correcta": false },
+      { "texto": "NEW Clientes (...);", "correcta": false }
+    ]
+  },
+  {
+    "id": "q7",
+    "pregunta": "¿Cuál es el propósito del comando UPDATE en SQL?",
+    "opciones": [
+      { "texto": "Eliminar una tabla", "correcta": false },
+      { "texto": "Actualizar datos en una tabla", "correcta": true },
+      { "texto": "Crear una nueva tabla", "correcta": false }
+    ]
+  },
+  {
+    "id": "q8",
+    "pregunta": "¿Qué hace el comando DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';?",
+    "opciones": [
+      {
+        "texto": "Elimina todos los registros de la tabla 'Customers'",
+        "correcta": false
+      },
+      {
+        "texto": "Elimina solo el registro donde CustomerName es 'Alfreds Futterkiste'",
+        "correcta": true
+      },
+      {
+        "texto": "Actualiza el registro de 'Alfreds Futterkiste'",
+        "correcta": false
+      }
+    ]
+  },
+  {
+    "id": "q9",
+    "pregunta": "¿Qué comando se usa para asignar un alias temporal a una columna en SQL?",
+    "opciones": [
+      { "texto": "RENAME columna AS alias", "correcta": false },
+      { "texto": "SELECT columna AS alias", "correcta": true },
+      { "texto": "COLUMN AS alias", "correcta": false }
+    ]
+  },
+  {
+    "id": "q10",
+    "pregunta": "¿Para qué sirve el comando SQL JOIN?",
+    "opciones": [
+      {
+        "texto": "Combinar registros de dos o más tablas en una consulta",
+        "correcta": true
+      },
+      {
+        "texto": "Crear una nueva tabla con datos de varias tablas",
+        "correcta": false
+      },
+      { "texto": "Renombrar tablas en la base de datos", "correcta": false }
+    ]
+  }
+]
