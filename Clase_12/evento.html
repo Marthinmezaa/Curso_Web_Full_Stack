@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calendario con 1 evento</title>
+
+    <!-- SOLO el JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // 1. Contenedor
+        const calendarEl = document.getElementById("calendar");
+
+        // 2. Crear calendario
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: "dayGridMonth",
+          locale: "es",
+
+          headerToolbar: {
+            left: "prev,next today",
+            center: "title",
+            right: "",
+          },
+
+          // 3. EVENTOS (aquí agregamos 1)
+          events: [
+            {
+              title: "🎉Reunión", // texto que aparece
+              start: "2026-05-10", // fecha (YYYY-MM-DD)
+            },
+          ],
+        });
+
+        // 4. Renderizar
+        calendar.render();
+      });
+    </script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+      }
+
+      #calendar {
+        max-width: 900px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Aquí se muestra el calendario -->
+    <div id="calendar"></div>
+  </body>
+</html>

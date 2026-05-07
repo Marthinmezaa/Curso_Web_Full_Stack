@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calendario con formulario</title>
+
+    <!-- SOLO JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js"></script>
+
+    <script>
+      let calendar; // variable global para usarla en el formulario
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const calendarEl = document.getElementById("calendar");
+
+        // Crear calendario
+        calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: "dayGridMonth",
+          locale: "es",
+        });
+
+        calendar.render();
+
+        // Manejar el formulario
+        document
+          .getElementById("eventForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault(); // evitar recargar la página
+
+            // Obtener valores
+            const title = document.getElementById("title").value;
+            const date = document.getElementById("date").value;
+
+            // Validación simple
+            if (!title || !date) {
+              alert("Completa todos los campos");
+              return;
+            }
+
+            // Agregar evento al calendario
+            calendar.addEvent({
+              title: title,
+              start: date,
+            });
+
+            // Limpiar formulario
+            this.reset();
+          });
+      });
+    </script>
+
+    <style>
+      body {
+        font-family: Arial;
+        margin: 30px;
+      }
+
+      #calendar {
+        max-width: 800px;
+        margin-top: 20px;
+      }
+
+      form {
+        margin-bottom: 20px;
+      }
+
+      input,
+      button {
+        padding: 8px;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- FORMULARIO -->
+    <form id="eventForm">
+      <!-- Nombre del evento -->
+      <input type="text" id="title" placeholder="Nombre del evento" />
+
+      <!-- Fecha -->
+      <input type="date" id="date" />
+
+      <!-- Botón -->
+      <button type="submit">Agregar</button>
+    </form>
+
+    <!-- CALENDARIO -->
+    <div id="calendar"></div>
+  </body>
+</html>

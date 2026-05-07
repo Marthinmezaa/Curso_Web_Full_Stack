@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calendario simple</title>
+
+    <!-- SOLO el JS (sin CSS como pediste) -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js"></script>
+
+    <script>
+      // Esperar a que cargue todo el HTML
+      document.addEventListener("DOMContentLoaded", function () {
+        // 1. Obtener el contenedor del calendario
+        const calendarEl = document.getElementById("calendar");
+
+        // 2. Crear el calendario
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+          // Vista inicial (mes)
+          initialView: "dayGridMonth",
+
+          // (Opcional) idioma
+          locale: "es",
+
+          // (Opcional) botones arriba
+          headerToolbar: {
+            left: "prev,next today", // botones izquierda
+            center: "title", // título (mes/año)
+            right: "", // vacío (sin vistas extra)
+          },
+        });
+
+        // 3. Mostrar el calendario
+        calendar.render();
+      });
+    </script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+      }
+
+      #calendar {
+        max-width: 900px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Contenedor donde se renderiza el calendario -->
+    <div id="calendar"></div>
+  </body>
+</html>

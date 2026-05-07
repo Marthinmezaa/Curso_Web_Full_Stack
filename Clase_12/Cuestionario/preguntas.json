@@ -1,0 +1,128 @@
+[
+  {
+    "id": "q1",
+    "pregunta": "¿Qué es FullCalendar?",
+    "opciones": [
+      {
+        "texto": "Una biblioteca de JavaScript para crear calendarios interactivos.",
+        "correcta": true
+      },
+      {
+        "texto": "Un framework de Node.js para gestionar bases de datos.",
+        "correcta": false
+      },
+      { "texto": "Una extensión de Visual Studio Code.", "correcta": false },
+      { "texto": "Un paquete de gestión de fechas en JSON.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q2",
+    "pregunta": "¿Cuál de las siguientes características pertenece a FullCalendar?",
+    "opciones": [
+      { "texto": "Gestión de bases de datos relacionales.", "correcta": false },
+      {
+        "texto": "Soporte para eventos recurrentes y arrastrar/soltar eventos.",
+        "correcta": true
+      },
+      {
+        "texto": "Integración con MongoDB para almacenar eventos.",
+        "correcta": false
+      },
+      {
+        "texto": "Implementación de sistemas de autenticación.",
+        "correcta": false
+      }
+    ]
+  },
+  {
+    "id": "q3",
+    "pregunta": "¿Cómo puedes integrar FullCalendar en un archivo HTML?",
+    "opciones": [
+      {
+        "texto": "<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>",
+        "correcta": true
+      },
+      {
+        "texto": "<script src='https://cdn.mongodb.com/fullcalendar.min.js'></script>",
+        "correcta": false
+      },
+      {
+        "texto": "import { FullCalendar } from 'fullcalendar';",
+        "correcta": false
+      },
+      { "texto": "<link href='fullcalendar.css'></link>", "correcta": false }
+    ]
+  },
+  {
+    "id": "q4",
+    "pregunta": "¿Qué archivo JSON actúa como base de datos en el proyecto de vacaciones?",
+    "opciones": [
+      { "texto": "empleados.json", "correcta": false },
+      { "texto": "vacaciones.json", "correcta": true },
+      { "texto": "eventos.json", "correcta": false },
+      { "texto": "calendario.json", "correcta": false }
+    ]
+  },
+  {
+    "id": "q5",
+    "pregunta": "¿Cuál es el propósito del archivo calendario.html en el proyecto de vacaciones?",
+    "opciones": [
+      { "texto": "Gestionar la lógica de negocio.", "correcta": false },
+      { "texto": "Mostrar un calendario con FullCalendar.", "correcta": true },
+      { "texto": "Realizar llamadas a la API de RapidAPI.", "correcta": false },
+      { "texto": "Guardar eventos en la base de datos.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q6",
+    "pregunta": "¿Cuál es el propósito de la ruta GET /vacaciones en la API del proyecto?",
+    "opciones": [
+      {
+        "texto": "Agregar nuevas vacaciones al archivo JSON.",
+        "correcta": false
+      },
+      { "texto": "Actualizar los registros de vacaciones.", "correcta": false },
+      { "texto": "Eliminar vacaciones específicas.", "correcta": false },
+      {
+        "texto": "Obtener todos los registros de vacaciones.",
+        "correcta": true
+      }
+    ]
+  },
+  {
+    "id": "q7",
+    "pregunta": "¿Qué código HTTP se devuelve al agregar correctamente un nuevo registro de vacaciones?",
+    "opciones": [
+      { "texto": "200", "correcta": false },
+      { "texto": "201", "correcta": true },
+      { "texto": "404", "correcta": false },
+      { "texto": "204", "correcta": false }
+    ]
+  },
+  {
+    "id": "q8",
+    "pregunta": "¿Qué función permite la actualización de registros en la base de datos del proyecto de vacaciones?",
+    "opciones": [
+      { "texto": "writeDatabase()", "correcta": true },
+      { "texto": "postDatabase()", "correcta": false },
+      { "texto": "putDatabase()", "correcta": false },
+      { "texto": "updateDatabase()", "correcta": false }
+    ]
+  },
+  {
+    "id": "q9",
+    "pregunta": "¿Cómo se elimina un registro de vacaciones en la API del proyecto?",
+    "opciones": [
+      { "texto": "Usando el método GET.", "correcta": false },
+      {
+        "texto": "Usando el método DELETE con el ID del registro.",
+        "correcta": true
+      },
+      { "texto": "Usando un formulario HTML.", "correcta": false },
+      {
+        "texto": "Actualizando el registro a través de POST.",
+        "correcta": false
+      }
+    ]
+  }
+]
