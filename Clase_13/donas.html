@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Postres Favoritos 🍩</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <script type="text/javascript">
+      google.charts.load("current", { packages: ["corechart"] });
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ["Postre", "Votos"],
+          ["Chocolate 🍫", 35],
+          ["Helado 🍦", 25],
+          ["Donas 🍩", 20],
+          ["Galletita 🍪", 15],
+        ]);
+
+        var options = {
+          title: "🍬 Postres Favoritos del 2025",
+          titleTextStyle: {
+            fontSize: 26,
+            bold: true,
+            color: "#6A1B9A",
+            fontName: "Poppins",
+          },
+          pieHole: 0.6,
+          pieSliceText: "label",
+          pieSliceTextStyle: {
+            fontSize: 14,
+            color: "#333",
+            bold: true,
+            fontName: "Poppins",
+          },
+          slices: {
+            0: { color: "#C08497" }, // Chocolate - rosa quemado
+            1: { color: "#F7AF9D" }, // Helado - durazno
+            2: { color: "#F7C59F" }, // Donas - caramelo suave
+            3: { color: "#A1C6EA" }, // Galletitas - azul pastel
+          },
+          legend: {
+            position: "right",
+            textStyle: {
+              fontSize: 14,
+              color: "#444",
+              bold: true,
+              fontName: "Poppins",
+            },
+          },
+          chartArea: {
+            width: "85%",
+            height: "85%",
+            backgroundColor: {
+              fill: "#FFFFFF",
+              stroke: "#D8CDE8",
+              strokeWidth: 1,
+            },
+          },
+          backgroundColor: "#FFFFFF",
+          tooltip: {
+            text: "percentage",
+            textStyle: {
+              fontSize: 14,
+              color: "#333",
+              bold: true,
+              fontName: "Poppins",
+            },
+            showColorCode: true,
+          },
+          animation: {
+            startup: true,
+            duration: 1200,
+            easing: "inAndOut",
+          },
+          pieSliceBorderColor: "#ffffff",
+        };
+
+        var chart = new google.visualization.PieChart(
+          document.getElementById("donut_chart"),
+        );
+        chart.draw(data, options);
+      }
+    </script>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f3e5f5; /* Fondo lavanda suave */
+      }
+
+      #donut_chart {
+        width: 800px;
+        height: 600px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+        padding: 20px;
+        background: #ffffff;
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        border: 1px solid #e1cfea;
+      }
+
+      #donut_chart:hover {
+        transform: scale(1.015);
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="donut_chart"></div>
+  </body>
+</html>

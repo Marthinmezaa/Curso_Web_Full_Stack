@@ -1,0 +1,110 @@
+[
+  {
+    "id": "q1",
+    "pregunta": "¿Qué son los gráficos dinámicos?",
+    "opciones": [
+      {
+        "texto": "Diagramas que representan datos de forma visual.",
+        "correcta": true
+      },
+      { "texto": "Esquemas para diagramar algoritmos.", "correcta": false },
+      {
+        "texto": "Una forma de organizar código en JavaScript.",
+        "correcta": false
+      }
+    ]
+  },
+  {
+    "id": "q2",
+    "pregunta": "¿Para qué sirven los gráficos dinámicos?",
+    "opciones": [
+      {
+        "texto": "Para resumir información visualmente y facilitar el entendimiento.",
+        "correcta": true
+      },
+      {
+        "texto": "Para diseñar interfaces de usuario complejas.",
+        "correcta": false
+      },
+      { "texto": "Para crear animaciones en páginas web.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q3",
+    "pregunta": "¿Qué es Google Charts?",
+    "opciones": [
+      {
+        "texto": "Un API de Google para crear gráficos estadísticos.",
+        "correcta": true
+      },
+      { "texto": "Un editor gráfico en línea de Google.", "correcta": false },
+      { "texto": "Una biblioteca de diseño gráfico.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q4",
+    "pregunta": "¿Qué es un gráfico de torta (Pie Chart)?",
+    "opciones": [
+      {
+        "texto": "Un gráfico circular que muestra datos divididos en sectores.",
+        "correcta": true
+      },
+      { "texto": "Un gráfico de barras verticales.", "correcta": false },
+      { "texto": "Un gráfico de líneas con curvas suaves.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q5",
+    "pregunta": "¿Qué diferencia los gráficos de torta y de donas?",
+    "opciones": [
+      {
+        "texto": "El gráfico de donas tiene un agujero en el centro.",
+        "correcta": true
+      },
+      {
+        "texto": "El gráfico de torta utiliza más colores.",
+        "correcta": false
+      },
+      { "texto": "El gráfico de donas siempre es 3D.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q6",
+    "pregunta": "¿Qué gráfico representa datos jerárquicos de una organización?",
+    "opciones": [
+      { "texto": "Organigrama.", "correcta": true },
+      { "texto": "Gráfico de barras.", "correcta": false },
+      { "texto": "Gráfico de área.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q7",
+    "pregunta": "¿Qué es Chart.js?",
+    "opciones": [
+      {
+        "texto": "Una biblioteca para crear gráficos estadísticos en la web.",
+        "correcta": true
+      },
+      { "texto": "Un editor visual de diagramas en línea.", "correcta": false },
+      { "texto": "Una herramienta para diseñar interfaces.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q8",
+    "pregunta": "¿Qué gráfico muestra sugerencias al pasar el cursor sobre puntos específicos?",
+    "opciones": [
+      { "texto": "Gráfico de área.", "correcta": true },
+      { "texto": "Gráfico de torta.", "correcta": false },
+      { "texto": "Gráfico de barras.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q9",
+    "pregunta": "¿Qué librería permite convertir gráficos a diferentes formatos cambiando una palabra en el código?",
+    "opciones": [
+      { "texto": "Google Charts.", "correcta": true },
+      { "texto": "Chart.js.", "correcta": false },
+      { "texto": "Highcharts.", "correcta": false }
+    ]
+  }
+]

@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Animales del Bosque 🍂</title>
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <script type="text/javascript">
+      google.charts.load("current", { packages: ["corechart"] });
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          [
+            "Animal",
+            "Longevidad (años)",
+            "Velocidad (km/h)",
+            "Tipo",
+            "Tamaño (kg)",
+          ],
+          ["Zorro 🦊", 5, 48, "Mamífero", 20],
+          ["Búho 🦉", 25, 40, "Ave", 3],
+          ["Oso Pardo 🐻", 30, 40, "Mamífero", 120],
+          ["Ardilla 🐿️", 8, 2, "Mamífero", 10],
+          ["Conejo 🐰", 9, 30, "Mamífero", 2],
+          ["Ciervo 🦌", 15, 60, "Mamífero", 120],
+        ]);
+
+        var options = {
+          title: "🦔 Animales del Bosque: Longevidad, Velocidad y Tamaño",
+          titleTextStyle: {
+            fontSize: 22,
+            bold: true,
+            color: "#4CAF50", // Color verde para el título
+          },
+          hAxis: {
+            title: "Longevidad (años)",
+            titleTextStyle: {
+              color: "#4CAF50",
+              fontSize: 14,
+            },
+            minValue: 0,
+            maxValue: 35,
+          },
+          vAxis: {
+            title: "Velocidad (km/h)",
+            titleTextStyle: {
+              color: "#4CAF50",
+              fontSize: 14,
+            },
+            minValue: 0,
+            maxValue: 70,
+          },
+          bubble: {
+            textStyle: {
+              fontSize: 12,
+              color: "#333333",
+            },
+            opacity: 0.8,
+          },
+          colors: ["#8D6E63", "#FFEB3B", "#4CAF50"], // Colores vibrantes para cada tipo
+          sizeAxis: {
+            minSize: 10,
+            maxSize: 40,
+          },
+          legend: {
+            position: "right",
+            textStyle: {
+              color: "#4CAF50",
+              fontSize: 14,
+              bold: true,
+            },
+          },
+          backgroundColor: "#F1F8E9", // Fondo más suave y natural
+          chartArea: {
+            backgroundColor: {
+              stroke: "#BCAAA4",
+              strokeWidth: 1,
+            },
+          },
+          animation: {
+            startup: true,
+            duration: 1500,
+            easing: "out",
+          },
+          tooltip: {
+            trigger: "focus",
+            textStyle: {
+              fontSize: 14,
+              bold: true,
+            },
+            isHtml: true,
+          },
+        };
+
+        var chart = new google.visualization.BubbleChart(
+          document.getElementById("bubble_chart"),
+        );
+        chart.draw(data, options);
+      }
+    </script>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #e8f5e9;
+      }
+      #bubble_chart {
+        width: 900px;
+        height: 600px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        padding: 20px;
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="bubble_chart"></div>
+  </body>
+</html>

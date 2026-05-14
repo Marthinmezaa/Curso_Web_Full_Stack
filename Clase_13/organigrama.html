@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Diagrama de Organización 🌟</title>
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <script type="text/javascript">
+      google.charts.load("current", { packages: ["orgchart"] });
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn("string", "Nombre");
+        data.addColumn("string", "Supervisor");
+        data.addColumn("string", "Tooltip");
+
+        data.addRows([
+          ["CEO", "", "Director General"],
+          ["VP de Ventas", "CEO", "Vicepresidente de Ventas"],
+          ["VP de Marketing", "CEO", "Vicepresidente de Marketing"],
+          ["Director de Producto", "CEO", "Director de Producto"],
+          ["Gerente de Ventas", "VP de Ventas", "Gerente de Ventas"],
+          ["Ejecutivo de Ventas", "Gerente de Ventas", "Ejecutivo de Ventas"],
+          ["Gerente de Marketing", "VP de Marketing", "Gerente de Marketing"],
+          [
+            "Ejecutivo de Marketing",
+            "Gerente de Marketing",
+            "Ejecutivo de Marketing",
+          ],
+          [
+            "Director de Producto 2",
+            "Director de Producto",
+            "Director de Producto",
+          ],
+        ]);
+
+        var options = {
+          allowHtml: true,
+          nodeClass: "orgchart-node",
+          size: "large",
+          animationDuration: 1000,
+          animationEasing: "out",
+          highlightBehavior: "individual",
+          nodeContent: "title", // Mostrar el nombre como contenido principal
+          tooltip: { trigger: "focus", textStyle: { fontSize: 14 } },
+        };
+
+        var chart = new google.visualization.OrgChart(
+          document.getElementById("org_chart"),
+        );
+        chart.draw(data, options);
+      }
+    </script>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #e8f5e9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      #org_chart {
+        width: 1000px;
+        height: 600px;
+        border-radius: 20px;
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .orgchart-node {
+        border: 2px solid #4caf50;
+        border-radius: 10px;
+        padding: 15px;
+        background-color: #c8e6c9;
+        color: #2c6b2f;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: center;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .orgchart-node:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .google-visualization-orgchart-node img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+      }
+
+      .orgchart-node .google-visualization-orgchart-title {
+        font-size: 16px;
+        font-weight: bold;
+        color: #2e7d32;
+      }
+
+      .orgchart-node .google-visualization-orgchart-tooltip {
+        font-size: 14px;
+        color: #388e3c;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="org_chart"></div>
+  </body>
+</html>

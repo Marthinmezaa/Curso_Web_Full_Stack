@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gráfico con Datos de API</title>
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        margin: 0;
+        padding: 20px;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      #chart_div {
+        width: 100%;
+        height: 500px;
+        margin: 20px 0;
+      }
+
+      .loading {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>📊 Gráfico de Datos de API Pública</h1>
+      <div id="chart_div" class="loading">Cargando datos...</div>
+    </div>
+
+    <script type="text/javascript">
+      // Cargar Google Charts
+      google.charts.load("current", { packages: ["corechart"] });
+      google.charts.setOnLoadCallback(fetchData);
+
+      // Función para obtener datos de la API
+      async function fetchData() {
+        try {
+          // API pública de ejemplo (puedes cambiarla por la que necesites)
+          const response = await fetch(
+            "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=5&page=1&sparkline=false",
+          );
+          const data = await response.json();
+
+          // Procesar datos para el gráfico
+          processData(data);
+        } catch (error) {
+          console.error("Error al obtener datos:", error);
+          document.getElementById("chart_div").innerHTML =
+            '<p style="color: red; text-align: center;">Error al cargar los datos</p>';
+        }
+      }
+
+      // Función para procesar datos y crear el gráfico
+      function processData(apiData) {
+        // Crear DataTable de Google Charts
+        const data = new google.visualization.DataTable();
+        data.addColumn("string", "Criptomoneda");
+        data.addColumn("number", "Precio (USD)");
+        data.addColumn("number", "Capitalización de Mercado (Billones)");
+
+        // Agregar filas con datos
+        apiData.forEach((coin) => {
+          data.addRow([
+            coin.name,
+            coin.current_price,
+            coin.market_cap / 1000000000, // Convertir a billones
+          ]);
+        });
+
+        // Opciones del gráfico
+        const options = {
+          title: "Top 5 Criptomonedas por Capitalización de Mercado",
+          titleTextStyle: {
+            fontSize: 20,
+            bold: true,
+            color: "#333",
+          },
+          colors: ["#4285F4", "#34A853"],
+          chartArea: {
+            width: "80%",
+            height: "70%",
+          },
+          hAxis: {
+            title: "Criptomoneda",
+            titleTextStyle: {
+              color: "#333",
+              fontSize: 14,
+              bold: true,
+            },
+          },
+          vAxis: {
+            title: "Valores",
+            titleTextStyle: {
+              color: "#333",
+              fontSize: 14,
+              bold: true,
+            },
+            format: "#,###",
+          },
+          legend: {
+            position: "top",
+            textStyle: {
+              color: "#333",
+              fontSize: 12,
+            },
+          },
+          animation: {
+            startup: true,
+            duration: 1000,
+            easing: "out",
+          },
+          bar: {
+            groupWidth: "75%",
+          },
+          backgroundColor: {
+            fill: "transparent",
+          },
+        };
+
+        // Crear y dibujar el gráfico
+        const chart = new google.visualization.ColumnChart(
+          document.getElementById("chart_div"),
+        );
+        chart.draw(data, options);
+      }
+
+      // Redibujar el gráfico cuando cambia el tamaño de la ventana
+      window.addEventListener("resize", fetchData);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ventas de Videojuegos</title>
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        text-align: center;
+        background: linear-gradient(135deg, #f0f8ff, #e0eafc);
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 700px;
+        margin: auto;
+        padding: 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+      }
+      input[type="text"] {
+        width: 85%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+      #chart_div {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Ventas de Videojuegos</h1>
+      <p>
+        Ingresa los videojuegos y sus ventas (en millones) para generar un
+        gráfico.
+      </p>
+      <form id="gameSalesForm">
+        <input
+          type="text"
+          id="gameTitles"
+          placeholder="Nombres de videojuegos (separados por comas)"
+          required
+        /><br />
+        <input
+          type="text"
+          id="gameSales"
+          placeholder="Ventas (separadas por comas, en millones)"
+          required
+        /><br />
+        <button type="button" onclick="drawChart()">Generar Gráfico</button>
+      </form>
+      <div id="chart_div"></div>
+    </div>
+
+    <script>
+      // Cargar la biblioteca de visualización de Google Charts
+      google.charts.load("current", { packages: ["corechart"] });
+
+      function drawChart() {
+        const gameTitlesInput = document.getElementById("gameTitles").value;
+        const gameSalesInput = document.getElementById("gameSales").value;
+
+        if (!gameTitlesInput || !gameSalesInput) {
+          alert("Por favor, llena ambos campos.");
+          return;
+        }
+
+        const gameTitles = gameTitlesInput
+          .split(",")
+          .map((title) => title.trim());
+        const gameSales = gameSalesInput
+          .split(",")
+          .map((sale) => parseFloat(sale.trim()));
+
+        if (gameSales.some(isNaN)) {
+          alert("Asegúrate de que los valores de ventas sean números.");
+          return;
+        }
+
+        // Crear la estructura de datos para Google Charts
+        const data = new google.visualization.DataTable();
+        data.addColumn("string", "Videojuego");
+        data.addColumn("number", "Ventas (millones)");
+
+        for (let i = 0; i < gameTitles.length; i++) {
+          data.addRow([gameTitles[i], gameSales[i]]);
+        }
+
+        // Configurar las opciones del gráfico
+        const options = {
+          title: "Ventas de Videojuegos (en millones)",
+          width: 700,
+          height: 400,
+          backgroundColor: "#f9f9f9",
+          chartArea: { width: "70%", height: "70%" },
+          hAxis: {
+            title: "Videojuegos",
+            slantedText: true,
+            slantedTextAngle: 45,
+          },
+          vAxis: { title: "Ventas (millones)" },
+          colors: ["#007bff"],
+          legend: { position: "none" },
+        };
+
+        // Dibujar el gráfico
+        const chart = new google.visualization.ColumnChart(
+          document.getElementById("chart_div"),
+        );
+        chart.draw(data, options);
+      }
+    </script>
+  </body>
+</html>

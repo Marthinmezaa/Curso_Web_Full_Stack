@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Crecimiento de Plantas en 2023 🌸</title>
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <script type="text/javascript">
+      google.charts.load("current", { packages: ["corechart"] });
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ["Mes", "Girasoles 🌻", "Rosas 🌹", "Lavanda 💜", "Cactus 🌵"],
+          ["Ene", 10, 5, 3, 8],
+          ["Feb", 20, 10, 5, 9],
+          ["Mar", 35, 20, 10, 10],
+          ["Abr", 50, 30, 15, 11],
+          ["May", 70, 45, 25, 12],
+          ["Jun", 90, 60, 40, 13],
+          ["Jul", 120, 75, 55, 14],
+          ["Ago", 110, 80, 60, 15],
+          ["Sep", 95, 70, 50, 16],
+          ["Oct", 130, 85, 65, 17],
+          ["Nov", 150, 90, 70, 18],
+          ["Dic", 160, 95, 75, 19],
+        ]);
+
+        var options = {
+          title: "🌿 Crecimiento de Plantas en el Jardín (2023)",
+          titleTextStyle: {
+            fontSize: 22,
+            bold: true,
+            color: "#2e7d32",
+          },
+          hAxis: {
+            title: "Mes",
+            titleTextStyle: {
+              color: "#2e7d32",
+              italic: false,
+            },
+          },
+          vAxis: {
+            title: "Altura (cm)",
+            titleTextStyle: {
+              color: "#2e7d32",
+              italic: false,
+            },
+            minValue: 0,
+            gridlines: { color: "#e0e0e0" },
+          },
+          colors: ["#FFD700", "#FF0000", "#9C27B0", "#4CAF50"], // Dorado, rojo, morado, verde
+          lineWidth: 3,
+          curveType: "function", // Líneas suaves
+          legend: {
+            position: "top",
+            textStyle: { fontSize: 14 },
+          },
+          backgroundColor: "#f5fdf4", // Fondo verde claro
+          chartArea: {
+            backgroundColor: {
+              stroke: "#81C784",
+              strokeWidth: 1,
+            },
+          },
+          animation: {
+            startup: true,
+            duration: 1500,
+            easing: "inAndOut",
+          },
+          tooltip: {
+            isHtml: true,
+            textStyle: { fontSize: 14 },
+          },
+        };
+
+        var chart = new google.visualization.AreaChart(
+          document.getElementById("chart_div"),
+        );
+        chart.draw(data, options);
+      }
+    </script>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #e8f5e9;
+      }
+      #chart_div {
+        width: 900px;
+        height: 500px;
+        box-shadow: 0 6px 16px rgba(0, 100, 0, 0.1);
+        border-radius: 12px;
+        padding: 20px;
+        background: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="chart_div"></div>
+  </body>
+</html>
