@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte con DataTables</title>
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.8/css/dataTables.dataTables.css">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/2.3.8/js/dataTables.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Reporte de Empleados</h1>
+  <p>Lista de empleados con sus datos personales y laborales.</p>
+
+  <table id="employeeTable" class="display">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Departamento</th>
+        <th>Puesto</th>
+        <th>Fecha de Ingreso</th>
+        <th>Salario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Juan Pérez</td>
+        <td>30</td>
+        <td>Recursos Humanos</td>
+        <td>Gerente</td>
+        <td>2018-06-01</td>
+        <td>$50,000</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>María Gómez</td>
+        <td>28</td>
+        <td>Ventas</td>
+        <td>Ejecutiva</td>
+        <td>2020-03-15</td>
+        <td>$35,000</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Carlos López</td>
+        <td>35</td>
+        <td>IT</td>
+        <td>Desarrollador</td>
+        <td>2017-09-10</td>
+        <td>$55,000</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Ana Sánchez</td>
+        <td>26</td>
+        <td>Marketing</td>
+        <td>Analista</td>
+        <td>2019-11-23</td>
+        <td>$40,000</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Jorge Ramírez</td>
+        <td>29</td>
+        <td>Finanzas</td>
+        <td>Contador</td>
+        <td>2021-02-01</td>
+        <td>$38,000</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Laura Torres</td>
+        <td>32</td>
+        <td>Recursos Humanos</td>
+        <td>Especialista</td>
+        <td>2018-07-05</td>
+        <td>$42,000</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Pedro Herrera</td>
+        <td>33</td>
+        <td>IT</td>
+        <td>Administrador de Sistemas</td>
+        <td>2016-12-12</td>
+        <td>$58,000</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Sofía Ruiz</td>
+        <td>27</td>
+        <td>Ventas</td>
+        <td>Representante</td>
+        <td>2022-01-10</td>
+        <td>$32,000</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Ricardo Morales</td>
+        <td>36</td>
+        <td>Finanzas</td>
+        <td>Analista Financiero</td>
+        <td>2015-10-25</td>
+        <td>$60,000</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>Andrea Castillo</td>
+        <td>31</td>
+        <td>Marketing</td>
+        <td>Coordinadora</td>
+        <td>2019-05-20</td>
+        <td>$45,000</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    $(document).ready(function() {
+      $('#employeeTable').DataTable({
+        "paging": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "language": {
+          "url": "https://cdn.datatables.net/plug-ins/2.3.8/i18n/es-ES.json"
+        }
+      });
+    });
+  </script>
+</body>
+</html>

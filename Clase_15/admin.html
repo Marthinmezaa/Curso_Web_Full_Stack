@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏷️ Admin: Marcas y Productos</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, 'Segoe UI', sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #0f172a;
+        }
+        .paneles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .panel {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 28px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .panel h2 {
+            margin-top: 0;
+            border-left: 6px solid #3b82f6;
+            padding-left: 12px;
+        }
+        .formulario {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .formulario input, .formulario select {
+            width: 100%;
+            padding: 8px 12px;
+            margin: 6px 0 12px 0;
+            border: 1px solid #cbd5e1;
+            border-radius: 40px;
+            font-size: 0.9rem;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .btn-danger {
+            background: #ef4444;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+        .btn-sec {
+            background: #64748b;
+        }
+        .lista {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .item-info {
+            flex: 1;
+        }
+        .item-acciones button {
+            margin-left: 6px;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+        }
+        .error {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 8px;
+            border-radius: 30px;
+            text-align: center;
+            margin: 10px 0;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📦 Administración · Marcas & Productos</h1>
+    <div class="paneles">
+        <!-- PANEL DE MARCAS -->
+        <div class="panel">
+            <h2>🏷️ Marcas</h2>
+            <div class="formulario" id="formMarca">
+                <input type="hidden" id="marcaId">
+                <label>Nombre de la marca</label>
+                <input type="text" id="marcaNombre" placeholder="Ej: Nike, Adidas..." required>
+                <button id="btnGuardarMarca">➕ Agregar marca</button>
+                <button id="btnCancelarMarca" class="btn-sec" style="display:none;">✖ Cancelar</button>
+            </div>
+            <div id="listaMarcas" class="lista">Cargando marcas...</div>
+        </div>
+
+        <!-- PANEL DE PRODUCTOS -->
+        <div class="panel">
+            <h2>👟 Productos</h2>
+            <div class="formulario" id="formProducto">
+                <input type="hidden" id="productoId">
+                <label>Nombre</label>
+                <input type="text" id="prodNombre" placeholder="Nombre del producto">
+                <label>Precio (USD)</label>
+                <input type="number" step="0.01" id="prodPrecio">
+                <label>URL de foto</label>
+                <input type="text" id="prodFoto" placeholder="https://...">
+                <label>Disponibilidad (1 = disponible, 0 = no)</label>
+                <input type="number" id="prodDisponibilidad" min="0" max="1" step="1" value="1">
+                <label>Marca (ID)</label>
+                <select id="prodIdMarca"></select>
+                <button id="btnGuardarProducto">➕ Agregar producto</button>
+                <button id="btnCancelarProducto" class="btn-sec" style="display:none;">✖ Cancelar</button>
+            </div>
+            <div id="listaProductos" class="lista">Cargando productos...</div>
+        </div>
+    </div>
+    <footer>🔌 API REST en http://localhost:3000 | CRUD completo (GET, POST, PUT, DELETE)</footer>
+</div>
+
+<script>
+    // ---------- CONFIGURACIÓN ----------
+    const API_BASE = 'http://localhost:3000';
+
+    // ---------- FUNCIONES AUXILIARES ----------
+    async function peticion(url, metodo, cuerpo = null) {
+        const opciones = {
+            method: metodo,
+            headers: { 'Content-Type': 'application/json' }
+        };
+        if (cuerpo) opciones.body = JSON.stringify(cuerpo);
+        const resp = await fetch(url, opciones);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        return await resp.json();
+    }
+
+    function mostrarError(contenedor, mensaje) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error';
+        errorDiv.innerText = mensaje;
+        contenedor.innerHTML = '';
+        contenedor.appendChild(errorDiv);
+        setTimeout(() => errorDiv.remove(), 3000);
+    }
+
+    // ---------- MARCAS ----------
+    async function cargarMarcas() {
+        const contenedor = document.getElementById('listaMarcas');
+        try {
+            const data = await peticion(`${API_BASE}/marca`, 'GET');
+            const marcas = data.data;
+            if (!marcas.length) {
+                contenedor.innerHTML = '<div class="error">📭 No hay marcas aún. Crea una.</div>';
+                return;
+            }
+            contenedor.innerHTML = marcas.map(m => `
+                <div class="item" data-id="${m.id}">
+                    <div class="item-info"><strong>${escapeHtml(m.nombre)}</strong> (ID: ${m.id})</div>
+                    <div class="item-acciones">
+                        <button class="btn-editar-marca" data-id="${m.id}" data-nombre="${escapeHtml(m.nombre)}">✏️ Editar</button>
+                        <button class="btn-eliminar-marca btn-danger" data-id="${m.id}">🗑️ Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+            // eventos editar
+            document.querySelectorAll('.btn-editar-marca').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.dataset.id;
+                    const nombre = btn.dataset.nombre;
+                    document.getElementById('marcaId').value = id;
+                    document.getElementById('marcaNombre').value = nombre;
+                    document.getElementById('btnGuardarMarca').innerText = '✏️ Actualizar marca';
+                    document.getElementById('btnCancelarMarca').style.display = 'inline-block';
+                });
+            });
+            // eventos eliminar
+            document.querySelectorAll('.btn-eliminar-marca').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const id = btn.dataset.id;
+                    if (!confirm(`¿Eliminar marca ID ${id}? También se perderán sus productos (si hay FK).`)) return;
+                    try {
+                        await peticion(`${API_BASE}/marca/${id}`, 'DELETE');
+                        cargarMarcas();     // refrescar lista
+                        cargarProductos();   // productos pueden depender de marca
+                    } catch (err) {
+                        mostrarError(document.getElementById('listaMarcas'), `Error al eliminar: ${err.message}`);
+                    }
+                });
+            });
+        } catch (err) {
+            mostrarError(contenedor, `⚠️ No se pudieron cargar marcas. ¿Servidor encendido en ${API_BASE}?`);
+        }
+    }
+
+    async function guardarMarca() {
+        const id = document.getElementById('marcaId').value;
+        const nombre = document.getElementById('marcaNombre').value.trim();
+        if (!nombre) return alert('Escribe el nombre de la marca');
+        try {
+            if (id) {
+                // PUT actualizar
+                await peticion(`${API_BASE}/marca/${id}`, 'PUT', { nombre });
+            } else {
+                // POST crear
+                await peticion(`${API_BASE}/marca`, 'POST', { nombre });
+            }
+            resetFormMarca();
+            cargarMarcas();
+            cargarProductos(); // actualizar select de marcas en productos
+        } catch (err) {
+            alert('Error al guardar marca: ' + err.message);
+        }
+    }
+
+    function resetFormMarca() {
+        document.getElementById('marcaId').value = '';
+        document.getElementById('marcaNombre').value = '';
+        document.getElementById('btnGuardarMarca').innerText = '➕ Agregar marca';
+        document.getElementById('btnCancelarMarca').style.display = 'none';
+    }
+
+    // ---------- PRODUCTOS ----------
+    async function cargarProductos() {
+        const contenedor = document.getElementById('listaProductos');
+        try {
+            const data = await peticion(`${API_BASE}/producto`, 'GET');
+            const productos = data.data;
+            if (!productos.length) {
+                contenedor.innerHTML = '<div class="error">📭 No hay productos. Crea uno.</div>';
+                return;
+            }
+            contenedor.innerHTML = productos.map(p => `
+                <div class="item" data-id="${p.id}">
+                    <div class="item-info">
+                        <strong>${escapeHtml(p.nombre)}</strong><br>
+                        💲 ${p.precio} | 🏷️ Marca ID: ${p.id_marca} | ${p.disponibilidad == 1 ? '✅ Disponible' : '❌ Sin stock'}<br>
+                        <img src="${p.foto}" style="width:40px; height:40px; object-fit:contain; border-radius:8px;" onerror="this.src='https://placehold.co/40x40?text=no+foto'">
+                    </div>
+                    <div class="item-acciones">
+                        <button class="btn-editar-producto" data-id="${p.id}" data-nombre="${escapeHtml(p.nombre)}" data-precio="${p.precio}" data-foto="${p.foto}" data-disponibilidad="${p.disponibilidad}" data-id_marca="${p.id_marca}">✏️ Editar</button>
+                        <button class="btn-eliminar-producto btn-danger" data-id="${p.id}">🗑️ Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+            // eventos editar
+            document.querySelectorAll('.btn-editar-producto').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.getElementById('productoId').value = btn.dataset.id;
+                    document.getElementById('prodNombre').value = btn.dataset.nombre;
+                    document.getElementById('prodPrecio').value = btn.dataset.precio;
+                    document.getElementById('prodFoto').value = btn.dataset.foto;
+                    document.getElementById('prodDisponibilidad').value = btn.dataset.disponibilidad;
+                    document.getElementById('prodIdMarca').value = btn.dataset.id_marca;
+                    document.getElementById('btnGuardarProducto').innerText = '✏️ Actualizar producto';
+                    document.getElementById('btnCancelarProducto').style.display = 'inline-block';
+                });
+            });
+            // eliminar producto
+            document.querySelectorAll('.btn-eliminar-producto').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const id = btn.dataset.id;
+                    if (!confirm(`¿Eliminar producto ID ${id}?`)) return;
+                    try {
+                        await peticion(`${API_BASE}/producto/${id}`, 'DELETE');
+                        cargarProductos();
+                    } catch (err) {
+                        mostrarError(document.getElementById('listaProductos'), `Error al eliminar: ${err.message}`);
+                    }
+                });
+            });
+        } catch (err) {
+            mostrarError(contenedor, `⚠️ Error cargando productos: ${err.message}`);
+        }
+    }
+
+    async function guardarProducto() {
+        const id = document.getElementById('productoId').value;
+        const nombre = document.getElementById('prodNombre').value.trim();
+        const precio = parseFloat(document.getElementById('prodPrecio').value);
+        const foto = document.getElementById('prodFoto').value.trim();
+        const disponibilidad = parseInt(document.getElementById('prodDisponibilidad').value);
+        const id_marca = parseInt(document.getElementById('prodIdMarca').value);
+        if (!nombre || isNaN(precio)) return alert('Nombre y precio válidos');
+        if (!id_marca) return alert('Selecciona una marca');
+
+        const producto = { nombre, precio, foto, disponibilidad, id_marca };
+        try {
+            if (id) {
+                await peticion(`${API_BASE}/producto/${id}`, 'PUT', producto);
+            } else {
+                await peticion(`${API_BASE}/producto`, 'POST', producto);
+            }
+            resetFormProducto();
+            cargarProductos();
+        } catch (err) {
+            alert('Error al guardar producto: ' + err.message);
+        }
+    }
+
+    function resetFormProducto() {
+        document.getElementById('productoId').value = '';
+        document.getElementById('prodNombre').value = '';
+        document.getElementById('prodPrecio').value = '';
+        document.getElementById('prodFoto').value = '';
+        document.getElementById('prodDisponibilidad').value = '1';
+        document.getElementById('btnGuardarProducto').innerText = '➕ Agregar producto';
+        document.getElementById('btnCancelarProducto').style.display = 'none';
+    }
+
+    async function cargarSelectMarcas() {
+        try {
+            const data = await peticion(`${API_BASE}/marca`, 'GET');
+            const marcas = data.data;
+            const select = document.getElementById('prodIdMarca');
+            select.innerHTML = '<option value="">-- Selecciona una marca --</option>' +
+                marcas.map(m => `<option value="${m.id}">${escapeHtml(m.nombre)} (ID ${m.id})</option>`).join('');
+        } catch (err) {
+            console.warn('No se pudo cargar el select de marcas');
+        }
+    }
+
+    // helper seguridad
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // ----- EVENTOS Y ARRANQUE -----
+    document.getElementById('btnGuardarMarca').addEventListener('click', guardarMarca);
+    document.getElementById('btnCancelarMarca').addEventListener('click', resetFormMarca);
+    document.getElementById('btnGuardarProducto').addEventListener('click', guardarProducto);
+    document.getElementById('btnCancelarProducto').addEventListener('click', resetFormProducto);
+
+    // Inicializar
+    cargarMarcas();
+    cargarProductos();
+    cargarSelectMarcas();
+</script>
+</body>
+</html>

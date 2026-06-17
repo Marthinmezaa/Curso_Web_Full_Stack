@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mueve al Personaje con el Teclado</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        #gameCanvas {
+            border: 4px solid #ff7e5f;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background-color: #e0f7fa;
+        }
+        
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        
+        h1 {
+            position: absolute;
+            top: 20px;
+            color: #ff7e5f;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>¡Mueve al Personaje!</h1>
+    <canvas id="gameCanvas" width="600" height="400"></canvas>
+    <div class="instructions">Usa las flechas del teclado para mover al personaje</div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Posición inicial del personaje
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+        const radius = 30;
+        const speed = 5;
+        
+        // Teclas presionadas
+        const keys = {
+            ArrowUp: false,
+            ArrowDown: false,
+            ArrowLeft: false,
+            ArrowRight: false
+        };
+        
+        // Dibujar el personaje (cara feliz)
+        function drawCharacter() {
+            // Cuerpo (círculo)
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#FFD700';
+            ctx.fill();
+            ctx.strokeStyle = '#FFA500';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // Ojos
+            ctx.beginPath();
+            ctx.arc(x - 10, y - 10, 5, 0, Math.PI * 2);
+            ctx.arc(x + 10, y - 10, 5, 0, Math.PI * 2);
+            ctx.fillStyle = '#333';
+            ctx.fill();
+            
+            // Boca (sonrisa)
+            ctx.beginPath();
+            ctx.arc(x, y + 5, 15, 0, Math.PI, false);
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // Mejillas rosadas
+            ctx.beginPath();
+            ctx.arc(x - 20, y, 5, 0, Math.PI * 2);
+            ctx.arc(x + 20, y, 5, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 105, 180, 0.4)';
+            ctx.fill();
+        }
+        
+        // Dibujar el fondo con elementos decorativos
+        function drawBackground() {
+            // Fondo degradado
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#e0f7fa');
+            gradient.addColorStop(1, '#b2ebf2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Nubes decorativas
+            drawCloud(100, 50, 30, 15);
+            drawCloud(400, 80, 40, 20);
+            drawCloud(200, 150, 35, 18);
+            
+            // Sol
+            ctx.beginPath();
+            ctx.arc(50, 50, 40, 0, Math.PI * 2);
+            ctx.fillStyle = '#FFEB3B';
+            ctx.fill();
+            
+            // Rayos del sol
+            for (let i = 0; i < 8; i++) {
+                const angle = (i / 8) * Math.PI * 2;
+                ctx.beginPath();
+                ctx.moveTo(50 + Math.cos(angle) * 40, 50 + Math.sin(angle) * 40);
+                ctx.lineTo(50 + Math.cos(angle) * 60, 50 + Math.sin(angle) * 60);
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = '#FFEB3B';
+                ctx.stroke();
+            }
+        }
+        
+        // Función auxiliar para dibujar nubes
+        function drawCloud(x, y, size, numCircles) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            for (let i = 0; i < numCircles; i++) {
+                const offsetX = Math.cos(i * 0.5) * size;
+                const offsetY = Math.sin(i * 0.5) * size * 0.5;
+                const circleSize = size * (0.6 + Math.random() * 0.4);
+                ctx.beginPath();
+                ctx.arc(x + offsetX, y + offsetY, circleSize, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // Actualizar la posición del personaje
+        function updatePosition() {
+            if (keys.ArrowUp && y - radius > 0) y -= speed;
+            if (keys.ArrowDown && y + radius < canvas.height) y += speed;
+            if (keys.ArrowLeft && x - radius > 0) x -= speed;
+            if (keys.ArrowRight && x + radius < canvas.width) x += speed;
+        }
+        
+        // Bucle principal del juego
+        function gameLoop() {
+            // Limpiar el canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Dibujar el fondo
+            drawBackground();
+            
+            // Actualizar posición
+            updatePosition();
+            
+            // Dibujar el personaje
+            drawCharacter();
+            
+            // Solicitar el próximo frame
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // Event listeners para las teclas
+        window.addEventListener('keydown', (e) => {
+            if (keys.hasOwnProperty(e.key)) {
+                keys[e.key] = true;
+                e.preventDefault();
+            }
+        });
+        
+        window.addEventListener('keyup', (e) => {
+            if (keys.hasOwnProperty(e.key)) {
+                keys[e.key] = false;
+                e.preventDefault();
+            }
+        });
+        
+        // Iniciar el juego
+        gameLoop();
+    </script>
+</body>
+</html>

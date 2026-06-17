@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login con API Node.js + JWT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #1a2a3a, #0f1a24);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.3);
+        }
+        h2 {
+            text-align: center;
+            color: #1a3e50;
+            margin-bottom: 1.5rem;
+        }
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 60px;
+            font-size: 1rem;
+            outline: none;
+        }
+        input:focus {
+            border-color: #2c7da0;
+            box-shadow: 0 0 0 2px rgba(44,125,160,0.2);
+        }
+        button {
+            width: 100%;
+            background: #2c7da0;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #1f5e7a;
+        }
+        .error {
+            background: #ffe0e0;
+            color: #c0392b;
+            padding: 10px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 12px;
+            display: none;
+        }
+        .success {
+            background: #e0f2e9;
+            color: #1e6f5c;
+            padding: 10px;
+            border-radius: 50px;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        .info-box {
+            background: #f0f4f8;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            word-break: break-all;
+        }
+        .token {
+            font-family: monospace;
+            font-size: 0.7rem;
+            background: #e2e8f0;
+            padding: 8px;
+            border-radius: 1rem;
+            margin: 10px 0;
+        }
+        .logout {
+            background: #c7452b;
+            margin-top: 0.5rem;
+        }
+        .logout:hover {
+            background: #9a2d18;
+        }
+        hr {
+            margin: 1rem 0;
+        }
+        .api-status {
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 1rem;
+            color: #4a627a;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Panel de login -->
+    <div id="loginPanel">
+        <h2>🔐 Acceso a la API</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Usuario" autocomplete="off" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit">Iniciar sesión</button>
+            <div id="errorMsg" class="error"></div>
+        </form>
+        <div class="api-status">
+            ⚡ Conectando a API Node.js en <strong>http://localhost:3000</strong><br>
+            Usuarios de prueba: ana/123 | luis/clave | admin/admin
+        </div>
+    </div>
+
+    <!-- Panel de bienvenida (oculto hasta login exitoso) -->
+    <div id="welcomePanel" style="display: none;">
+        <h2>✨ Bienvenido ✨</h2>
+        <p id="userNameDisplay" style="text-align: center; font-size: 1.2rem; font-weight: bold;"></p>
+        
+        <div class="info-box">
+            <strong>✅ Sesión iniciada con JWT</strong>
+            <div class="token">
+                <strong>🪙 Token:</strong><br>
+                <span id="tokenValue" style="font-size: 0.65rem;"></span>
+            </div>
+            <button id="perfilBtn">📄 Obtener mi perfil (ruta protegida)</button>
+            <div id="perfilResultado" style="margin-top: 10px; font-size: 0.8rem;"></div>
+        </div>
+
+        <button id="logoutBtn" class="logout">🚪 Cerrar sesión</button>
+        <hr>
+        <div class="api-status">
+            El token se envía automáticamente en el header <code>Authorization: Bearer</code>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Configuración de la API (ajusta si cambias el puerto)
+    const API_URL = 'http://localhost:3000';
+
+    // Elementos del DOM
+    const loginPanel = document.getElementById('loginPanel');
+    const welcomePanel = document.getElementById('welcomePanel');
+    const loginForm = document.getElementById('loginForm');
+    const errorMsgDiv = document.getElementById('errorMsg');
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const tokenValueSpan = document.getElementById('tokenValue');
+    const perfilBtn = document.getElementById('perfilBtn');
+    const perfilResultado = document.getElementById('perfilResultado');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // --- Función para mostrar errores ---
+    function mostrarError(mensaje) {
+        errorMsgDiv.textContent = mensaje;
+        errorMsgDiv.style.display = 'block';
+        setTimeout(() => {
+            errorMsgDiv.style.display = 'none';
+        }, 4000);
+    }
+
+    // --- Login: enviar credenciales a la API Node.js ---
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorMsgDiv.style.display = 'none';
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!username || !password) {
+            mostrarError('❌ Completa usuario y contraseña');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                mostrarError(data.mensaje || data.error || 'Error al iniciar sesión');
+                return;
+            }
+
+            // Guardar token y datos del usuario
+            const token = data.token;
+            const usuario = data.usuario;
+
+            sessionStorage.setItem('jwt_token', token);
+            sessionStorage.setItem('usuario_nombre', usuario.nombre);
+            sessionStorage.setItem('usuario_username', usuario.username);
+
+            // Mostrar panel de bienvenida
+            mostrarWelcome(usuario.nombre, token);
+
+        } catch (error) {
+            console.error(error);
+            mostrarError('⚠️ No se pudo conectar con la API. ¿Está corriendo Node.js (app.js) en el puerto 3000?');
+        }
+    });
+
+    // Mostrar panel de bienvenida con los datos
+    function mostrarWelcome(nombre, token) {
+        loginPanel.style.display = 'none';
+        welcomePanel.style.display = 'block';
+        userNameDisplay.textContent = `👋 Hola, ${nombre}`;
+        tokenValueSpan.textContent = token;
+        perfilResultado.innerHTML = ''; // limpiar resultados anteriores
+    }
+
+    // --- Obtener perfil (ruta protegida /perfil) usando el token guardado ---
+    perfilBtn.addEventListener('click', async () => {
+        const token = sessionStorage.getItem('jwt_token');
+        if (!token) {
+            perfilResultado.innerHTML = '<span style="color:red;">❌ No hay token. Vuelve a iniciar sesión.</span>';
+            return;
+        }
+
+        perfilResultado.innerHTML = '<span>Cargando...</span>';
+        try {
+            const response = await fetch(`${API_URL}/perfil`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                perfilResultado.innerHTML = `<span style="color:red;">❌ Error: ${data.error || 'No autorizado'}</span>`;
+                if (response.status === 401 || response.status === 403) {
+                    // Token inválido o expirado: borrar sesión
+                    sessionStorage.removeItem('jwt_token');
+                    sessionStorage.removeItem('usuario_nombre');
+                    sessionStorage.removeItem('usuario_username');
+                    setTimeout(() => {
+                        alert('Tu sesión expiró. Serás redirigido al login.');
+                        location.reload();
+                    }, 1500);
+                }
+                return;
+            }
+
+            // Mostrar datos del perfil (viene el payload del token)
+            perfilResultado.innerHTML = `
+                <div style="background:#d4edda; padding:8px; border-radius:16px;">
+                    ✅ <strong>Perfil verificado</strong><br>
+                    ID: ${data.usuario.id}<br>
+                    Username: ${data.usuario.username}<br>
+                    Nombre: ${data.usuario.nombre}<br>
+                    <small>El token es válido y no ha expirado.</small>
+                </div>
+            `;
+        } catch (error) {
+            console.error(error);
+            perfilResultado.innerHTML = '<span style="color:red;">⚠️ Error de red. ¿El servidor sigue activo?</span>';
+        }
+    });
+
+    // --- Cerrar sesión ---
+    logoutBtn.addEventListener('click', () => {
+        sessionStorage.removeItem('jwt_token');
+        sessionStorage.removeItem('usuario_nombre');
+        sessionStorage.removeItem('usuario_username');
+        // Recargar para volver al login
+        location.reload();
+    });
+
+    // --- Verificar si ya hay sesión al cargar la página ---
+    (function verificarSesionExistente() {
+        const token = sessionStorage.getItem('jwt_token');
+        const nombre = sessionStorage.getItem('usuario_nombre');
+        if (token && nombre) {
+            mostrarWelcome(nombre, token);
+        }
+    })();
+</script>
+</body>
+</html>

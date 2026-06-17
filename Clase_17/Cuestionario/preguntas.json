@@ -1,0 +1,38 @@
+[
+  {
+    "id": "q1",
+    "pregunta": "¿Qué es OpenWA?",
+    "opciones": [
+      { "texto": "Un WhatsApp API Gateway que permite integrar mensajería sin depender de proveedores externos.", "correcta": true },
+      { "texto": "Un editor de texto para programadores.", "correcta": false },
+      { "texto": "Un sistema operativo basado en Linux.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q2",
+    "pregunta": "¿Cuál es una característica principal de OpenWA?",
+    "opciones": [
+      { "texto": "Es código abierto y permite personalización.", "correcta": true },
+      { "texto": "Solo funciona con una cuenta de WhatsApp.", "correcta": false },
+      { "texto": "Requiere pagar una licencia mensual.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q3",
+    "pregunta": "¿Qué riesgo se menciona al usar OpenWA?",
+    "opciones": [
+      { "texto": "Depende de la versión web de WhatsApp, lo que puede afectar compatibilidad.", "correcta": true },
+      { "texto": "No permite enviar mensajes de prueba.", "correcta": false },
+      { "texto": "No se puede instalar en Node.js.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q4",
+    "pregunta": "¿Qué pasos básicos forman parte de la instalación de OpenWA?",
+    "opciones": [
+      { "texto": "Clonar el repositorio, instalar dependencias y ejecutar con npm run dev.", "correcta": true },
+      { "texto": "Descargar un archivo ZIP y abrirlo en Word.", "correcta": false },
+      { "texto": "Configurar directamente desde el navegador sin instalar nada.", "correcta": false }
+    ]
+  }
+]

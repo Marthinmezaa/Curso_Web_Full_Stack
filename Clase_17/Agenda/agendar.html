@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Agenda tu Consulta Médica</title>
+
+    <style>
+        body {
+            background: #f5f7fa;
+            font-family: Arial;
+        }
+
+        .contenedor {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, .1);
+        }
+
+        h1 {
+            color: #1e88e5;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background: #1e88e5;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1565c0;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            background: #4caf50;
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            border-radius: 6px; 
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="contenedor">
+
+        <h1>Agenda tu Consulta Médica</h1>
+
+        <form action="/agendar" method="POST">
+
+            <label>Nombre completo</label>
+            <input type="text" name="nombrePaciente" required>
+
+            <label>Teléfono</label>
+            <input type="text" name="telefono" required>
+
+            <label>Email</label>
+            <input type="email" name="email" required>
+
+            <label>Fecha de la consulta</label>
+            <input type="date" name="fechaConsulta" required>
+
+            <button type="submit">
+                Agendar Consulta
+            </button>
+
+        </form>
+
+        <a href="/consultas">
+            Ver Consultas
+        </a>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleados y Salarios</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 24px 28px 32px 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        h2 {
+            margin: 0 0 6px 0;
+            font-weight: 600;
+            color: #1e2f3e;
+            font-size: 1.7rem;
+        }
+        .desc {
+            color: #4a627a;
+            margin-bottom: 24px;
+            border-left: 3px solid #2c7da0;
+            padding-left: 14px;
+            font-size: 0.95rem;
+        }
+        table.dataTable {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            margin-top: 10px !important;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+        table.dataTable thead th {
+            background: #eef2f9;
+            color: #1e4663;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 14px 12px;
+            border-bottom: 2px solid #d4dee8;
+        }
+        table.dataTable tbody td {
+            padding: 12px 12px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #eef2f6;
+            color: #1f2f3e;
+        }
+        /* Filas alternadas */
+        table.dataTable tbody tr:nth-child(even) {
+            background-color: #fafcff;
+        }
+        table.dataTable tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        /* Efecto hover en filas */
+        table.dataTable tbody tr:hover {
+            background-color: #eef4fc !important;
+            transition: 0.2s ease;
+            cursor: pointer;
+        }
+        /* Resaltar salarios */
+        table.dataTable tbody td:last-child {
+            font-weight: 500;
+            color: #1f6392;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>📋 Empleados y salarios</h2>
+    <div class="desc">Tabla con búsqueda, ordenamiento, paginación y botones de exportación (copiar, CSV, Excel, PDF, imprimir).</div>
+
+    <table id="tablaEmpleados" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre completo</th>
+                <th>Puesto</th>
+                <th>Departamento</th>
+                <th>Salario mensual</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Ana Gutiérrez</td><td>Gerente TI</td><td>Tecnología</td><td>8950.00</td></tr>
+            <tr><td>2</td><td>Carlos Méndez</td><td>Desarrollador</td><td>Tecnología</td><td>5200.00</td></tr>
+            <tr><td>3</td><td>Laura Ramírez</td><td>Analista Datos</td><td>*****ítica</td><td>6100.00</td></tr>
+            <tr><td>4</td><td>Javier Castro</td><td>Coordinador Ventas</td><td>Ventas</td><td>4875.50</td></tr>
+            <tr><td>5</td><td>María López</td><td>RRHH</td><td>Recursos Humanos</td><td>4620.00</td></tr>
+            <tr><td>6</td><td>Ricardo Peña</td><td>Ingeniero Software</td><td>Tecnología</td><td>5550.00</td></tr>
+            <tr><td>7</td><td>Valentina Cruz</td><td>Diseñadora UX</td><td>Diseño</td><td>4780.00</td></tr>
+            <tr><td>8</td><td>Sergio Flores</td><td>Contador</td><td>Finanzas</td><td>6350.00</td></tr>
+            <tr><td>9</td><td>Patricia Jiménez</td><td>Jefe Marketing</td><td>Marketing</td><td>7200.00</td></tr>
+            <tr><td>10</td><td>Fernando Herrera</td><td>Soporte Técnico</td><td>Operaciones</td><td>3850.00</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.11/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.11/vfs_fonts.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#tablaEmpleados').DataTable({
+            dom: 'Bfrtip',
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+            language: {
+                "search": "Buscar:",
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ empleados",
+                "paginate": { "next": "Siguiente", "previous": "Anterior" }
+            },
+            pageLength: 5,
+            order: [[0, 'asc']]
+        });
+    });
+</script>
+</body>
+</html>

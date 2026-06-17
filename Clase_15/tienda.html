@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>📦 Productos desde API local</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .productos-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .producto-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 260px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .producto-card:hover {
+            transform: scale(1.02);
+        }
+        .producto-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+        .producto-card h3 {
+            margin: 10px 0 5px;
+            color: #222;
+        }
+        .precio {
+            font-weight: bold;
+            color: #2a7f3e;
+            font-size: 1.2rem;
+        }
+        .disponible {
+            color: #27ae60;
+            font-size: 0.8rem;
+        }
+        .no-disponible {
+            color: #e74c3c;
+            font-size: 0.8rem;
+        }
+        .error {
+            background: #ffe0e0;
+            color: #c0392b;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .cargando {
+            text-align: center;
+            font-style: italic;
+            color: #777;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🛍️ Nuestros productos</h1>
+<div id="productosContainer" class="productos-grid">
+    <div class="cargando">⏳ Cargando productos desde localhost:3000...</div>
+</div>
+<footer>📡 API: http://localhost:3000/producto</footer>
+
+<script>
+    // URL de la API (asegúrate que el servidor local esté corriendo)
+    const apiUrl = 'http://localhost:3000/producto';
+
+    async function cargarProductos() {
+        const contenedor = document.getElementById('productosContainer');
+
+        try {
+            // Mostrar mensaje de carga mientras esperamos
+            contenedor.innerHTML = '<div class="cargando">⏳ Cargando productos...</div>';
+
+            // Hacer la petición a la API
+            const respuesta = await fetch(apiUrl);
+
+            // Verificar si la respuesta fue exitosa (código 200-299)
+            if (!respuesta.ok) {
+                throw new Error(`Error HTTP: ${respuesta.status}`);
+            }
+
+            // Convertir la respuesta a JSON
+            const datos = await respuesta.json();
+
+            // Verificar la estructura esperada: { message: "success", data: [...] }
+            if (datos.message !== 'success' || !Array.isArray(datos.data)) {
+                throw new Error('La API no devolvió el formato esperado');
+            }
+
+            const productos = datos.data;
+
+            // Si no hay productos, mostrar mensaje
+            if (productos.length === 0) {
+                contenedor.innerHTML = '<div class="error">⚠️ No hay productos disponibles.</div>';
+                return;
+            }
+
+            // Generar el HTML para cada producto
+            contenedor.innerHTML = productos.map(producto => `
+                <div class="producto-card">
+                    <img src="${producto.foto}" alt="${producto.nombre}" loading="lazy">
+                    <h3>${producto.nombre}</h3>
+                    <p class="precio">$${producto.precio.toFixed(2)}</p>
+                    <p class="${producto.disponibilidad === 1 ? 'disponible' : 'no-disponible'}">
+                        ${producto.disponibilidad === 1 ? '✅ Disponible' : '❌ Sin stock'}
+                    </p>
+                    <small>ID Marca: ${producto.id_marca}</small>
+                </div>
+            `).join('');
+
+        } catch (error) {
+            // Mostrar mensaje de error amigable
+            console.error('Error al cargar productos:', error);
+            contenedor.innerHTML = `
+                <div class="error">
+                    ❌ No se pudieron cargar los productos.<br>
+                    Verifica que el servidor esté corriendo en <strong>http://localhost:3000</strong><br>
+                    Detalle técnico: ${error.message}
+                </div>
+            `;
+        }
+    }
+
+    // Ejecutar la función al cargar la página
+    cargarProductos();
+</script>
+
+</body>
+</html>

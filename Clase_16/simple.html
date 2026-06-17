@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Login Simple | Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #e0eafc 0%, #cfdef3 100%);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    /* Tarjeta principal */
+    .login-card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(2px);
+      max-width: 420px;
+      width: 100%;
+      padding: 2rem 2rem 2.2rem;
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease;
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .login-card:hover {
+      transform: translateY(-3px);
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: #1e2a3e;
+      letter-spacing: -0.3px;
+      text-align: center;
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #4b6a8b;
+      font-size: 0.85rem;
+      border-bottom: 1px solid #e2edf7;
+      padding-bottom: 1rem;
+      margin-bottom: 1.6rem;
+    }
+
+    /* Campos del formulario */
+    .campo {
+      margin-bottom: 1.4rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 500;
+      margin-bottom: 0.45rem;
+      color: #1e3a5f;
+      font-size: 0.85rem;
+      letter-spacing: 0.3px;
+    }
+
+    input {
+      background: #fefefe;
+      border: 1.5px solid #dce5f0;
+      border-radius: 1.2rem;
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.2s;
+      outline: none;
+      color: #1a2c3e;
+    }
+
+    input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+      background-color: #ffffff;
+    }
+
+    /* Botón */
+    button {
+      background: #1f6392;
+      background: linear-gradient(105deg, #1e4a76, #1f6392);
+      color: white;
+      border: none;
+      padding: 0.85rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      width: 100%;
+      margin-top: 0.5rem;
+      box-shadow: 0 5px 12px rgba(0, 50, 80, 0.2);
+      letter-spacing: 0.5px;
+    }
+
+    button:hover {
+      background: linear-gradient(105deg, #123e60, #18537a);
+      transform: scale(0.98);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    /* Mensaje de feedback */
+    .mensaje {
+      margin-top: 1.6rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.6rem;
+      border-radius: 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .mensaje.exito {
+      background: #e0f7e9;
+      color: #0a5e2e;
+      border-left: 4px solid #2b9348;
+    }
+
+    .mensaje.error {
+      background: #ffe6e5;
+      color: #b91c1c;
+      border-left: 4px solid #e53e3e;
+    }
+
+    /* Datos de prueba (info adicional) */
+    .test-data {
+      background: #f0f5fa;
+      margin-top: 1.8rem;
+      padding: 0.8rem 1rem;
+      border-radius: 1.2rem;
+      font-size: 0.75rem;
+      text-align: center;
+      color: #2c5a7a;
+      border: 1px solid #d4e2f0;
+    }
+
+    .test-data span {
+      font-weight: 700;
+      background: #ffffffc9;
+      padding: 0.2rem 0.5rem;
+      border-radius: 40px;
+      display: inline-block;
+      margin: 0.2rem 0.2rem;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: #0b3b5f;
+    }
+
+    .test-data strong {
+      color: #0b4d6e;
+    }
+
+    hr {
+      margin: 0.5rem 0;
+      border: none;
+      border-top: 1px solid #cfdfef;
+    }
+
+    footer {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #5f7d9c;
+    }
+
+    @media (max-width: 480px) {
+      .login-card {
+        padding: 1.5rem;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      button {
+        padding: 0.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-card">
+  <h1>🔐 Acceso seguro</h1>
+
+  <!-- Formulario (permite envío con Enter) -->
+  <form id="loginForm" method="post" novalidate>
+    <div class="campo">
+      <label for="username">👤 Usuario</label>
+      <input type="text" id="username" name="username" placeholder="ej: admin / demo" autocomplete="off" autofocus>
+    </div>
+    <div class="campo">
+      <label for="password">🔒 Contraseña</label>
+      <input type="password" id="password" name="password" placeholder="••••••" autocomplete="off">
+    </div>
+    <button type="submit" id="loginBtn">Iniciar sesión</button>
+  </form>
+
+  <!-- Zona de mensajes dinámicos -->
+  <div id="mensajeFeedback" class="mensaje"></div>
+
+  <!-- Datos de prueba visibles -->
+  <div class="test-data">
+    <strong>📋 Datos de prueba:</strong><br>
+    ▸ usuario: <span>admin</span> · contraseña: <span>123</span><br>
+    ▸ usuario: <span>demo</span> · contraseña: <span>demo</span><br>
+  </div>
+</div>
+
+<script>
+    // ----- CREDENCIALES DE PRUEBA (datos fijos) -----
+    const VALID_CREDENTIALS = [
+      { username: "admin", password: "123" },
+      { username: "demo",  password: "demo" }
+    ];
+
+    // Elementos del DOM
+    const loginForm = document.getElementById("loginForm");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const messageDiv = document.getElementById("mensajeFeedback");
+
+    // Función para limpiar mensajes (útil cuando el usuario escribe)
+    function clearMessage() {
+      if (messageDiv) {
+        messageDiv.innerHTML = "";
+        messageDiv.className = "mensaje";
+      }
+    }
+
+    // Función para mostrar mensaje de éxito o error
+    function showMessage(text, type) {
+      if (!messageDiv) return;
+      messageDiv.innerHTML = text;
+      messageDiv.className = `mensaje ${type}`;  // type puede ser 'exito' o 'error'
+    }
+
+    // Lógica principal de autenticación
+    function attemptLogin(event) {
+      // Prevenir envío real del formulario y recarga de página
+      if (event) event.preventDefault();
+
+      // Obtener valores y limpiar espacios (solo el username se normaliza)
+      const rawUsername = usernameInput.value;
+      const password = passwordInput.value;   // contraseña SIN trim (se respetan espacios, pero credenciales de prueba no los tienen)
+      const trimmedUsername = rawUsername.trim();   // eliminamos espacios al inicio/final del nombre
+
+      // Validar campos vacíos (después de trim en usuario)
+      if (trimmedUsername === "" || password === "") {
+        showMessage("❌ Ambos campos son obligatorios. Completa usuario y contraseña.", "error");
+        return false;
+      }
+
+      // Buscar coincidencia exacta en el arreglo de credenciales
+      const isValid = VALID_CREDENTIALS.some(cred => 
+        cred.username === trimmedUsername && cred.password === password
+      );
+
+      if (isValid) {
+        // Éxito: mostrar mensaje personalizado con el nombre del usuario
+        showMessage(`✅ ¡Inicio de sesión exitoso! Bienvenido, ${trimmedUsername}. ✨`, "exito");
+      } else {
+        // Error credenciales incorrectas
+        showMessage("⚠️ Usuario o contraseña incorrectos. Revisa los datos de prueba.", "error");
+        // Limpiar campo contraseña por seguridad (opcional pero buena práctica en demos)
+        passwordInput.value = "";
+      }
+      return isValid;
+    }
+
+    // === Eventos ===
+
+    // 1. Escuchar submit del formulario (incluye clic en botón + tecla Enter)
+    if (loginForm) {
+      loginForm.addEventListener("submit", attemptLogin);
+    }
+
+    // 2. Limpiar mensaje cuando el usuario empiece a escribir en usuario o contraseña
+    //    (para mejorar experiencia, borra feedback antiguo)
+    if (usernameInput) {
+      usernameInput.addEventListener("focus", clearMessage);
+      usernameInput.addEventListener("input", clearMessage);
+    }
+    if (passwordInput) {
+      passwordInput.addEventListener("focus", clearMessage);
+      passwordInput.addEventListener("input", clearMessage);
+    }
+</script>
+</body>
+</html>

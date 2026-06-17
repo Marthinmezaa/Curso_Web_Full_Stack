@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>😺 Gatos desde API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #e0f0ff;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin: 15px 0;
+            border: 3px solid #8fc9ff;
+        }
+        button {
+            background: #5ba9e0;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            color: white;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #3a8bc4;
+        }
+        .loading {
+            color: #5a7d9a;
+            font-style: italic;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #5a7d9a;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🐱 ¡Gatos aleatorios!</h1>
+    <p>Usando la API pública <strong>The Cat API</strong></p>
+
+    <!-- Espacio para la imagen del gato -->
+    <div id="catArea">
+        <img id="catImage" src="" alt="Aquí aparecerá un gato" style="display:none;">
+        <div id="loadingText" class="loading">✨ Cargando gatito...</div>
+    </div>
+
+    <button id="newCatBtn">😸 Nuevo gato</button>
+    <footer>🌐 Fuente: thecatapi.com</footer>
+</div>
+
+<script>
+    // 1. Obtener elementos del HTML
+    const imagenGato = document.getElementById('catImage');
+    const textoCargando = document.getElementById('loadingText');
+    const boton = document.getElementById('newCatBtn');
+
+    // 2. Función para pedir un gato a la API
+    async function obtenerGato() {
+        // Mostrar mensaje de carga y ocultar imagen
+        textoCargando.style.display = 'block';
+        imagenGato.style.display = 'none';
+
+        try {
+            // Pedir datos a la API pública de gatos (no necesita clave)
+            const respuesta = await fetch('https://api.thecatapi.com/v1/images/search');
+            const datos = await respuesta.json();
+
+            // La URL de la imagen viene en datos[0].url
+            const urlImagen = datos[0].url;
+
+            // Asignar la URL a la imagen y mostrarla cuando cargue
+            imagenGato.src = urlImagen;
+            imagenGato.onload = () => {
+                textoCargando.style.display = 'none';
+                imagenGato.style.display = 'block';
+            };
+        } catch (error) {
+            // Si algo sale mal, mostrar mensaje amigable
+            textoCargando.innerHTML = '❌ Error al cargar. ¡Intenta de nuevo!';
+            console.error('Error:', error);
+        }
+    }
+
+    // 3. Al hacer clic en el botón, pedimos otro gato
+    boton.addEventListener('click', obtenerGato);
+
+    // 4. Al abrir la página, mostrar un primer gato automáticamente
+    obtenerGato();
+</script>
+
+</body>
+</html>

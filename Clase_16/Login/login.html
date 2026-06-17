@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72, #2b3b4e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .login-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            width: 320px;
+            text-align: center;
+        }
+        h2 {
+            color: #1e2f3e;
+            margin-bottom: 1.5rem;
+        }
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 40px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+        input:focus {
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 2px rgba(30,60,114,0.2);
+        }
+        button {
+            width: 100%;
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #0f2a4a;
+        }
+        .error {
+            color: #d9534f;
+            font-size: 0.85rem;
+            margin-top: 12px;
+            background: #f8d7da;
+            padding: 8px;
+            border-radius: 30px;
+        }
+        .demo {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>🔐 Acceso seguro</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Usuario" autocomplete="off" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button type="submit">Iniciar sesión</button>
+            <div id="errorMsg" class="error" style="display: none;"></div>
+        </form>
+        <div class="demo">
+            📘 Usuario de prueba: <strong>emilys</strong><br>
+            Contraseña: <strong>emilyspass</strong>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        const errorDiv = document.getElementById('errorMsg');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorDiv.style.display = 'none';
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                mostrarError('Completa ambos campos.');
+                return;
+            }
+
+            try {
+                const respuesta = await fetch('https://dummyjson.com/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const datos = await respuesta.json();
+
+                if (!respuesta.ok) {
+                    mostrarError(datos.message || 'Credenciales incorrectas');
+                    return;
+                }
+
+                // Guardar información de sesión
+                sessionStorage.setItem('token', datos.token);
+                sessionStorage.setItem('usuario', datos.firstName + ' ' + datos.lastName);
+                sessionStorage.setItem('nombre', datos.firstName);
+
+                // Redirigir a bienvenida
+                window.location.href = 'bienvenido.html';
+            } catch (error) {
+                mostrarError('Error de red. Inténtalo de nuevo.');
+                console.error(error);
+            }
+        });
+
+        function mostrarError(mensaje) {
+            errorDiv.textContent = mensaje;
+            errorDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

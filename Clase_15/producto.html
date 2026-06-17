@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>📦 Producto desde API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            margin: 15px 0;
+        }
+        button {
+            background: #2c7da0;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            color: white;
+            margin-top: 15px;
+        }
+        button:hover {
+            background: #1f5e7a;
+        }
+        .loading, .error {
+            color: #888;
+            font-style: italic;
+            padding: 20px;
+        }
+        .error {
+            color: #d9534f;
+        }
+        footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🛍️ Producto destacado</h1>
+    <p>API: <strong>dummyjson.com</strong></p>
+
+    <div id="productoInfo">
+        <div id="loadingMsg" class="loading">⏳ Cargando producto...</div>
+        <div id="contenidoProducto" style="display:none;">
+            <img id="productoImagen" src="" alt="Imagen del producto">
+            <h2 id="productoTitulo"></h2>
+            <p id="productoDescripcion"></p>
+            <p><strong>💰 Precio:</strong> $<span id="productoPrecio"></span></p>
+        </div>
+        <div id="errorMsg" class="error" style="display:none;"></div>
+    </div>
+
+    <button id="cambiarBtn">🔄 Probar con otro ID</button>
+    <footer>💡 Cambia el parámetro en la URL: <code>?id=1</code> , <code>?id=2</code> , etc.</footer>
+</div>
+
+<script>
+    // 1. Obtener el ID del producto desde la URL (ej: ?id=3)
+    function obtenerIdDeURL() {
+        const params = new URLSearchParams(window.location.search);
+        let id = params.get('id');
+        if (!id) {
+            // Si no hay ?id, usamos el 1 por defecto
+            id = '1';
+        }
+        return id;
+    }
+
+    // 2. Mostrar el producto llamando a la API
+    async function mostrarProducto() {
+        const id = obtenerIdDeURL();
+        const loadingDiv = document.getElementById('loadingMsg');
+        const contenidoDiv = document.getElementById('contenidoProducto');
+        const errorDiv = document.getElementById('errorMsg');
+
+        // Ocultar contenido previo y errores, mostrar loading
+        contenidoDiv.style.display = 'none';
+        errorDiv.style.display = 'none';
+        loadingDiv.style.display = 'block';
+        loadingDiv.innerText = '⏳ Cargando producto ID ' + id + '...';
+
+        try {
+            // Usamos la API pública DummyJSON (no necesita clave)
+            const respuesta = await fetch(`https://dummyjson.com/products/${id}`);
+            
+            if (!respuesta.ok) {
+                // Si el producto no existe (ej: id 9999), la API responde con 404
+                throw new Error(`Producto con ID ${id} no encontrado.`);
+            }
+
+            const producto = await respuesta.json();
+
+            // Rellenar los campos del HTML
+            document.getElementById('productoImagen').src = producto.thumbnail || producto.images?.[0] || '';
+            document.getElementById('productoTitulo').innerText = producto.title;
+            document.getElementById('productoDescripcion').innerText = producto.description;
+            document.getElementById('productoPrecio').innerText = producto.price;
+
+            // Mostrar contenido y ocultar loading
+            loadingDiv.style.display = 'none';
+            contenidoDiv.style.display = 'block';
+        } catch (error) {
+            // Mostrar mensaje de error amigable
+            loadingDiv.style.display = 'none';
+            errorDiv.style.display = 'block';
+            errorDiv.innerText = `❌ ${error.message} Intenta con otro ID (1 al 30).`;
+            console.error('Error:', error);
+        }
+    }
+
+    // 3. Botón para cambiar de producto sin recargar la página? 
+    // Para mantener la idea simple, usamos el botón para generar un ID aleatorio y recargar la página con ese ID
+    function cambiarProductoAleatorio() {
+        const nuevoId = Math.floor(Math.random() * 30) + 1; // IDs del 1 al 30
+        // Recargar la página con el nuevo parámetro ?id=nuevoId
+        window.location.href = `?id=${nuevoId}`;
+    }
+
+    document.getElementById('cambiarBtn').addEventListener('click', cambiarProductoAleatorio);
+
+    // 4. Al cargar la página, mostrar el producto según el ID de la URL
+    mostrarProducto();
+</script>
+
+</body>
+</html>

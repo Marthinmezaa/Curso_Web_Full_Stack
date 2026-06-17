@@ -1,0 +1,52 @@
+[
+  {
+    "id": "q1",
+    "pregunta": "¿Qué es un reporte en una aplicación?",
+    "opciones": [
+      { "texto": "Un documento para jugar en línea", "correcta": false },
+      { "texto": "Un archivo que solo guarda imágenes", "correcta": false },
+      { "texto": "Un documento que presenta información estructurada para analizar y decidir", "correcta": true },
+      { "texto": "Un programa para editar videos", "correcta": false }
+    ]
+  },
+  {
+    "id": "q2",
+    "pregunta": "¿Cuál de estos es un elemento clave de un reporte efectivo?",
+    "opciones": [
+      { "texto": "Claridad en la presentación de datos", "correcta": true },
+      { "texto": "Que tenga colores llamativos únicamente", "correcta": false },
+      { "texto": "Que sea difícil de entender", "correcta": false },
+      { "texto": "Que no permita interacción", "correcta": false }
+    ]
+  },
+  {
+    "id": "q3",
+    "pregunta": "¿Qué es DataTables?",
+    "opciones": [
+      { "texto": "Una librería de JavaScript que convierte tablas estáticas en dinámicas e interactivas", "correcta": true },
+      { "texto": "Un editor de texto para programadores", "correcta": false },
+      { "texto": "Una aplicación para crear presentaciones", "correcta": false },
+      { "texto": "Un sistema operativo", "correcta": false }
+    ]
+  },
+  {
+    "id": "q4",
+    "pregunta": "¿Cuál de estas es una característica principal de DataTables?",
+    "opciones": [
+      { "texto": "Paginación automática", "correcta": true },
+      { "texto": "Reproducción de música", "correcta": false },
+      { "texto": "Creación de imágenes", "correcta": false },
+      { "texto": "Traducción de documentos", "correcta": false }
+    ]
+  },
+  {
+    "id": "q5",
+    "pregunta": "¿Qué ventaja ofrece DataTables?",
+    "opciones": [
+      { "texto": "Escalabilidad con grandes volúmenes de datos", "correcta": true },
+      { "texto": "Solo funciona con tablas pequeñas", "correcta": false },
+      { "texto": "No permite exportar información", "correcta": false },
+      { "texto": "Es incompatible con navegadores modernos", "correcta": false }
+    ]
+  }
+]

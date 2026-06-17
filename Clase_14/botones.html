@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Empleados y Salarios - DataTables simple</title>
+    <!-- CSS mínimo de DataTables (obligatorio para estilo básico) -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+    <style>
+        /* CSS MUY MÍNIMO: solo para que la tabla se vea ordenada */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 20px;
+            background: white;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        h2 {
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+        /* Opcional: un poco de espaciado en la tabla */
+        table.dataTable {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>📋 Empleados y salarios</h2>
+    <p>Tabla con búsqueda, ordenamiento, paginación y botones de exportación (copiar, CSV, Excel, PDF, imprimir).</p>
+
+    <!-- Tabla HTML estándar con datos de empleados y salarios -->
+    <table id="tablaEmpleados" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre completo</th>
+                <th>Puesto</th>
+                <th>Departamento</th>
+                <th>Salario mensual</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Ana Gutiérrez</td><td>Gerente TI</td><td>Tecnología</td><td>8950.00</td></tr>
+            <tr><td>2</td><td>Carlos Méndez</td><td>Desarrollador</td><td>Tecnología</td><td>5200.00</td></tr>
+            <tr><td>3</td><td>Laura Ramírez</td><td>Analista Datos</td><td>*****ítica</td><td>6100.00</td></tr>
+            <tr><td>4</td><td>Javier Castro</td><td>Coordinador Ventas</td><td>Ventas</td><td>4875.50</td></tr>
+            <tr><td>5</td><td>María López</td><td>RRHH</td><td>Recursos Humanos</td><td>4620.00</td></tr>
+            <tr><td>6</td><td>Ricardo Peña</td><td>Ingeniero Software</td><td>Tecnología</td><td>5550.00</td></tr>
+            <tr><td>7</td><td>Valentina Cruz</td><td>Diseñadora UX</td><td>Diseño</td><td>4780.00</td></tr>
+            <tr><td>8</td><td>Sergio Flores</td><td>Contador</td><td>Finanzas</td><td>6350.00</td></tr>
+            <tr><td>9</td><td>Patricia Jiménez</td><td>Jefe Marketing</td><td>Marketing</td><td>7200.00</td></tr>
+            <tr><td>10</td><td>Fernando Herrera</td><td>Soporte Técnico</td><td>Operaciones</td><td>3850.00</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Scripts necesarios -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.11/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.11/vfs_fonts.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#tablaEmpleados').DataTable({
+            dom: 'Bfrtip',               // Muestra botones arriba
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+            language: {                  // Textos en español (opcional, pero más amigable)
+                "search": "Buscar:",
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ empleados",
+                "paginate": { "next": "Siguiente", "previous": "Anterior" }
+            },
+            pageLength: 5                // Muestra 5 filas por defecto (puedes cambiarlo)
+        });
+    });
+</script>
+</body>
+</html>

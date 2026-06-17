@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Incluye la librería de Google Charts -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    // Carga la librería de visualización y los paquetes de gráficos necesarios.
+    google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Lenguaje', 'Popularidad'],
+        ['JavaScript', 90],
+        ['Python', 80],
+        ['Java', 75],
+        ['Ruby', 65],
+        ['C#', 70],
+        ['PHP', 60],
+        ['Swift', 55]
+      ]);
+
+      var options = {
+        chart: {
+          title: 'Popularidad de los lenguajes de programacion para fullstack',
+          subtitle: 'Basado en encuestas de desarrolladores',
+        }
+      };
+
+      var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+      chart.draw(data, google.charts.Bar.convertOptions(options));
+    }
+  </script>
+</head>
+<body>
+  <!-- Donde se renderizará el gráfico -->
+  <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+</body>
+</html>

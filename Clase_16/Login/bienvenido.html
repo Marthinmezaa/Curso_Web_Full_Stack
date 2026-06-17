@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Helvetica Neue', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #2b5e3b, #1d3e2a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(2px);
+            border-radius: 3rem;
+            padding: 3rem 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 45px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease;
+        }
+        .welcome-card:hover {
+            transform: scale(1.01);
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: #1e4620;
+            margin-bottom: 0.5rem;
+        }
+        .saludo {
+            font-size: 1.7rem;
+            margin: 1rem 0 0.5rem;
+            color: #2c5e2d;
+        }
+        .nombre {
+            font-weight: 800;
+            color: #d45a2b;
+            background: #fff0e6;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 50px;
+            margin: 0.5rem 0;
+        }
+        .mensaje {
+            font-size: 1.1rem;
+            color: #2d4a22;
+            margin: 1.5rem 0;
+            border-top: 2px solid #cfe3cf;
+            padding-top: 1.2rem;
+        }
+        button {
+            background: #c7362b;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 12px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #9e2a21;
+            transform: scale(0.97);
+        }
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: #6b8c5c;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-card">
+        <h1>✨ ¡Bienvenido! ✨</h1>
+        <div class="saludo">Hola,</div>
+        <div id="displayNombre" class="nombre">Usuario</div>
+        <div class="mensaje">
+            🌟 Nos alegra tenerte de vuelta.<br>
+            Disfruta tu experiencia.
+        </div>
+        <button id="logoutBtn">🚪 Cerrar sesión</button>
+        <div class="footer">Sesión activa</div>
+    </div>
+
+    <script>
+        // Verificar si existe sesión guardada
+        const nombreGuardado = sessionStorage.getItem('nombre');
+        const tokenGuardado = sessionStorage.getItem('token');
+
+        if (!nombreGuardado || !tokenGuardado) {
+            // No hay sesión -> redirigir al login
+            window.location.href = 'login.html';
+        }
+
+        // Mostrar nombre elegante
+        const nombreSpan = document.getElementById('displayNombre');
+        nombreSpan.textContent = nombreGuardado;
+
+        // Cerrar sesión: eliminar datos y volver al login
+        const logoutBtn = document.getElementById('logoutBtn');
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('usuario');
+            sessionStorage.removeItem('nombre');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

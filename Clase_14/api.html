@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>API - Tabla de Usuarios</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 24px 28px 32px 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        h2 {
+            margin: 0 0 6px 0;
+            color: #1e2f3e;
+        }
+        .desc {
+            color: #4a627a;
+            margin-bottom: 24px;
+            border-left: 3px solid #2c7da0;
+            padding-left: 14px;
+        }
+        table.dataTable thead th {
+            background: #eef2f9;
+            color: #1e4663;
+            font-weight: 600;
+            padding: 14px 12px;
+        }
+        table.dataTable tbody tr:hover {
+            background-color: #eef4fc !important;
+        }
+        .dataTables_filter input {
+            border: 1px solid #cbdbe2;
+            border-radius: 40px;
+            padding: 8px 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>📡 Usuarios desde JSONPlaceholder API</h2>
+    <div class="desc">Datos obtenidos de <strong>https://jsonplaceholder.typicode.com/users</strong> (API pública). Tabla con búsqueda y ordenamiento. Sin botones de exportación.</div>
+
+    <table id="tablaUsuarios" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Sitio web</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td colspan="6">Cargando usuarios...</td</tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+    // 1. Usamos fetch (más moderno, sin AJAX de jQuery)
+    fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())   // Convertir respuesta a JSON
+        .then(usuarios => {
+            // 2. Cuando los datos llegan, inicializamos DataTables
+            $('#tablaUsuarios').DataTable({
+                data: usuarios,               // Los datos de la API
+                columns: [
+                    { data: 'id' },
+                    { data: 'name' },
+                    { data: 'username' },
+                    { data: 'email' },
+                    { data: 'phone' },
+                    { data: 'website' }
+                ],
+                language: {                  // Textos en español
+                    search: "🔍 Buscar:",
+                    lengthMenu: "Mostrar _MENU_ registros",
+                    info: "Mostrando _START_ a _END_ de _TOTAL_ usuarios",
+                    paginate: { next: "Siguiente", previous: "Anterior" }
+                },
+                pageLength: 10,
+                dom: 'lfrtip'                // Sin botones: solo filtro, tabla, info y paginación
+            });
+        })
+        .catch(error => {
+            // Si hay error (ejemplo: sin internet), mostramos mensaje
+            document.querySelector('#tablaUsuarios tbody').innerHTML = 
+                '<tr><td colspan="6">❌ Error al cargar datos. Intenta de nuevo más tarde.</td></tr>';
+            console.error('Error fetching data:', error);
+        });
+</script>
+</body>
+</html>

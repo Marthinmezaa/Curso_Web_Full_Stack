@@ -1,0 +1,47 @@
+[
+  {
+    "id": "q1",
+    "pregunta": "¿Qué es JSON?",
+    "opciones": [
+      { "texto": "Un formato de texto para guardar y compartir datos.", "correcta": true },
+      { "texto": "Un lenguaje de programación.", "correcta": false },
+      { "texto": "Un sistema operativo.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q2",
+    "pregunta": "¿Qué son los servicios web?",
+    "opciones": [
+      { "texto": "Programas que ofrecen funcionalidades útiles y pueden ser invocados a través de una red.", "correcta": true },
+      { "texto": "Bases de datos para almacenar información.", "correcta": false },
+      { "texto": "Aplicaciones para diseño web.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q3",
+    "pregunta": "¿Cuál es el propósito de la tabla 'producto' en la base de datos?",
+    "opciones": [
+      { "texto": "Guardar información sobre los productos, como nombre, precio y disponibilidad.", "correcta": true },
+      { "texto": "Guardar datos de los pedidos realizados por los clientes.", "correcta": false },
+      { "texto": "Registrar marcas y sus descripciones.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q4",
+    "pregunta": "¿Qué lenguaje y base de datos se usan en el proyecto de la tienda?",
+    "opciones": [
+      { "texto": "NodeJS y SQLite.", "correcta": true },
+      { "texto": "Python y MySQL.", "correcta": false },
+      { "texto": "PHP y PostgreSQL.", "correcta": false }
+    ]
+  },
+  {
+    "id": "q5",
+    "pregunta": "¿Qué debe ejecutarse para crear la base de datos en el proyecto de la tienda?",
+    "opciones": [
+      { "texto": "El comando: `node crear.base.js`.", "correcta": true },
+      { "texto": "El comando: `npm start`.", "correcta": false },
+      { "texto": "El comando: `sqlite init`.", "correcta": false }
+    ]
+  }
+]

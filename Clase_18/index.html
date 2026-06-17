@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador de Gravedad</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    
+    #canvas {
+      display: block;
+      background-color: #fff;
+      margin: 20px auto;
+      border: 1px solid #333;
+    }
+    
+    #controls {
+      width: 800px;
+      margin: 0 auto;
+      padding: 10px;
+      text-align: center;
+    }
+    
+    button {
+      padding: 8px 16px;
+      margin: 0 10px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
+    
+    .slider-container {
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .slider-container label {
+      margin-right: 10px;
+      width: 200px;
+      text-align: right;
+    }
+    
+    input[type="range"] {
+      width: 200px;
+    }
+    
+    .value-display {
+      width: 50px;
+      text-align: left;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <h2>Simulador de Gravedad</h2>
+    
+    <div class="slider-container">
+      <label for="gravitySlider">Gravedad:</label>
+      <input type="range" min="0" max="2" step="0.1" value="0.5" id="gravitySlider">
+      <span class="value-display" id="gravityValue">0.5</span>
+    </div>
+    
+    <div class="slider-container">
+      <label for="bounceSlider">Rebote:</label>
+      <input type="range" min="0" max="1" step="0.1" value="0.7" id="bounceSlider">
+      <span class="value-display" id="bounceValue">0.7</span>
+    </div>
+    
+    <div class="slider-container">
+      <label for="frictionSlider">Fricción:</label>
+      <input type="range" min="0" max="0.1" step="0.01" value="0.02" id="frictionSlider">
+      <span class="value-display" id="frictionValue">0.02</span>
+    </div>
+    
+    <button id="addCircle">Crear Circulo</button>
+    <button id="reset">Reiniciar</button>
+  </div>
+  
+  <canvas id="canvas" width="600" height="320"></canvas>
+  
+  <script>
+    // Configuración del juego
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Variables globales
+    let gravity = 0.5;
+    let bounce = 0.7;
+    let friction = 0.02;
+    const objects = [];
+    let isRunning = true;
+    
+    // Controles deslizantes
+    const gravitySlider = document.getElementById('gravitySlider');
+    const bounceSlider = document.getElementById('bounceSlider');
+    const frictionSlider = document.getElementById('frictionSlider');
+    
+    // Displays de valores
+    const gravityValue = document.getElementById('gravityValue');
+    const bounceValue = document.getElementById('bounceValue');
+    const frictionValue = document.getElementById('frictionValue');
+    
+    // Botones
+    const addCircleButton = document.getElementById('addCircle');
+    const resetButton = document.getElementById('reset');
+    
+    // Clase Base para objetos
+    class PhysicsObject {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.vx = 0;
+        this.vy = 0;
+        this.color = color || getRandomColor();
+      }
+      
+      update() {
+        // Aplicar gravedad
+        this.vy += gravity;
+        
+        // Aplicar fricción
+        this.vx *= (1 - friction);
+        
+        // Actualizar posición
+        this.x += this.vx;
+        this.y += this.vy;
+        
+        // Comprobar límites del canvas
+        this.checkBoundaries();
+      }
+      
+      checkBoundaries() {
+        // Método para ser sobreescrito
+      }
+      
+      draw() {
+        // Método para ser sobreescrito
+      }
+    }
+ 
+    // Clase para círculos
+    class Circle extends PhysicsObject {
+      constructor(x, y, radius, color) {
+        super(x, y, color);
+        this.radius = radius || 15 + Math.random() * 25;
+      }
+      
+      checkBoundaries() {
+        // Colisión con los bordes laterales
+        if (this.x - this.radius < 0) {
+          this.x = this.radius;
+          this.vx *= -bounce;
+        } else if (this.x + this.radius > canvas.width) {
+          this.x = canvas.width - this.radius;
+          this.vx *= -bounce;
+        }
+        
+        // Colisión con el suelo y el techo
+        if (this.y - this.radius < 0) {
+          this.y = this.radius;
+          this.vy *= -bounce;
+        } else if (this.y + this.radius > canvas.height) {
+          this.y = canvas.height - this.radius;
+          this.vy *= -bounce;
+          
+          // Aplicar fricción adicional cuando toca el suelo
+          if (Math.abs(this.vy) < 0.5) {
+            this.vy = 0;
+          }
+        }
+      }
+      
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+        
+        // Línea para mostrar la velocidad
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x + this.vx*5, this.y + this.vy*5);
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+      }
+    }
+    
+    // Función para obtener color aleatorio
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+    
+    // Función para añadir un círculo
+    function addCircle() {
+      const circle = new Circle(
+        Math.random() * (canvas.width - 50),
+        Math.random() * (canvas.height / 2)
+      );
+      
+      // Dar velocidad inicial aleatoria
+      circle.vx = (Math.random() - 0.5) * 10;
+      circle.vy = Math.random() * 5;
+      
+      objects.push(circle);
+    }
+    
+    // Función para resetear la simulación
+    function reset() {
+      objects.length = 0;
+    }
+    
+    // Actualizar parámetros desde los controles deslizantes
+    function updateParams() {
+      gravity = parseFloat(gravitySlider.value);
+      bounce = parseFloat(bounceSlider.value);
+      friction = parseFloat(frictionSlider.value);
+      
+      // Actualizar displays
+      gravityValue.textContent = gravity.toFixed(1);
+      bounceValue.textContent = bounce.toFixed(1);
+      frictionValue.textContent = friction.toFixed(2);
+    }
+    
+    // Event listeners
+    gravitySlider.addEventListener('input', updateParams);
+    bounceSlider.addEventListener('input', updateParams);
+    frictionSlider.addEventListener('input', updateParams);
+    addCircleButton.addEventListener('click', addCircle);
+    resetButton.addEventListener('click', reset);
+    
+    // Interacción con el mouse (añadir impulso)
+    canvas.addEventListener('click', function(event) {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+      
+      // Verificar si el clic fue en algún objeto
+      for (let i = 0; i < objects.length; i++) {
+        const obj = objects[i];
+          const distance = Math.sqrt(
+            Math.pow(mouseX - obj.x, 2) + Math.pow(mouseY - obj.y, 2)
+          );
+          if (distance <= obj.radius) {
+            // Aplicar impulso
+            obj.vy = -10;
+            return;
+          }
+      }
+    });
+    
+    // Bucle principal del juego
+    function gameLoop() {
+      // Limpiar el canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Actualizar y dibujar objetos
+      for (let i = 0; i < objects.length; i++) {
+        objects[i].update();
+        objects[i].draw();
+      }
+      
+      // Solicitar el siguiente frame
+      requestAnimationFrame(gameLoop);
+    }
+    
+    // Iniciar la simulación
+    updateParams();
+    gameLoop();
+    
+    // Añadir algunos objetos iniciales
+    for (let i = 0; i < 3; i++) {
+      addCircle();
+    }
+  </script>
+</body>
+</html>

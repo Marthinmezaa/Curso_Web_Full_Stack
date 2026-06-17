@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Fútbol con Funcionalidades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .table-container {
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+        th:hover {
+            background-color: #e6e6e6;
+        }
+        .search-container {
+            margin-bottom: 15px;
+        }
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+        .pagination li {
+            margin-right: 5px;
+        }
+        .pagination a {
+            display: block;
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            text-decoration: none;
+            color: #333;
+        }
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tabla de Jugadores de Fútbol</h1>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="searchTable()">
+    </div>
+    
+    <div class="table-container">
+        <table id="footballTable">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Nombre</th>
+                    <th onclick="sortTable(1)">Equipo</th>
+                    <th onclick="sortTable(2)">Posición</th>
+                    <th onclick="sortTable(3)">Edad</th>
+                    <th onclick="sortTable(4)">Goles</th>
+                    <th onclick="sortTable(5)">Asistencias</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Los datos se cargarán aquí -->
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="pagination-container">
+        <ul class="pagination" id="pagination">
+            <!-- Los números de página se generarán aquí -->
+        </ul>
+    </div>
+    
+    <script>
+        // Datos de ejemplo
+        const players = [
+            { nombre: "Lionel Messi", equipo: "Inter Miami", posicion: "Delantero", edad: 36, goles: 25, asistencias: 15 },
+            { nombre: "Cristiano Ronaldo", equipo: "Al Nassr", posicion: "Delantero", edad: 38, goles: 30, asistencias: 8 },
+            { nombre: "Kylian Mbappé", equipo: "PSG", posicion: "Delantero", edad: 24, goles: 28, asistencias: 12 },
+            { nombre: "Kevin De Bruyne", equipo: "Manchester City", posicion: "Centrocampista", edad: 32, goles: 10, asistencias: 25 },
+            { nombre: "Virgil van Dijk", equipo: "Liverpool", posicion: "Defensa", edad: 32, goles: 5, asistencias: 3 },
+            { nombre: "Robert Lewandowski", equipo: "Barcelona", posicion: "Delantero", edad: 35, goles: 22, asistencias: 7 },
+            { nombre: "Erling Haaland", equipo: "Manchester City", posicion: "Delantero", edad: 23, goles: 35, asistencias: 5 },
+            { nombre: "Luka Modrić", equipo: "Real Madrid", posicion: "Centrocampista", edad: 38, goles: 6, asistencias: 10 },
+            { nombre: "Karim Benzema", equipo: "Al-Ittihad", posicion: "Delantero", edad: 36, goles: 18, asistencias: 9 },
+            { nombre: "Neymar Jr", equipo: "Al Hilal", posicion: "Delantero", edad: 31, goles: 15, asistencias: 20 },
+            { nombre: "Harry Kane", equipo: "Bayern Munich", posicion: "Delantero", edad: 30, goles: 27, asistencias: 8 },
+            { nombre: "Mohamed Salah", equipo: "Liverpool", posicion: "Delantero", edad: 31, goles: 19, asistencias: 12 },
+            { nombre: "Jude Bellingham", equipo: "Real Madrid", posicion: "Centrocampista", edad: 20, goles: 16, asistencias: 7 },
+            { nombre: "Thibaut Courtois", equipo: "Real Madrid", posicion: "Portero", edad: 31, goles: 0, asistencias: 1 },
+            { nombre: "Toni Kroos", equipo: "Real Madrid", posicion: "Centrocampista", edad: 34, goles: 4, asistencias: 15 },
+            { nombre: "Antoine Griezmann", equipo: "Atlético Madrid", posicion: "Delantero", edad: 32, goles: 17, asistencias: 14 },
+            { nombre: "Son Heung-min", equipo: "Tottenham", posicion: "Delantero", edad: 31, goles: 14, asistencias: 10 },
+            { nombre: "Bruno Fernandes", equipo: "Manchester United", posicion: "Centrocampista", edad: 29, goles: 12, asistencias: 18 },
+            { nombre: "Rúben Dias", equipo: "Manchester City", posicion: "Defensa", edad: 26, goles: 2, asistencias: 4 },
+            { nombre: "Ederson", equipo: "Manchester City", posicion: "Portero", edad: 30, goles: 0, asistencias: 2 }
+        ];
+
+        // Variables para paginación
+        let currentPage = 1;
+        const rowsPerPage = 5;
+        
+        // Función para mostrar la tabla
+        function displayTable(rows, page) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            
+            const start = (page - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const paginatedRows = rows.slice(start, end);
+            
+            paginatedRows.forEach(player => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${player.nombre}</td>
+                    <td>${player.equipo}</td>
+                    <td>${player.posicion}</td>
+                    <td>${player.edad}</td>
+                    <td>${player.goles}</td>
+                    <td>${player.asistencias}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Actualizar paginación
+            updatePagination(rows.length);
+        }
+        
+        // Función para actualizar la paginación
+        function updatePagination(totalRows) {
+            const pageCount = Math.ceil(totalRows / rowsPerPage);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            
+            for (let i = 1; i <= pageCount; i++) {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#';
+                a.textContent = i;
+                if (i === currentPage) {
+                    a.className = 'active';
+                }
+                a.onclick = function() {
+                    currentPage = i;
+                    displayTable(filteredPlayers, currentPage);
+                    return false;
+                };
+                li.appendChild(a);
+                pagination.appendChild(li);
+            }
+        }
+        
+        // Función para ordenar la tabla
+        function sortTable(columnIndex) {
+            const headers = document.querySelectorAll('th');
+            const direction = headers[columnIndex].getAttribute('data-sort') === 'asc' ? 'desc' : 'asc';
+            
+            // Resetear todos los atributos de ordenación
+            headers.forEach(header => {
+                header.removeAttribute('data-sort');
+            });
+            
+            // Establecer dirección de ordenación para la columna actual
+            headers[columnIndex].setAttribute('data-sort', direction);
+            
+            filteredPlayers.sort((a, b) => {
+                const keyA = Object.values(a)[columnIndex];
+                const keyB = Object.values(b)[columnIndex];
+                
+                if (typeof keyA === 'string') {
+                    return direction === 'asc' 
+                        ? keyA.localeCompare(keyB) 
+                        : keyB.localeCompare(keyA);
+                } else {
+                    return direction === 'asc' 
+                        ? keyA - keyB 
+                        : keyB - keyA;
+                }
+            });
+            
+            displayTable(filteredPlayers, currentPage);
+        }
+        
+        // Función para buscar en la tabla
+        function searchTable() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            
+            filteredPlayers = players.filter(player => {
+                return (
+                    player.nombre.toUpperCase().includes(filter) ||
+                    player.equipo.toUpperCase().includes(filter) ||
+                    player.posicion.toUpperCase().includes(filter) ||
+                    player.edad.toString().includes(filter) ||
+                    player.goles.toString().includes(filter) ||
+                    player.asistencias.toString().includes(filter)
+                );
+            });
+            
+            currentPage = 1;
+            displayTable(filteredPlayers, currentPage);
+        }
+        
+        // Inicializar
+        let filteredPlayers = [...players];
+        displayTable(filteredPlayers, currentPage);
+    </script>
+</body>
+</html>

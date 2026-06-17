@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Carga la librería de Google Charts -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      // Datos de los equipos de fútbol más exitosos
+      var data = google.visualization.arrayToDataTable([
+        ['Equipo', 'Títulos'],
+        ['Real Madrid', 34],
+        ['Barcelona', 26],
+        ['Manchester United', 20],
+        ['Bayern Munich', 30],
+        ['AC Milan', 18]
+      ]);
+
+      var options = {
+        title: 'Los 5 equipos de futbol mas exitosos',
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <!-- Div donde se dibujará el gráfico -->
+  <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Login con API real - DummyJSON</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .login-card {
+            background: white;
+            max-width: 440px;
+            width: 100%;
+            padding: 2.2rem 2rem;
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .login-card:hover {
+            transform: translateY(-4px);
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #1e293b, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .sub {
+            text-align: center;
+            color: #5b6e8c;
+            font-size: 0.85rem;
+            margin-bottom: 1.6rem;
+            border-bottom: 1px solid #eef2ff;
+            padding-bottom: 1rem;
+        }
+
+        .campo {
+            margin-bottom: 1.3rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 0.45rem;
+            color: #1e293b;
+            font-size: 0.85rem;
+            letter-spacing: 0.2px;
+        }
+
+        input {
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s;
+            outline: none;
+            color: #0f172a;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+            background-color: white;
+        }
+
+        button {
+            background: linear-gradient(105deg, #1e3a8a, #2563eb);
+            color: white;
+            border: none;
+            border-radius: 1.8rem;
+            padding: 0.85rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-top: 0.7rem;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        button:hover {
+            background: linear-gradient(105deg, #0f2b6d, #1d4ed8);
+            transform: scale(0.98);
+        }
+
+        button:active {
+            transform: scale(0.96);
+        }
+
+        .mensaje {
+            margin-top: 1.3rem;
+            padding: 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+        }
+
+        .mensaje.exito {
+            background: #dcfce7;
+            color: #15803d;
+            border-left: 4px solid #22c55e;
+            display: block;
+        }
+
+        .mensaje.error {
+            background: #fee2e2;
+            color: #b91c1c;
+            border-left: 4px solid #ef4444;
+            display: block;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .test-data {
+            background: #f1f5f9;
+            margin-top: 1.8rem;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            text-align: center;
+            color: #334155;
+            border: 1px solid #e0e7ff;
+        }
+
+        .test-data span {
+            font-weight: 700;
+            background: #ffffff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 0.15rem;
+            font-family: monospace;
+            font-size: 0.7rem;
+            color: #0c4e8f;
+        }
+
+        hr {
+            margin: 0.6rem 0;
+            border: 0;
+            height: 1px;
+            background: #cbd5e1;
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 1.3rem;
+            color: #5a6e8a;
+        }
+
+        .api-badge {
+            background: #e6f0ff;
+            border-radius: 30px;
+            padding: 3px 10px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-bottom: 12px;
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <div style="text-align: center;">
+        <span class="api-badge">🔌 Conectado a DummyJSON API</span>
+    </div>
+    <h1>🔐 Acceso con API</h1>
+    <div class="sub">Autenticación contra API real de prueba</div>
+
+    <form id="loginForm">
+        <div class="campo">
+            <label>👤 Usuario (username)</label>
+            <input type="text" id="username" placeholder="ej: emilys" autocomplete="off" autofocus>
+        </div>
+        <div class="campo">
+            <label>🔒 Contraseña</label>
+            <input type="password" id="password" placeholder="••••••" autocomplete="off">
+        </div>
+        <button type="submit" id="loginBtn">
+            <span id="btnText">Iniciar sesión</span>
+        </button>
+    </form>
+
+    <div id="mensajeFeedback" class="mensaje"></div>
+
+    <div class="test-data">
+        <strong>📡 Credenciales válidas (usuarios reales de la API):</strong><br>
+        ▸ usuario: <span>emilys</span> · contraseña: <span>emilyspass</span><br>
+        ▸ usuario: <span>michaelw</span> · contraseña: <span>michaelwpass</span><br>
+        ▸ usuario: <span>sophiab</span> · contraseña: <span>sophiabpass</span><br>
+        <hr>
+        💡 La API devuelve un <strong>token JWT</strong> y datos del perfil tras login exitoso.
+    </div>
+    <footer>⚡ Integración con <strong>dummyjson.com/auth/login</strong> | Sin backend propio</footer>
+</div>
+
+<script>
+    const loginForm = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const messageDiv = document.getElementById('mensajeFeedback');
+    const loginBtn = document.getElementById('loginBtn');
+    const btnTextSpan = document.getElementById('btnText');
+
+    // Limpiar mensaje cuando el usuario empiece a escribir
+    function clearMessage() {
+        if (messageDiv) {
+            messageDiv.style.display = 'none';
+            messageDiv.className = 'mensaje';
+            messageDiv.innerHTML = '';
+        }
+    }
+
+    usernameInput.addEventListener('input', clearMessage);
+    passwordInput.addEventListener('input', clearMessage);
+
+    // Mostrar mensaje de éxito/error
+    function showMessage(text, type) {
+        messageDiv.innerHTML = text;
+        messageDiv.className = `mensaje ${type}`;
+        messageDiv.style.display = 'block';
+    }
+
+    // Mostrar estado de carga
+    function setLoading(isLoading) {
+        if (isLoading) {
+            btnTextSpan.innerHTML = '<span class="loading"></span> Validando...';
+            loginBtn.disabled = true;
+        } else {
+            btnTextSpan.innerHTML = 'Iniciar sesión';
+            loginBtn.disabled = false;
+        }
+    }
+
+    // Función principal que se conecta a la API real
+    async function loginWithAPI(event) {
+        event.preventDefault();
+
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value;
+
+        // Validación básica
+        if (!username || !password) {
+            showMessage('❌ Por favor, completa usuario y contraseña.', 'error');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            // 🔥 LLAMADA REAL A LA API FAMOSA: DummyJSON
+            const response = await fetch('https://dummyjson.com/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                    expiresInMins: 30  // token válido por 30 minutos
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Éxito: mostramos datos del usuario + parte del token
+                const userFullName = `${data.firstName || ''} ${data.lastName || ''}`.trim();
+                const welcomeName = userFullName || data.username || username;
+                
+                // Mostrar información amigable (se puede ver el token en consola)
+                console.log('✅ Login exitoso. Token:', data.accessToken);
+                console.log('Usuario completo:', data);
+                
+                showMessage(
+                    `✅ ¡Bienvenido, ${welcomeName}! <br> 
+                    📧 Email: ${data.email || 'no disponible'} <br>
+                    🔑 Sesión iniciada correctamente con token JWT.`,
+                    'exito'
+                );
+                passwordInput.value = '';
+            } else {
+                // Error de autenticación
+                let errorMsg = data.message || 'Credenciales incorrectas.';
+                showMessage(`⚠️ ${errorMsg} <br> Revisa los datos de prueba incluidos.`, 'error');
+                passwordInput.value = '';  // limpiar contraseña por seguridad
+                passwordInput.focus();
+            }
+        } catch (error) {
+            console.error('Error de conexión:', error);
+            showMessage('❌ Error de red. No se pudo conectar con la API de autenticación.', 'error');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    // Asociar evento submit del formulario
+    loginForm.addEventListener('submit', loginWithAPI);
+</script>
+</body>
+</html>

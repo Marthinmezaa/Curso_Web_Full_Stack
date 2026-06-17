@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>➕ Crear producto (POST / body)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f7f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 550px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2d6a4f;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+        }
+        button {
+            background: #2d6a4f;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+        button:hover {
+            background: #1b4d3e;
+        }
+        .respuesta {
+            margin-top: 20px;
+            background: #e9f5e9;
+            padding: 12px;
+            border-radius: 18px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .error {
+            background: #ffe0e0;
+            color: #a00;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #5f7e6e;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>✨ Crear nuevo producto</h1>
+    <p><strong>Método POST</strong> · Los datos van en el <strong>cuerpo (body)</strong> como JSON</p>
+    <p>🌐 API: <code>https://dummyjson.com/products/add</code> (simula creación)</p>
+
+    <form id="productForm">
+        <label>📦 Título del producto:</label>
+        <input type="text" id="title" required placeholder="Ej: Camiseta de algodón">
+
+        <label>💰 Precio (USD):</label>
+        <input type="number" id="price" step="0.01" required placeholder="19.99">
+
+        <label>📝 Descripción:</label>
+        <textarea id="description" rows="2" placeholder="Producto ecológico..."></textarea>
+
+        <label>🏷️ Categoría (opcional):</label>
+        <input type="text" id="category" placeholder="Ej: ropa">
+
+        <button type="submit">🚀 Crear producto</button>
+    </form>
+
+    <div id="respuestaContainer" style="display:none;">
+        <div id="respuestaTexto" class="respuesta"></div>
+    </div>
+    <footer>💡 La API devuelve el producto creado con un ID generado (simulado).</footer>
+</div>
+
+<script>
+    const form = document.getElementById('productForm');
+    const respuestaContainer = document.getElementById('respuestaContainer');
+    const respuestaTexto = document.getElementById('respuestaTexto');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();  // Evitar que recargue la página
+
+        // --- 1. Recoger los datos del formulario ---
+        const nuevoProducto = {
+            title: document.getElementById('title').value,
+            price: parseFloat(document.getElementById('price').value),
+            description: document.getElementById('description').value,
+            category: document.getElementById('category').value || "general"
+        };
+
+        // Mostrar mensaje de "enviando..."
+        respuestaContainer.style.display = 'block';
+        respuestaTexto.className = 'respuesta';
+        respuestaTexto.innerText = '📤 Enviando datos al servidor...';
+
+        try {
+            // --- 2. Hacer la petición POST con el cuerpo JSON ---
+            const respuesta = await fetch('https://dummyjson.com/products/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'   // Indicamos que enviamos JSON
+                },
+                body: JSON.stringify(nuevoProducto)      // Convertir objeto a JSON
+            });
+
+            if (!respuesta.ok) {
+                throw new Error(`Error HTTP: ${respuesta.status}`);
+            }
+
+            // --- 3. Leer la respuesta de la API (el producto creado) ---
+            const productoCreado = await respuesta.json();
+            
+            // Mostrar respuesta bonita
+            respuestaTexto.className = 'respuesta';
+            respuestaTexto.innerText = '✅ ¡Producto creado con éxito!\n\n' + 
+                JSON.stringify(productoCreado, null, 2);
+            
+            // Opcional: limpiar formulario (solo si quieres)
+            // form.reset();
+        } catch (error) {
+            // Mostrar error amigable
+            respuestaTexto.className = 'respuesta error';
+            respuestaTexto.innerText = '❌ Error al crear producto:\n' + error.message;
+        }
+    });
+</script>
+
+</body>
+</html>

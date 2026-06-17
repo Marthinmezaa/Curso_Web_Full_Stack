@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ver Consultas</title>
+
+<style>
+
+body{
+    background:#f4f6f8;
+    font-family:Arial, sans-serif;
+    margin:0;
+    padding:20px;
+}
+
+.contenedor{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+h1{
+    text-align:center;
+    color:#1e88e5;
+    margin-bottom:30px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#1e88e5;
+    color:white;
+}
+
+th,td{
+    padding:14px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+}
+
+tr:hover{
+    background:#f8f9fa;
+}
+
+.boton{
+    display:inline-block;
+    margin-top:25px;
+    padding:12px 20px;
+    background:#1e88e5;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+}
+
+@media(max-width:768px){
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="contenedor">
+
+    <h1>Ver Consultas</h1>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Paciente</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Fecha</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="tablaConsultas">
+
+        </tbody>
+
+    </table>
+
+    <a href="/" class="boton">
+        Nueva Consulta
+    </a>
+
+</div>
+
+<script>
+
+async function cargarConsultas(){
+
+    const respuesta = await fetch("/api/consultas");
+
+    const consultas = await respuesta.json();
+
+    let filas = "";
+
+    consultas.forEach(c => {
+
+        filas += `
+            <tr>
+                <td>${c.id}</td>
+                <td>${c.nombrePaciente}</td>
+                <td>${c.telefono}</td>
+                <td>${c.email}</td>
+                <td>${c.fechaConsulta}</td>
+            </tr>
+        `;
+
+    });
+
+    document.getElementById("tablaConsultas").innerHTML = filas;
+
+}
+
+cargarConsultas();
+
+</script>
+
+</body>
+</html>
